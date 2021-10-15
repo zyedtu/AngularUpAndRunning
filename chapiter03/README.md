@@ -30,6 +30,37 @@ Tout d'abord, nous ajoutons des nouvelles classes scss dans src/app/stock/stock-
 		.small-change {
 			font-size: 0.8em;
 		}
+Ensuite, nous pouvons modifions notre composant *stock-item.component.ts* pour calculer et garder l'objet JSON prêt avec les classes à appliquer. Dans le composant *stock-item.component.ts* on calcule d'abord la différence entre le prix actuel et l'ancien prix, puis créer un objet qui contient toutes les données.    
+
+		ngOnInit(): void {
+			this.stock = new Stock('Test Stock Company', 'TSC', 85, 80);
+			let diff = (this.stock.price / this.stock.previousPrice) - 1;
+			let largeChange = Math.abs(diff) > 0.01;
+			this.stockClasses = {
+			"positive": this.stock.isPositiveChange,
+			"negative": !this.stock.isPositiveChange,
+			"large-change": largeChange,
+			"small-change": !largeChange
+			};
+		}
+Dans le code du composant, nous avons créé un objet stockClasses avec quatre clés: *positive, négative, grande variation et petite variation*. Sur la base du prix actuel et des prix précédents, chacune de ces clés aura une valeur vraie ou fausse.      
+Voyons maintenant comment on peut utiliser la directive **NgClass** pour l'utiliser à la place de *la liaison de classe* que nous utilisions auparavant dans le Template *stock-item.component.html*.      
+
+		<div class="stock-container">
+			<div class="name">{{stock.name + ' (' + stock.code + ')'}}</div>
+			<div class="price"
+				[ngClass]="stockClasses">$ {{stock.price}}</div>
+			<button (click) = toggleFavorite($event) [disabled]="stock.favorite">Add to Favorite</button>
+		</div>
+Nous avons remplacé:    
+
+	[class]="stock.isPositiveChange() ? 'positive' : 'negative'"
+Par:    
+
+	[ngClass]="stockClasses">$ {{stock.price}}</div>
+Maintenant si nous relance l'application, on remarque que le champ *price* est affiché en vert et en caractères légèrement plus grand, car on applique à la fois la classe *positive* et *large-change*.      
+Donc avec la directive NgClass on peut fournir plusieur classes css pour un seul élément.    
+Une autre chose à noter, la liaison de classe écrasait notre classe initiale *la classe price* à partir de l'élément, la directive NgClass conserve les classes sur l'élément.     
 
 ##### NgStyle: 
 #####  Alternative Class and Style Binding Syntax: 
