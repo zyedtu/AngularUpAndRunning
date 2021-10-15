@@ -15,6 +15,22 @@ Nous allons d'abord explorer les directives d'attribut. Il existe deux directive
 
 ##### NgClass:
 La directive NgClass nous permet d'appliquer ou de supprimer plusieurs classes CSS simultanément à partir d'un élément de notre HTML.   
+Dans le chapitre précedent, nous appliquions une seule classe à notre élément pour mettre en évidence s'il s'agissait d'un changement positif ou négatif comme suit :
+
+	<div class="price"
+			[class]="stock.isPositiveChange ? 'positive' : 'negative'">$ {{stock.price}}</div>
+Dans cet exemple, nous examinons simplement une valeur booléenne, puis décidons d'appliquer la classe positive ou négative en fonction de cela. Mais et si nous devions appliquer plusieurs classes CSS ? Et ils étaient tous (ou beaucoup) conditionnels ? Vous finirez par devoir écrire du code qui génère une chaîne en fonction de ces multiples conditions, de sorte que vous puissiez avoir une chaîne qui représente toutes les classes qui doivent être appliquées.      
+C'est du code grossier qui ne vaut pas la peine d'être écrit ou maintenu. Donc, pour ce genre de situations, Angular fournit la directive NgClass, qui peut prendre un objet JavaScript en entrée. Pour chaque clé de l'objet qui a une valeur de vérité, Angular ajoutera cette clé (la clé elle-même, pas la valeur de la clé !) En tant que classe à l'élément. De même, chaque clé de l'objet qui a une valeur fausse sera supprimée en tant que classe de cet élément.         
+Prenons un exemple pour voir cela en action. Disons que nous voulons étendre notre exemple d'avant, où au lieu de simplement une classe positive et une classe négative, nous voulons ajouter une autre classe qui dicte s'il s'agit d'un grand ou d'un petit changement. Nous voulons qu'il s'agisse d'un petit changement (indiqué par la classe CSS small-change) si le pourcentage de changement est inférieur à 1 % ; sinon ce serait un grand changement (indiqué par la classe CSS grand changement).       
+Tout d'abord, nous ajoutons des nouvelles classes scss dans src/app/stock/stock-item/stock-item.component.scss, on ajoute ces deux classes scss:   
+
+		.large-change {
+			font-size: 1.2em;
+		}
+		.small-change {
+			font-size: 0.8em;
+		}
+
 ##### NgStyle: 
 #####  Alternative Class and Style Binding Syntax: 
 ### Built-In Structural Directives:  
