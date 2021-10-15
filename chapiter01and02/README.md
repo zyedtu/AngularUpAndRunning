@@ -55,7 +55,7 @@ ng serve démarre un serveur de développement local sur le port 4200.
 Une chose à noter est que bien que nous développions notre application Angular en TypeScript, l'application Web fonctionne avec du JavaScript **transpilé**. La commande ng serve est responsable de la traduction de notre code TypeScript en JavaScript pour que le navigateur se charge.      
 Si nous regardons la structure générée par Angular CLI, c'est quelque chose comme ceci:  
 
-![Alt text](https://github.com/zyedtu/AngularUpAndRunning/blob/master/imgReadme/squelette.png?raw=true "Title")
+![Alt text](https://github.com/zyedtu/AngularUpAndRunning/blob/master/chapiter01and02/imgReadme/squelette.png?raw=true "Title")
 
 * package.json : fichier déclarant les dépendances NPM tirées lors de l'installation du projet et nécessaire à la compilation et les tests.   
 * angular.json: fournit des paramètres de configuration par défaut à l'échelle de l'espace de travail et spécifiques au projet pour les outils de construction et de développement fournis par l'interface de ligne de commande angulaire. Les valeurs de chemin indiquées dans la configuration sont relatives au dossier racine de l'espace de travail.     
