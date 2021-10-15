@@ -61,8 +61,10 @@ Par:
 Maintenant si nous relance l'application, on remarque que le champ *price* est affiché en vert et en caractères légèrement plus grand, car on applique à la fois la classe *positive* et *large-change*.      
 Donc avec la directive NgClass on peut fournir plusieur classes css pour un seul élément.    
 Une autre chose à noter, la liaison de classe écrasait notre classe initiale *la classe price* à partir de l'élément, la directive NgClass conserve les classes sur l'élément.     
-
 ##### NgStyle: 
+La directive NgStyle est de niveau inférieur que la directive NgClass. Il fonctionne de manière similaire à la NgClass en ce sens qu'il prend un objet JSON et l'applique en fonction des valeurs des clés. Mais la directive NgStyle fonctionne au niveau du style/des propriétés CSS. Les clés et les valeurs qu'il attend sont des propriétés et des attributs CSS plutôt que des noms de classe.      
+Considérant que notre exemple avec NgClass utilisait des classes CSS simples affectant chacune une seule propriété CSS, voyons comment utiliser la directive NgStyle comme NgClass mais sur les propiètes *name et code* du model Stock. Tout d'abord, nous devons modifier le fichier stock-item.component.ts pour créer l'objet de style basé sur les propriétés du stock:      
+
 #####  Alternative Class and Style Binding Syntax: 
 ### Built-In Structural Directives:  
 ##### NgIf: 

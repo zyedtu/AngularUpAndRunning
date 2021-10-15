@@ -1,5 +1,5 @@
 <div class="stock-container">
-    <div class="name">{{stock.name + ' (' + stock.code + ')'}}</div>
+    <div class="name" [ngStyle]="stockStyles">{{stock.name + ' (' + stock.code + ')'}}</div>
     <div class="price"
         [ngClass]="stockClasses">$ {{stock.price}}</div>
     <button (click) = toggleFavorite($event) [disabled]="stock.favorite">Add to Favorite</button>
