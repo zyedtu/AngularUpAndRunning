@@ -65,6 +65,34 @@ Une autre chose à noter, la liaison de classe écrasait notre classe initiale *
 La directive NgStyle est de niveau inférieur que la directive NgClass. Il fonctionne de manière similaire à la NgClass en ce sens qu'il prend un objet JSON et l'applique en fonction des valeurs des clés. Mais la directive NgStyle fonctionne au niveau du style/des propriétés CSS. Les clés et les valeurs qu'il attend sont des propriétés et des attributs CSS plutôt que des noms de classe.      
 Considérant que notre exemple avec NgClass utilisait des classes CSS simples affectant chacune une seule propriété CSS, voyons comment utiliser la directive NgStyle comme NgClass mais sur les propiètes *name et code* du model Stock. Tout d'abord, nous devons modifier le fichier stock-item.component.ts pour créer l'objet de style basé sur les propriétés du stock:      
 
+		public stockStyles;
+
+		ngOnInit(): void {
+			this.stock = new Stock('Test Stock Company', 'TSC', 85, 80);
+			let diff = (this.stock.price / this.stock.previousPrice) - 1;
+			let largeChange = Math.abs(diff) > 0.01;
+			console.log('diff', diff);
+			this.stockClasses = {
+			'positive': this.stock.isPositiveChange,
+			'negative': !this.stock.isPositiveChange,
+			'large-change': largeChange,
+			'small-change': !largeChange
+			};
+			this.stockStyles = {
+			"color": this.stock.isPositiveChange ? "green" : "red",
+			"font-size": largeChange ? "1.2em" : "0.8em"
+			};
+		}
+Semblable à la section précédente, nous avons créé un objet stockStyles. Dans le code d'initialisation, nous avons initialisé l'objet stockStyles avec les clés color et font-size. Ses valeurs sont des attributs CSS générés en fonction des propriétés du stock. Nous pouvons ensuite utiliser cet objet stockStyles comme entrée de la directive NgStyle pour la liaison.      
+Nous pouvons maintenant modifier notre code HTML pour utiliser ces informations en éditant le fichier stock-item.component.html comme suit:     
+
+		<div class="stock-container">
+			<div class="name" [ngStyle]="stockStyles">{{stock.name + ' (' + stock.code + ')'}}</div>
+			<div class="price"
+				[ngClass]="stockClasses">$ {{stock.price}}</div>
+			<button (click) = toggleFavorite($event) [disabled]="stock.favorite">Add to Favorite</button>
+		</div>
+
 #####  Alternative Class and Style Binding Syntax: 
 ### Built-In Structural Directives:  
 ##### NgIf: 
