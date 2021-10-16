@@ -92,9 +92,20 @@ Nous pouvons maintenant modifier notre code HTML pour utiliser ces informations 
 				[ngClass]="stockClasses">$ {{stock.price}}</div>
 			<button (click) = toggleFavorite($event) [disabled]="stock.favorite">Add to Favorite</button>
 		</div>
+Nous avons ajouté **[ngStyle]="stockStyles"**, Angular examinera les clés et les valeurs de l'objet stockStyles et ajoutera ces styles particuliers à l'élément HTML.     
 
-#####  Alternative Class and Style Binding Syntax: 
-### Built-In Structural Directives:  
+Il est généralement préférable d'utiliser la classe ou les liaisons NgClass pour changer l'apparence de votre application, mais le NgStyle vous donne une autre alternives.          
+#####  Alternative Class and Style Binding Syntax:   
+Nous avons abordé l'utilisation de la syntaxe de liaison [class] dans le chapitre précédent, ainsi que l'alternative NgClass pour ajouter dynamiquement des classes à nos éléments à l'aide d'Angular. Il existe une troisième alternative pour les classes et les styles, qui consiste à utiliser une version singulière de la liaison de classe et de style qui ajoute et supprime une classe/un style particulier, au lieu de l'approche tout ou rien de la liaison [class].     
+Nous pouvons ajouter ou supprimer des classes individuelles en fonction de l'évaluation d'une expression véridique dans Angular avec la syntaxe suivante:    
+
+	[class.class-name]="expression"  
+### Built-In Structural Directives:    
+Les directives structurelles, comme discuté précédemment, sont responsables à la modification et la mise en page du HTML en ajoutant, en supprimant ou en modifiant des éléments du DOM. Tout comme les autres directives qui ne sont pas des composants, les directives structurelles sont appliquées sur un élément préexistant, et la directive opère alors sur le contenu de cet élément.     
+Les directives structurelles dans Angular suivent une syntaxe très particulière, ce qui permet de reconnaître facilement une directive structurelle par rapport à une directive normale. Toutes les directives structurelles dans Angular commencent par un astérisque (*), comme:    
+
+	<div *ngIf="stock.favorite"></div>
+
 ##### NgIf: 
 ##### NgFor:
 ##### NgSwitch:
