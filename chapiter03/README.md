@@ -138,9 +138,42 @@ Tout d'abord, nous allons modifier le fichier stock-item.component.ts, juste à 
 		}
 	}
 Nous avons changé le stock à un tableau d'objets de stocks. Nous avons ensuite créé des stocks factices lors de notre initialisation. Enfin, nous avons modifié le toggleFavorite pour qu'il prenne un index en tant que paramètre, au lieu de travailler avec un seul stock.    
+Ensuite, voyons comment nous pouvons maintenant modifier notre code HTML dans stockitem.component.html pour tirer parti de la puissance de la directive NgFor:    
 
-##### NgSwitch:
-##### Multiple Sibling Structural Directives:
+		<div class="stock-container" *ngFor="let stock of stocks; index as i">
+			<div class="name">{{stock.name + ' (' + stock.code + ')'}}</div>
+			<div class="price"
+				[class]="stock.isPositiveChange ? 'positive' : 'negative'">$ {{stock.price}}
+			</div>
+			<button (click)="toggleFavorite($event, i)"
+				[disabled]="stock.favorite">Add to Favorite</button>
+		</div>
+Nous avons mis à jour notre conteneur parent avec la directive NgFor. Explorons un peu plus en détail comment nous l'avons utilisé:      
+
+		*ngFor="let stock of stocks; index as i"
+La première partie de la microsyntaxe est essentiellement notre boucle for. Nous créons une variable d'instance de modèle nommée stock, qui sera disponible dans le cadre de l'élément créé. Cela peut être assimilé à une boucle for-each standard, la variable stock faisant référence à chaque élément individuel du tableau. La deuxième partie après le point-virgule crée une autre variable d'instance de modèle i, qui contient la valeur d'index actuelle. Nous parlerons des autres propriétés dans un instant.      
+Semblable à index, il existe d'autres valeurs locales disponibles dans le contexte d'une directive NgFor que vous pouvez affecter à un nom de variable locale (comme nous l'avons fait avec i) et les lier à différentes valeurs:    
+* index: Il s'agit de l'index de l'élément actuel.
+* even: Ceci est vrai lorsque l'élément a un index pair
+* odd: Ceci est vrai lorsque l'élément a un index impair.
+* first: Ceci est vrai lorsque l'élément est le premier élément du tableau.
+* last: Ceci est vrai lorsque l'élément est le dernier élément du tableau.  
+
+##### NgSwitch:   
+TODO       
+##### Multiple Sibling Structural Directives:  
+Vous pouvez rencontrer un cas à un moment donné où vous souhaitez exécuter un *ngFor sur un modèle, mais uniquement si certaines conditions sont remplies. Votre réaction instinctive dans ce cas pourrait être d'ajouter à la fois *ngFor et *ngIf sur le même élément. Angular ne vous laissera pas.     
+Par exemple, considérons le code suivant:  
+
+	<div *ngFor="let stock of stocks" *ngIf="stock.active">
+		<!-- Show stock details here if stock is active -->
+	</div>
+Ici, nous voulons exécuter le *ngFor, ensuite on teste si le stock est actif avant de l'afficher. Considérons maintenant le code suivant:    
+
+	<div *ngFor="let stock of stocks" *ngIf="stocks.length > 2">
+		<!-- Show stock details here if more than 2 stocks present -->
+	</div>
+Ces deux cas se ressemblent beaucoup, mais l'intention et les attentes sont très différentes. Dans le premier cas, nous nous attendons à ce que *ngFor s'exécute en premier, suivi de *ngIf, et vice versa dans le second cas.    
 # Understanding and Using Angular Components: 
 ### Components—A Recap: 
 ### Defining a Component: 
