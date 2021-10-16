@@ -106,7 +106,39 @@ Les directives structurelles dans Angular suivent une syntaxe très particulièr
 
 	<div *ngIf="stock.favorite"></div>
 ##### NgIf: 
-##### NgFor:
+Nous allons d'abord jeter un œil sur la directive structurelle NgIf. La directive NgIf vous permet de masquer ou d'afficher des éléments de manière conditionnelle dans votre interface utilisateur. La syntaxe, comme mentionné précédemment, commence par un astérisque car il s'agit d'une directive structurelle qui peut supprimer ou ajouter de manière conditionnelle des éléments à notre Template HTML.    
+Nous modifions le bouton Ajouter aux favoris de sorte qu'au lieu de le désactiver, nous cachons le bouton si le stock est déjà favori. Nous n'avons pas besoin d'apporter de modifications au composant ou au code CSS, mais uniquement au fichier stockitem.component.html comme suit:    
+
+		<div class="stock-container">
+			<div class="name" [ngStyle]="stockStyles">{{stock.name + ' (' + stock.code + ')'}}</div>
+			<div class="price"
+				[ngClass]="stockClasses">$ {{stock.price}}</div>
+			<button (click) = toggleFavorite($event) *ngIf="!stock.favorite">Add to Favorite</button>
+		</div>
+On a ajouté la condition avec *ngIf="!stock.favorite" sur le bouton. Cela indique à Angular d'ajouter l'élément si le stock n'est pas favori, et de le supprimer du DOM s'il est favori. Maintenant, lorsque vous chargez la page, vous verrez le bouton est affiché par défaut. Une fois que vous avez cliqué sur le bouton Ajouter aux favoris, le booléen bascule et le stock est désormais favori. Angular masquera automatiquement à ce stade le bouton de l'interface utilisateur.         
+##### NgFor:  
+Alors que la directive NgIf est utilisée pour afficher/masquer des éléments de manière conditionnelle, la directive NgFor est utilisée pour afficher plusieurs éléments. C'est une pratique courante d'avoir un modèle, puis de créer une instance de ce modèle pour chaque instance de notre objet.      
+Tout d'abord, nous allons modifier le fichier stock-item.component.ts, juste à des fins de démonstration, pour avoir un tableau de stocks au lieu d'un stock:     
+
+	export class StockItemComponent implements OnInit {
+		public stocks: Array<Stock>;
+		constructor() { }
+
+		ngOnInit(): void {
+			this.stocks = [
+			new Stock('Test Stock Company', 'TSC', 85, 80),
+			new Stock('Second Stock Company', 'SSC', 10, 20),
+			new Stock('Last Stock Company', 'LSC', 876, 765)
+			];
+		}
+
+		toggleFavorite(event, index) {
+			console.log('We are toggling the favorite state for this stock', event);
+			this.stocks[index].favorite = !this.stocks[index].favorite;
+		}
+	}
+Nous avons changé le stock à un tableau d'objets de stocks. Nous avons ensuite créé des stocks factices lors de notre initialisation. Enfin, nous avons modifié le toggleFavorite pour qu'il prenne un index en tant que paramètre, au lieu de travailler avec un seul stock.    
+
 ##### NgSwitch:
 ##### Multiple Sibling Structural Directives:
 # Understanding and Using Angular Components: 
