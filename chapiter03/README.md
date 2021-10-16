@@ -105,7 +105,6 @@ Les directives structurelles, comme discuté précédemment, sont responsables �
 Les directives structurelles dans Angular suivent une syntaxe très particulière, ce qui permet de reconnaître facilement une directive structurelle par rapport à une directive normale. Toutes les directives structurelles dans Angular commencent par un astérisque (*), comme:    
 
 	<div *ngIf="stock.favorite"></div>
-
 ##### NgIf: 
 ##### NgFor:
 ##### NgSwitch:
