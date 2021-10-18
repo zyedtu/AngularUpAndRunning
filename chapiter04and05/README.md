@@ -29,11 +29,33 @@ Par exemple, voici quelques façons de spécifier l'attribut selector et de l'ut
 * selector: '[app-stock-item]', entraînerait l'utilisation du composant comme attribut sur un élément existant:
 
         <div app-stock-item></div>
+##### Template:  
+Jusqu'à présent, nous avons utilisé templateUrl pour définir le modèle à utiliser avec un composant. Le chemin que vous transmettez à l'attribut templateUrl est **relatif** au chemin du composant. Dans le cas précédent, nous pouvons soit spécifier le templateUrl et cela fonctionnerait. Mais si vous essayez de spécifier une URL absolue ou quoi que ce soit d'autre, votre compilation va échouer.     
 
-   
+        templateUrl: './stock.item.component.html'
+Au lieu de templateUrl, nous pourrions également spécifier le modèle en ligne dans le composant, en utilisant l'attribut **template**. Cela nous permet de faire en sorte que le composant contienne toutes les informations au lieu de les diviser en code HTML et TypeScript. Comme le code ci-dessous:     
 
-##### Template
-##### Styles
+    @Component({
+    selector: 'app-stock-item',
+    template: `
+        <div class="stock-container">
+        <div class="name">{{stock.name + ' (' + stock.code + ')'}}</div>
+        <div class="price"
+        [class]="stock.isPositiveChange() ? 'positive' : 'negative'">
+        $ {{stock.price}}
+        </div>
+        <button (click)="toggleFavorite($event)"
+        *ngIf="!stock.favorite">Add to Favorite</button>
+        </div>
+        `,
+    styleUrls: ['./stock-item.component.css']
+    })
+    export class StockItemComponent implements OnInit {
+        // Code omitted here for clarity
+    }
+* Remarque: template ou templateUrl peut être spécifié dans un composant. Vous ne pouvez pas utiliser les deux, mais au moins un est essentiel.   
+##### Styles: 
+Un composant donné peut être associé à plusieurs styles. Cela vous permet d'extraire du CSS spécifique au composant. Vous pouvez soit incorporer votre CSS à l'aide de l'attribut **styles**, ou s'il y a une quantité importante de CSS, vous pouvez l'extraire dans un fichier séparé et l'intégrer dans votre composant à l'aide de l'attribut **styleUrls**.       
 ##### Style Encapsulation
 ##### Others
 ### Components and Modules:
