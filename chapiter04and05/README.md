@@ -79,7 +79,7 @@ Ensuite dans le composant on ajoute l'attribut **ViewEncapsulation.None**:
         encapsulation: ViewEncapsulation.None
         })
         export class AppComponent {
-        title = 'app works!';
+                title = 'app works!';
         }
 Maintenant, si nous actualisons notre application, vous verrez que le nom du stock a été gonflé à 50px. En effet, les styles appliqués sur AppComponent ne se limitent pas au composant, mais prennent désormais l'espace de noms global.         
 ViewEncapsulation.None est un bon moyen d'appliquer des styles communs à tous les composants enfants, mais ajoute définitivement le risque d'affecter l'espace de noms CSS global et d'avoir des effets non intentionnels.     
