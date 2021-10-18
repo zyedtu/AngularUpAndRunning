@@ -56,7 +56,12 @@ Au lieu de templateUrl, nous pourrions également spécifier le modèle en ligne
 * Remarque: template ou templateUrl peut être spécifié dans un composant. Vous ne pouvez pas utiliser les deux, mais au moins un est essentiel.   
 ##### Styles: 
 Un composant donné peut être associé à plusieurs styles. Cela vous permet d'extraire du CSS spécifique au composant. Vous pouvez soit incorporer votre CSS à l'aide de l'attribut **styles**, ou s'il y a une quantité importante de CSS, vous pouvez l'extraire dans un fichier séparé et l'intégrer dans votre composant à l'aide de l'attribut **styleUrls**.       
-##### Style Encapsulation
+##### Style Encapsulation:   
+Angular encapsule les styles de chaque composant, pour s'assurer qu'il ne sera pas utilisé ou plolué les autres. En fait, vous pouvez réellement dire à Angular s'il doit le faire ou non, ou si les styles peuvent être accessibles globalement. Vous pouvez définir cela en utilisant l'attribut **encapsulation** sur le décorateur composant. L'attribut d'encapsulation prend l'une des trois valeurs suivantes:     
+* ViewEncapsulation.Emulated: Il s'agit de la valeur **par défaut**, où Angular crée un CSS calé pour émuler le comportement fourni par les DOM fantômes et les racines fantômes.    
+* ViewEncapsulation.Native: C'est l'idéal, où Angular utilisera des racines d'ombre. Cela ne fonctionnera que sur les navigateurs et les plates-formes qui le prennent en charge nativement.    
+* ViewEncapsulation.None: Utilise le CSS global, sans aucune encapsulation.    
+
 ##### Others
 ### Components and Modules:
 ### Input and Output:
