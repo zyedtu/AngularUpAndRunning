@@ -87,6 +87,9 @@ ViewEncapsulation.None est un bon moyen d'appliquer des styles communs à tous l
 Avant d'entrer dans les détails du cycle de vie d'un composant, examinons rapidement comment les composants sont liés aux modules et quelle est leur relation. Au chapitre 2, nous avons vu comment chaque fois que nous créions un nouveau composant, nous devions l'inclure dans un module. Si vous créez un nouveau composant et ne l'ajoutez pas à un module, Angular se plaindra que vous avez des composants qui ne font partie d'aucun module.      
 Pour qu'un composant soit utilisé dans le contexte d'un module, il doit être importé dans votre fichier de déclaration de module et déclaré dans le tableau des déclarations. Cela garantit que le composant est visible pour tous les autres composants du module.     
 Il existe trois attributs spécifiques sur le NgModule qui ont un impact direct sur les composants et leur utilisation, qu'il est important de connaître. Bien que seules les déclarations soient importantes au départ, une fois que vous commencez à travailler avec plusieurs modules, ou si vous créez ou importez d'autres modules, les deux autres attributs deviennent essentiels:    
+* declarations:  
+* imports:  
+* exports:   
 ### Input and Output:
 ##### Input: 
 ##### Output: 
