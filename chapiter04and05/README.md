@@ -20,7 +20,8 @@ Nous définissons un composant à l'aide du décorateur TypeScript **@Componant*
 ##### Selector:  
 L'attribut selector, nous permet de définir comment Angular identifie le composant lorsque il'est utilisé dans le clode HTML. Le sélecteur prend une valeur de chaîne, qui est le sélecteur CSS qu'Angular utilisera pour identifier l'élément.    
 Par exemple, voici quelques façons de spécifier l'attribut selector et de l'utiliser dans le code HTML: (la première façon est recommendée)     
-* selector: 'app-stock-item' entraînerait l'utilisation du composant comme: *<app-stock-item></app-stock-item>* enHTML.
+* selector: 'app-stock-item' entraînerait l'utilisation du composant en HTML: 
+    <app-stock-item></app-stock-item>
    
 
 ##### Template
