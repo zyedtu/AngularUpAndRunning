@@ -58,10 +58,31 @@ Au lieu de templateUrl, nous pourrions également spécifier le modèle en ligne
 Un composant donné peut être associé à plusieurs styles. Cela vous permet d'extraire du CSS spécifique au composant. Vous pouvez soit incorporer votre CSS à l'aide de l'attribut **styles**, ou s'il y a une quantité importante de CSS, vous pouvez l'extraire dans un fichier séparé et l'intégrer dans votre composant à l'aide de l'attribut **styleUrls**.       
 ##### Style Encapsulation:   
 Angular encapsule les styles de chaque composant, pour s'assurer qu'il ne sera pas utilisé ou plolué les autres. En fait, vous pouvez réellement dire à Angular s'il doit le faire ou non, ou si les styles peuvent être accessibles globalement. Vous pouvez définir cela en utilisant l'attribut **encapsulation** sur le décorateur composant. L'attribut d'encapsulation prend l'une des trois valeurs suivantes:     
-* ViewEncapsulation.Emulated: Il s'agit de la valeur **par défaut**, où Angular crée un CSS calé pour émuler le comportement fourni par les DOM fantômes et les racines fantômes.    
-* ViewEncapsulation.Native: C'est l'idéal, où Angular utilisera des racines d'ombre. Cela ne fonctionnera que sur les navigateurs et les plates-formes qui le prennent en charge nativement.    
+* ViewEncapsulation.Emulated: Il s'agit de la valeur **par défaut**, où Angular crée un CSS spécial pour émuler le comportement fourni par les shadow DOM (pas utilisation de Shadow DOM).    
+* ViewEncapsulation.Native:  Angular créera un Web Component complet avec l’utilisation du Shadow DOM et du CSS scopé au component.        
 * ViewEncapsulation.None: Utilise le CSS global, sans aucune encapsulation.    
 
+- Définition Shadow DOM: Le Shadow DOM fait parti des Web Components qui sont un ensemble de technologies permettant justement le développement d’interfaces ou de widgets réutilisables nativement dans le navigateur. En clair, il permet de définir du comportement interne à notre DOM sans qu’il interfère sur les autres parties de notre application. Il permet aussi de définir du style spécifique.     
+
+La meilleure façon de voir comment cela affecte notre application est d'apporter une légère modification et de voir comment votre application se comporte dans différentes circonstances.   
+On ajoute dans le fichier *app.component.scss* ce code:   
+
+        .name {
+                font-size: 50px;
+        }
+Ensuite dans le composant on ajoute l'attribut **ViewEncapsulation.None**:    
+
+        @Component({
+        selector: 'app-root',
+        templateUrl: './app.component.html',
+        styleUrls: ['./app.component.css'],
+        encapsulation: ViewEncapsulation.None
+        })
+        export class AppComponent {
+        title = 'app works!';
+        }
+Maintenant, si nous actualisons notre application, vous verrez que le nom du stock a été gonflé à 50px. En effet, les styles appliqués sur AppComponent ne se limitent pas au composant, mais prennent désormais l'espace de noms global.         
+ViewEncapsulation.None est un bon moyen d'appliquer des styles communs à tous les composants enfants, mais ajoute définitivement le risque d'affecter l'espace de noms CSS global et d'avoir des effets non intentionnels.     
 ##### Others
 ### Components and Modules:
 ### Input and Output:
