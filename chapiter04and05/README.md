@@ -62,7 +62,7 @@ Angular encapsule les styles de chaque composant, pour s'assurer qu'il ne sera p
 * ViewEncapsulation.Native:  Angular créera un Web Component complet avec l’utilisation du Shadow DOM et du CSS scopé au component.        
 * ViewEncapsulation.None: Utilise le CSS global, sans aucune encapsulation.    
 
-- Définition Shadow DOM: Le Shadow DOM fait parti des Web Components qui sont un ensemble de technologies permettant justement le développement d’interfaces ou de widgets réutilisables nativement dans le navigateur. En clair, il permet de définir du comportement interne à notre DOM sans qu’il interfère sur les autres parties de notre application. Il permet aussi de définir du style spécifique.     
+- Définition Shadow DOM: Le Shadow DOM est une notion venant des standards des Web Components, qui permettent d’encapsuler des parties du DOM, ainsi que des styles. En clair, il permet de définir du comportement interne ou d'appliquer des styles bien précis à un seul nœud du DOM, sans que tout le reste de l’application soit impacté.          
 
 La meilleure façon de voir comment cela affecte notre application est d'apporter une légère modification et de voir comment votre application se comporte dans différentes circonstances.   
 On ajoute dans le fichier *app.component.scss* ce code:   
@@ -90,9 +90,13 @@ Il existe trois attributs spécifiques dans le **NgModule** qui ont un impact di
 * declarations: L'attribut declarations garantit que les composants et les directives peuvent être utilisés dans le cadre du module. L'Angular CLI ajoutera automatiquement votre composant ou directive au module lorsque vous créez un composant via le CLI Angular.    
 * imports: L'attribut imports vous permet de spécifier les modules que vous souhaitez importer et accessibles dans votre module. Il s'agit principalement d'un moyen d'intégrer des modules tiers pour rendre les composants et les services disponibles dans votre application.   
 * exports: L'attribut exports, offre la possibilité d'utiliser un composant dans un autre module.    
-  
 ### Input and Output:
+Un composant est vraiment utile lorsqu'il est réutilisable. L'un des moyens de rendre un composant réutilisable (plutôt que d'avoir des valeurs par défaut codées en dur à l'intérieur) est de transmettre différentes entrées en fonction du cas d'utilisation. De même, il peut y avoir des cas où nous voulons des hooks d'un composant lorsqu'une certaine activité se produit dans son contexte.    
+Angular fournit des hooks (crochets) pour spécifier chacun d'entre eux via des décorateurs, bien nommés Input et Output. Ceux-ci, contrairement aux décorateurs Component et NgModule, s'appliquent au niveau d'une variable membre de classe.   
 ##### Input: 
+Lorsque nous ajoutons un décorateur @Input sur une variable membre, il vous permet automatiquement de transmettre les valeurs de cette entrée au composant via la syntaxe de liaison de données d'Angular.      
+ L’input peut être de n’importe quel type TypeScript, un number, un string, ou même une classe/interface que vous aurez créée.    
+ Voyons comment nous pouvons étendre notre composant stock-item du chapitre précédent pour nous permettre de passer l'objet stock, plutôt que de le re-coder en dur dans le composant:     
 ##### Output: 
 ##### Change Detection: 
 ### Component Lifecycle: 
