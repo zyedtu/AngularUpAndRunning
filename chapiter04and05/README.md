@@ -184,7 +184,7 @@ Enfin, relions le tout en vous abonnant à la nouvelle sortie de notre composant
                 <app-stock-item [stock]="stock" 
                                 (toggleFavorite)="onToggleFavorite($event)"></app-stock-item>  
         </div>
-
+Nous venons d'ajouter une liaison d'événement à l'aide de la syntaxe de liaison d'événement d'Angular à la sortie déclarée dans le composant stock-item. Notez à nouveau qu'il est sensible à la casse et qu'il doit correspondre exactement à la variable membre que nous avons décorée avec le @Output.   
 ##### Change Detection: 
 ### Component Lifecycle: 
 ### Interfaces and Functions:
