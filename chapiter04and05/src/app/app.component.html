@@ -4,4 +4,8 @@
   </h1>
   <app-stock-item [stock]="stock" 
                   (toggleFavorite)="onToggleFavorite($event)"></app-stock-item>  
+  <div class="button">
+    <button (click)="changeStockObject()">Change Stock</button>
+    <button (click)="changeStockPrice()">Change Price</button>
+  </div>
 </div>

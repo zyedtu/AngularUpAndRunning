@@ -192,5 +192,75 @@ En ravanche, Angular nous permet de changer cette stratégie de la detection de 
 Angular nous fournit des moyens de signaler quand vérifier les liaisons à partir du composant également, pour avoir un contrôle absolu sur la liaison de données d'Angular.   
 Modifions maintenant l'exemple de code pour voir cela en action. Tout d'abord, modifiez l'article en stock.component.ts pour modifier la ChangeDetectionStrategy dans le composant enfant:     
 
+        @Component({
+        selector: 'app-stock-item',
+        templateUrl: './stock-item.component.html',
+        styleUrls: ['./stock-item.component.scss'],
+        changeDetection: ChangeDetectionStrategy.OnPush
+        })
+
+        export class StockItemComponent implements OnInit {
+
+                @Input() public stock: Stock;
+                @Output() private toggleFavorite: EventEmitter<Stock>;
+
+                constructor() { 
+                        this.toggleFavorite = new EventEmitter<Stock>();
+                }
+                ........
+                changeStockPrice() {
+                        this.stock.price += 5;
+                }
+        }
+En plus de changer la ChangeDetectionStrategy, nous avons également ajouté une autre fonction à changeStockPrice(). Nous utiliserons cette fonctions pour montrer le comportement de la détection de changement dans le contexte de notre application.     
+Ensuite, modifions rapidement stock-item.component.html pour nous permettre de déclencher la nouvelle fonction. Nous allons simplement ajouter un nouveau bouton pour déclencher et modifier le cours de l'action lorsque le bouton est cliqué:     
+
+        <div class="stock-container">
+                <div class="name">{{stock.name + ' (' + stock.code + ')'}}</div>
+                <div class="price"
+                        [class]="stock.isPositiveChange ? 'positive' : 'negative'">$ {{stock.price}}
+                </div>
+                <button (click)="onToggleFavorite($event)"
+                        [disabled]="stock.favorite">Add to Favorite</button>
+                <button (click)="changeStockPrice()">Change Price</button>
+        </div>
+Il n'y a aucun changement au code HTML du modèle autre que l'ajout d'un nouveau bouton pour modifier le cours de l'action. De même, modifions rapidement le fichier principal app.component.html pour ajouter un autre bouton pour déclencher la modification du prix du composant parent.   
+
+        <div style="text-align:center">
+                <h1>
+                Welcome to {{ title }}!
+                </h1>
+                <app-stock-item [stock]="stock" 
+                                (toggleFavorite)="onToggleFavorite($event)"></app-stock-item>  
+                <button (click)="changeStockObject()">Change Stock</button>
+                <button (click)="changeStockPrice()">Change Price</button>
+        </div>
+Nous avons ajouté deux nouveaux boutons à ce modèle : un qui changera la référence de l'objet stock directement, et un autre qui modifiera la référence existante de l'objet stock pour changer le prix de l'AppComponent parent. Maintenant, enfin, nous pouvons voir comment tout cela est connecté dans le fichier app.component.ts:  
+
+        export class AppComponent implements OnInit {
+                title = 'app works !';
+                public stock: Stock;
+                private counter: number = 1;
+                .........
+                
+                changeStockObject() {
+                        // Cela mettra à jour la valeur dans le composant d'article en stock 
+                        // car nous créons une nouvelle référence pour l'entrée de stock.
+                        this.stock = new Stock('Test Stock Company - ' + this.counter++,
+                        'TSC', 85, 80);
+                }
+                changeStockPrice() {
+                        // Cela ne mettra pas à jour la valeur stock dans le composant  
+                        // StockItemComponent car il modifie la même référence et angulaire 
+                        // ne la vérifiera pas dans la stratégie de détection de changement OnPush.
+                        this.stock.price += 10;
+                }
+        }
+Le fichier *app.component.ts* a subi le plus de changements. Le code précédent est également bien annoté avec des commentaires pour expliquer le comportement attendu lorsque chacune de ces fonctions est déclenchée. Nous avons ajouté deux nouvelles fonctions changeStockObject() qui crée une nouvelle instance de l'objet stock dans l'AppComponent, et changeStockPrice(), qui modifie les prix de l'objet stock dans l'AppComponent. Nous avons également ajouté un compteur juste pour garder une trace du nombre de fois que nous créons un nouvel objet stock, mais ce n'est pas strictement nécessaire.     
+Maintenant, lorsque vous exécutez cette application, vous devez vous attendre à voir le comportement suivant:   
+* Cliquer sur Ajouter aux favoris dans StockItemComponent fonctionne toujours comme prévu.
+* En cliquant sur Modifier le prix dans le composant StockItemComponent, le prix de l'action augmentera de 5$ à chaque fois.
+* Cliquer sur Change Stock en dehors du StockItemComponent (dans AppComponent) changera le nom du stock à chaque clic. (C'est pourquoi nous avons ajouté le compteur!).  
+* Cliquer sur Modifier le prix en dehors de StockItemComponent (dans AppComponent) n'aura aucun impact (même si la valeur réelle de l'action augmentera si vous cliquez sur Modifier le prix à l'intérieur après cela). Cela montre que le modèle est mis à jour, mais Angular ne met pas à jour la vue.
 ### Component Lifecycle: 
 ### Interfaces and Functions:
