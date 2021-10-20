@@ -2,5 +2,6 @@
   <h1>
   Welcome to {{ title }}!
   </h1>
-  <app-stock-item [stock]="stockObj"></app-stock-item>  
+  <app-stock-item [stock]="stock" 
+                  (toggleFavorite)="onToggleFavorite($event)"></app-stock-item>  
 </div>

@@ -94,7 +94,7 @@ Il existe trois attributs spécifiques dans le **NgModule** qui ont un impact di
 Un composant est vraiment utile lorsqu'il est réutilisable. L'un des moyens de rendre un composant réutilisable (plutôt que d'avoir des valeurs par défaut codées en dur à l'intérieur) est de transmettre différentes entrées en fonction du cas d'utilisation. De même, il peut y avoir des cas où nous voulons des hooks d'un composant lorsqu'une certaine activité se produit dans son contexte.    
 Angular fournit des hooks (crochets) pour spécifier chacun d'entre eux via des décorateurs, bien nommés Input et Output. Ceux-ci, contrairement aux décorateurs Component et NgModule, s'appliquent au niveau d'une variable membre de classe.   
 ##### Input: 
-Lorsque nous ajoutons un décorateur @Input sur une variable membre, il vous permet automatiquement de transmettre les valeurs de cette entrée au composant via la syntaxe de liaison de données d'Angular.      
+Lorsque nous ajoutons un décorateur **@Input** sur une variable membre, il vous permet automatiquement de transmettre les valeurs de cette entrée au composant via la syntaxe de liaison de données d'Angular.      
  L’input peut être de n’importe quel type TypeScript, un number, un string, ou même une classe/interface que vous aurez créée.    
  Voyons comment nous pouvons étendre notre composant stock-item du chapitre précédent pour nous permettre de passer l'objet stock, plutôt que de le re-coder en dur dans le composant:     
 
@@ -129,6 +129,47 @@ Nous venons de déplacer l'initialisation de l'objet stock de StockItemComponent
         </div>
 Nous utilisons la liaison de données d'Angular pour transmettre le stock de AppComponent à StockItemComponent. Le nom de l'attribut (stock) doit correspondre au nom de la variable dans le composant qui a été marqué comme entrée. Le nom de l'attribut est **sensible à la casse**, assurez-vous donc qu'il correspond exactement au nom de la variable d'entrée. La valeur que nous lui passons est la référence de l'objet dans la classe AppComponent, qui est **stockObj**.      
 ##### Output: 
+Tout comme nous pouvons transmettre des données à un composant, nous pouvons également enregistrer et écouter les événements d'un composant. Nous utilisons la liaison de données pour transmettre les données et nous utilisons la syntaxe de liaison d'événement pour s'inscrire aux événements. Nous utilisons le décorateur **@Output** pour accomplir cela.     
+Nous enregistrons un EventEmitter en tant que sortie du composant, ensuite on déclencher l'événement à l'aide de l'objet EventEmitter, cela permet à chaque composant lié à l'évenement de recevoir la notification et de réagir en conséquence.     
+Nous pouvons utiliser le code de l'exemple précédent où nous avons enregistré un décorateur @Input et continuer à partir de là. Suposant maintenant que le StockComponent déclenche un événement lorsqu'il est favori, et délège la gestion de données du composant vers son parent. Ainsi, nous laisserons le composant d'application parent s'enregistrer pour l'événement toggleFavorite et modifier l'état du stock lorsque l'événement est déclenché.      
+On commence par la modification du code de composant *stockitem.component.ts*:  
+
+        import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+        export class StockItemComponent implements OnInit {
+
+                @Input() public stock: Stock;
+                @Output() private toggleFavorite: EventEmitter<Stock>;
+
+                constructor() { 
+                        this.toggleFavorite = new EventEmitter<Stock>();
+                }
+
+                ngOnInit(): void {
+                
+                }
+
+                onToggleFavorite(event) {
+                        console.log('We are toggling the favorite state for this stock', event);
+                        this.toggleFavorite.emit(this.stock); // ligne 24
+                }
+        }
+Quelques points importants à noter :    
+* Nous avons importé le décorateur Output ainsi que l'EventEmitter de la bibliothèque core Angular.  
+* Nous avons créé un nouveau membre de classe appelé toggle Favorite de type EventEmitter et renommé notre méthode en onToggle Favorite.    
+* Nous devons nous assurer que l'instance EventEmitter est *initialisée*, car elle n'est pas initialisée automatiquement pour nous. On fait l'instanciation dans *le constructeur*.       
+* Dans la **ligne 24** de la fonction onToggleFavorite appelle simplement une méthode sur l'EventEmitter *emit(stock)* pour émettre l'intégralité de l'objet stock. Cela signifie que tous les écouteurs de l'événement toggleFavorite obtiendront l'objet stock actuel en tant que paramètre.     
+
+Nous allons également modifier stock-item.component.html pour appeler la méthode onToggle Favorite au lieu de toggle Favorite. Le balisage HTML reste à peu près le même:   
+
+        <div class="stock-container">
+                <div class="name">{{stock.name + ' (' + stock.code + ')'}}</div>
+                <div class="price"
+                        [class]="stock.isPositiveChange ? 'positive' : 'negative'">$ {{stock.price}}
+                </div>
+                <button (click)="onToggleFavorite($event)"
+                        [disabled]="stock.favorite">Add to Favorite</button>
+        </div>
+
 ##### Change Detection: 
 ### Component Lifecycle: 
 ### Interfaces and Functions:

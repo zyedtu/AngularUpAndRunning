@@ -3,6 +3,6 @@
     <div class="price"
         [class]="stock.isPositiveChange ? 'positive' : 'negative'">$ {{stock.price}}
     </div>
-    <button (click)="toggleFavorite($event)"
+    <button (click)="onToggleFavorite($event)"
         [disabled]="stock.favorite">Add to Favorite</button>
 </div>
