@@ -272,5 +272,5 @@ Ci-dessous, on trouve la liste des hooks de cycle de vie d'un composant, dans l'
 
 ![Alt text](https://github.com/zyedtu/AngularUpAndRunning/blob/master/chapiter04and05/imgReadme/hooks.png?raw=true "Title")
 
-Angular appellera d'abord le constructeur de tout composant, puis les différentes étapes mentionnées précédemment dans l'ordre. Certains d'entre eux, comme OnInit et AfterContentInit (essentiellement, tout hook de cycle de vie se terminant par Init) ne sont appelés qu'une seule fois, lorsqu'un composant est initialisé, tandis que les autres sont appelés chaque fois que le contenu change. Le hook OnDestroy est également appelé une seule fois pour un composant.  
+Angular appellera d'abord le constructeur de chaquecomposant, ensuite parcoure les différentes étapes mentionnées le figure dans l'ordre. Certains d'entre eux, comme OnInit et AfterContentInit (les hooks de cycle de vie qui se terminent par **Init**) ne sont appelés qu'une **seule fois** lorsqu'un composant est initialisé, tandis que les autres sont appelés chaque fois que le contenu change. Le hook **OnDestroy** est également appelé une seule fois pour un composant.  
 ### Interfaces and Functions:
