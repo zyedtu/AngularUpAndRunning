@@ -263,4 +263,14 @@ Maintenant, lorsque vous exécutez cette application, vous devez vous attendre �
 * Cliquer sur Change Stock en dehors du StockItemComponent (dans AppComponent) changera le nom du stock à chaque clic. (C'est pourquoi nous avons ajouté le compteur!).  
 * Cliquer sur Modifier le prix en dehors de StockItemComponent (dans AppComponent) n'aura aucun impact (même si la valeur réelle de l'action augmentera si vous cliquez sur Modifier le prix à l'intérieur après cela). Cela montre que le modèle est mis à jour, mais Angular ne met pas à jour la vue.
 ### Component Lifecycle: 
+Les composants (et directives) dans Angular ont leur propre cycle de vie (création, rendu de la vue, modification, et enfin destruction). Ce cycle de vie s'exécute dans l'ordre de parcours de l'arborescence de DOM, de haut en bas. Une fois qu'Angular a rendu un composant, il démarre le cycle de vie de chacun de ses enfants, et ainsi de suite jusqu'à ce que l'ensemble de l'application soit rendu.    
+Il y a des moments où ces événements de cycle de vie nous sont utiles dans le développement de notre application, donc Angular fournit des crochets (Hooks) dans ce cycle de vie afin que nous puissions observer et réagir si nécessaire.   
+##### Définition Hooks de cycle de vie: 
+Les hooks de cycle de vie Angular ne sont rien d'autre des interface (fonction de rappel),qu'angular les invoquent lorqu'un certain événement se produit pendant le cycle de vie deu composant.   
+##### Liste complète des hooks:  
+Ci-dessous, on trouve la liste des hooks de cycle de vie d'un composant, dans l'ordre dans lequel ils sont appelés.
+
+![Alt text](https://github.com/zyedtu/AngularUpAndRunning/blob/master/chapiter04and05/imgReadme/hooks.png?raw=true "Title")
+
+Angular appellera d'abord le constructeur de tout composant, puis les différentes étapes mentionnées précédemment dans l'ordre. Certains d'entre eux, comme OnInit et AfterContentInit (essentiellement, tout hook de cycle de vie se terminant par Init) ne sont appelés qu'une seule fois, lorsqu'un composant est initialisé, tandis que les autres sont appelés chaque fois que le contenu change. Le hook OnDestroy est également appelé une seule fois pour un composant.  
 ### Interfaces and Functions:
