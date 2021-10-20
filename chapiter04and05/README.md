@@ -157,7 +157,7 @@ Quelques points importants à noter :
 * Nous avons importé le décorateur Output ainsi que l'EventEmitter de la bibliothèque core Angular.  
 * Nous avons créé un nouveau membre de classe appelé toggle Favorite de type EventEmitter et renommé notre méthode en onToggle Favorite.    
 * Nous devons nous assurer que l'instance EventEmitter est *initialisée*, car elle n'est pas initialisée automatiquement pour nous. On fait l'instanciation dans *le constructeur*.       
-* Dans la **ligne 24** de la fonction onToggleFavorite appelle simplement une méthode sur l'EventEmitter *emit(stock)* pour émettre l'intégralité de l'objet stock. Cela signifie que tous les écouteurs de l'événement toggleFavorite obtiendront l'objet stock actuel en tant que paramètre.     
+* Dans la **ligne 24** de la fonction onToggleFavorite appelle simplement une fonction sur l'EventEmitter *emit(stock)* pour émettre l'intégralité de l'objet stock. Cela signifie que tous les écouteurs de l'événement toggleFavorite obtiendront l'objet stock actuel en tant que paramètre.     
 
 Nous allons également modifier stock-item.component.html pour appeler la méthode onToggle Favorite au lieu de toggle Favorite. Le balisage HTML reste à peu près le même:   
 
@@ -168,6 +168,21 @@ Nous allons également modifier stock-item.component.html pour appeler la métho
                 </div>
                 <button (click)="onToggleFavorite($event)"
                         [disabled]="stock.favorite">Add to Favorite</button>
+        </div>
+Ensuite, nous ajoutons une fonction à l'AppComponent qui doit être déclenchée chaque fois que la fonction onToggleFavorite est déclenchée, sur laquelle nous ajouterons une liaison d'événement:    
+
+         onToggleFavorite(stock: Stock) {
+                console.log('Favorite for stock ', stock, ' was triggered');
+                this.stock.favorite = !this.stock.favorite;
+        }
+Enfin, relions le tout en vous abonnant à la nouvelle sortie de notre composant Stock dans le fichier app-component.html:     
+
+        <div style="text-align:center">
+                <h1>
+                Welcome to {{ title }}!
+                </h1>
+                <app-stock-item [stock]="stock" 
+                                (toggleFavorite)="onToggleFavorite($event)"></app-stock-item>  
         </div>
 
 ##### Change Detection: 
