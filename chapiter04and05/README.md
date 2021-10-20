@@ -282,5 +282,5 @@ TODO
 La dernière chose que nous aborderons dans ce chapitre est le concept de projection de continue. La projection est une idée importante dans Angular car elle nous donne plus de flexibilité lorsque nous développons nos composants et nous donne encore un autre outil pour les rendre vraiment nos composant réutilisables dans différents contextes.          
 La projection est utile lorsque nous voulons construire des composants mais définir certaines parties de l'interface utilisateur du composant pour qu'elles n'en fassent pas partie innée. Par exemple, supposons que nous construisions un composant pour un carrousel. Un carrousel a quelques fonctionnalités simples: il est capable d'afficher un élément et nous permet de naviguer vers l'élément suivant/précédent. Votre composant carrousel peut également avoir d'autres fonctionnalités telles que le chargement paresseux (Lazy loading), etc. Mais une chose qui n'est pas du ressort du composant carrousel est le contenu qu'il affiche. Un utilisateur du composant peut vouloir afficher une image, une page d'un livre ou tout autre élément aléatoire.    
 Ainsi, dans ces cas, la vue serait contrôlée par l'utilisateur du composant et la fonctionnalité serait fournie par le composant lui-même. Ceci n'est qu'un cas d'utilisation où nous pourrions vouloir utiliser la projection dans nos composants.    
-
+TODO demain
 # 
