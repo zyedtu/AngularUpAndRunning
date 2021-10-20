@@ -8,7 +8,8 @@ import { Stock } from 'src/app/model/stock';
 })
 export class StockItemComponent implements OnInit {
 
-  @Input() public stock: Stock;
+  @Input() 
+  public stock: Stock;
 
   constructor() { }
 

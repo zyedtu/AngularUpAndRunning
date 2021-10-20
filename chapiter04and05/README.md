@@ -97,6 +97,37 @@ Angular fournit des hooks (crochets) pour spécifier chacun d'entre eux via des 
 Lorsque nous ajoutons un décorateur @Input sur une variable membre, il vous permet automatiquement de transmettre les valeurs de cette entrée au composant via la syntaxe de liaison de données d'Angular.      
  L’input peut être de n’importe quel type TypeScript, un number, un string, ou même une classe/interface que vous aurez créée.    
  Voyons comment nous pouvons étendre notre composant stock-item du chapitre précédent pour nous permettre de passer l'objet stock, plutôt que de le re-coder en dur dans le composant:     
+
+        export class StockItemComponent implements OnInit {
+                @Input() public stock: Stock;
+                constructor() { }
+                ngOnInit(): void {}
+
+                toggleFavorite(event) {
+                        console.log('We are toggling the favorite state for this stock', event);
+                        this.stock.favorite = !this.stock.favorite;
+                }
+        }
+Nous avons supprimé toute logique d'instanciation du composant app-stock-item et marqué la variable stock comme entrée. Cela signifie que la logique d'initialisation a été déplacée et que le composant est uniquement responsable de la réception de la valeur du stock du composant parent et de l'affichage des données.     
+Ensuite, jetons un coup d'œil à *AppComponent* et à la façon dont nous avons changé afin qu'il transmet les données au comosanr StockItemComponent:     
+
+        export class AppComponent implements OnInit {
+                title = 'Stock Market App';
+
+                public stockObj: Stock;
+                ngOnInit(): void {
+                        this.stockObj = new Stock('Test Stock Company', 'TSC', 85, 80);
+                }
+        }
+Nous venons de déplacer l'initialisation de l'objet stock de StockItemComponent vers AppComponent. Enfin, examinons le modèle de l'AppComponent pour voir comment nous pouvons transmettre le stock au StockItemComponent:     
+
+        <div style="text-align:center">
+        <h1>
+        Welcome to {{ title }}!
+        </h1>
+        <app-stock-item [stock]="stockObj"></app-stock-item>  
+        </div>
+Nous utilisons la liaison de données d'Angular pour transmettre le stock de AppComponent à StockItemComponent. Le nom de l'attribut (stock) doit correspondre au nom de la variable dans le composant qui a été marqué comme entrée. Le nom de l'attribut est **sensible à la casse**, assurez-vous donc qu'il correspond exactement au nom de la variable d'entrée. La valeur que nous lui passons est la référence de l'objet dans la classe AppComponent, qui est **stockObj**.      
 ##### Output: 
 ##### Change Detection: 
 ### Component Lifecycle: 
