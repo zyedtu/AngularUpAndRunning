@@ -16,4 +16,21 @@ Le noyau de tout formulaire réactif est le FormControl, qui représente directe
 Pour créer notre formulaire reactif, nous commençons par le création d'un nouveau composant *create-stock* avec notre outil Angular CLI:   
 
         ng g component stock/create-stock
-La première chose à faire et d'importer le **ReactiveFormsModule** dans notre fichier principal *app.module.ts*, 
+La première chose à faire et d'importer le **ReactiveFormsModule** dans notre module principal *app.module.ts*, et d'ajouter ce module dans le tableau des imports du module principal.   
+
+    import { ReactiveFormsModule } from '@angular/forms';
+    
+    @NgModule({
+    declarations: [
+        AppComponent,
+        StockItemComponent,
+        CreateStockComponent
+    ],
+    imports: [
+        BrowserModule,
+        ReactiveFormsModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
+    })
+    export class AppModule { }
