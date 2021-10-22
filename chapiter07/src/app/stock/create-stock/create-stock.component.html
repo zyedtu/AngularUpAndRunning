@@ -1,9 +1,10 @@
 <h2>Create Stock Form</h2>
 <div class="form-group">
     <div class="stock-name">
-        <input type="text" placeholder="Stock Name" name="stockName" [formControl]="nameControl">
+        <input type="text" placeholder="Stock Name" 
+                name="stockName" [formControl]="nameControl"> <!-- ligne 5 -->
     </div>
     <button (click)="onSubmit()">Submit</button>
 </div>
-<p>Form Control value: {{ nameControl.value | json }}</p>
+<p>Form Control value: {{ nameControl.value | json }}</p> <!-- ligne 9 -->
 <p>Form Control status: {{ nameControl.status | json }}</p>

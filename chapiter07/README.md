@@ -19,7 +19,7 @@ Pour créer notre formulaire reactif, nous commençons par le création d'un nou
 La première chose à faire et d'importer le **ReactiveFormsModule** dans notre module principal *app.module.ts*, et d'ajouter ce module dans le tableau des imports du module principal.   
 
     import { ReactiveFormsModule } from '@angular/forms';
-    
+
     @NgModule({
     declarations: [
         AppComponent,
@@ -34,3 +34,37 @@ La première chose à faire et d'importer le **ReactiveFormsModule** dans notre 
     bootstrap: [AppComponent]
     })
     export class AppModule { }
+voyons comment créer un formulaire simple qui nous permet de prendre et de travailler avec un nom. Nous allons d'abord modifier le modèle de notre CreateStockComponent en changeant le Template *create-stock.component.html*.     
+
+    <h2>Create Stock Form</h2>
+    <div class="form-group">
+        <div class="stock-name">
+            <input type="text" placeholder="Stock Name" 
+                    name="stockName" [formControl]="nameControl"> <!-- ligne 5 -->
+        </div>
+        <button (click)="onSubmit()">Submit</button>
+    </div>
+    <p>Form Control value: {{ nameControl.value | json }}</p> <!-- ligne 9 -->
+    <p>Form Control status: {{ nameControl.status | json }}</p>
+* Dans la ligne 5 on utilise le FormControl pour le formulaire.  
+* Dans la ligne 9 accéder à la valeur actuelle dans le champ du formulaire.    
+
+l'élément form à **nameControl**. On peut alors dériver la valeur courante du contrôle de formulaire via ce champ, qu'il s'agisse de la valeur (via nameControl.value) ou de son statut (via nameControl.status, qui est toujours valable pour cet élément simple). Enfin, nous avons un simple bouton qui déclenche la méthode onSubmit() dans le composant.      
+Ensuite, examinons le fichier *create stock/createstock.component.ts*, pour voir quelles modifications nous devons y apporter pour prendre en charge ce formulaire:   
+
+    export class CreateStockComponent implements OnInit {
+
+        public nameControl = new FormControl();
+
+        constructor() { }
+        ngOnInit(): void {
+        }
+
+        onSubmit() {
+            console.log('Name Control Value', this.nameControl.value);
+        }
+    }
+Dans le composant nous créons une **instance** de FormControl appelée nameControl, exactement le même nom que dans le Template.    
+
+En résumé, il est utile de penser à FormControl lorsque nous devons suivre l'état et la valeur de tout élément de formulaire individuel, comme une zone de saisie ou une case à cocher. Dans la section suivante, nous verrons comment créer un formulaire plus complet en utilisant FormControl et un nouveau objet appelé FormGroup.     
+### Form Groups: 
