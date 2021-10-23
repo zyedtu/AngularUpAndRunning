@@ -67,4 +67,101 @@ Ensuite, examinons le fichier *create stock/createstock.component.ts*, pour voir
 Dans le composant nous créons une **instance** de FormControl appelée nameControl, exactement le même nom que dans le Template.    
 
 En résumé, il est utile de penser à FormControl lorsque nous devons suivre l'état et la valeur de tout élément de formulaire individuel, comme une zone de saisie ou une case à cocher. Dans la section suivante, nous verrons comment créer un formulaire plus complet en utilisant FormControl et un nouveau objet appelé FormGroup.     
-### Form Groups: 
+### Form Groups:  
+Habituellement, lorsque nous construisons un formulaire, nous avons généralement un ensemble de champs et d'éléments dans le formulaire. Dans ces cas, le **FormGroup** est utile pour regrouper les champs de formulaire pertinents sous un seul groupe. Cela nous donne la possibilité de suivre les contrôles de formulaire individuellement ou en groupe. Par exemple, nous pouvons obtenir la valeur complète du formulaire ou vérifier si le formulaire dans son ensemble est valide (en raison d'éléments individuels et de leur état).     
+Voyons comment nous pouvons étendre l'exemple de la section précédente pour créer un formulaire complet d'un stock à l'aide des instances FormControl et FormGroup.    
+Dans un premier temps, nous verrons comment modifier le template *create-stock.component.html* pour demander à l'utilisateur tous les champs pertinents d'un stock:   
+
+    <h2>Create Stock Form</h2>
+    <div class="form-group">
+        <form [formGroup]="stockForm" (ngSubmit)="onSubmit()"> <!-- ligne 3 -->
+            <div class="stock-name">
+                <input type="text" placeholder="Stock name" name="stockName" formControlName="name"> <!-- ligne 5-->
+            </div>
+            <div class="stock-code">
+                <input type="text" placeholder="Stock code" name="stockCode" formControlName="code">
+            </div>
+            <div class="stock-price">
+                <input type="number" placeholder="Price" name="stockPrice" formControlName="price">
+            </div>
+        </form>
+        <button type="submit">Submit</button>
+    </div>
+    <p>Form groupe value: {{ stockForm.value | json }}</p> <!-- ligne 16 -->
+    <p>Form groupe status: {{ stockForm.status | json }}</p>
+* ligne 3: Nous nous lions le formulaire maintenant à un formGroup au lieu d'un formControl.
+* ligne 5: Une fois que nous utilisons un formGroup, nous utilisons **formControlName** à l'intérieur du groupe
+* ligne 16: On affiche sur l'écran la valeur du form group (groupe de formulaires) au lieu de l'élément.
+
+Le changement majeur par rapport à l'exemple précédent est que nous sommes passés de la **liaison (binding)** à formControl à un formGroup. Nous le faisons au niveau du formulaire. Maintenant, à l'intérieur, pour chaque élément de formulaire, nous mentionnons un formControlName. Chacun d'eux se liera à un élément individuel au sein du formGroup. Enfin, nous affichons la valeur actuelle et l'état du formulaire de la même manière que nous l'avons fait pour le FormControl.    
+
+De plus, pour une meilleure lisibilité, nous avons cessé d'appeler le contrôle nameControl et l'appelons simplement name, code et price dans le composant.    
+Voyons ensuite comment nous modifions la classe de composants createstock.component.ts pour que cet exemple fonctionne:   
+
+    export class CreateStockComponent implements OnInit {
+
+    public stockForm: FormGroup;
+    constructor() { 
+        this.stockForm = new FormGroup({
+        name: new FormControl(null, Validators.required),
+        code: new FormControl(null, [Validators.required, Validators.minLength(2)]),
+        price: new FormControl(0, [Validators.required, Validators.min(0)])
+        });
+    }
+
+    ngOnInit(): void {
+    }
+
+     onSubmit() {
+        console.log('Name Control Value', this.stockForm.value);
+     }
+    }
+Dans le composant, nous instancions et exposons maintenant une instance FormGroup, nommée stockForm. C'est ce à quoi nous nous étions liés au niveau du formulaire dans le Template (modèle). FormGroup nous permet d'instancier plusieurs FromControl dedans, et nous l'avons fait pour instancier un contrôle de formulaire pour le nom, le code et le prix. Cette fois, nous utilisons également le constructeur du FormControl dans la mesure du possible, en ajoutant une valeur par défaut et des validateurs au besoin.   
+Le premier argument du constructeur FormControl est la valeur par défaut du contrôle de formulaire. Ici, nous initialisons les valeurs par défaut des deux contrôles de formulaire à null et 0, respectivement.    
+Le deuxième argument du constructeur FormControl peut être soit un seul validateur, soit un tableau de validateurs. Il existe un ensemble de validateurs intégrés pour garantir que le FormControl est requis ou a une valeur minimale. Ces validateurs peuvent être soit synchrones (comme ceux que nous avons utilisés), soit également asynchrones (par exemple, pour vérifier si un nom d'utilisateur est disponible sur le serveur). Vous pouvez consulter les validateurs intégrés dans les documents officiels d'Angular.     
+Lorsque le formulaire est soumis (à l'aide de la liaison d'événement ngSubmit), nous affichons ensuite la valeur complète du groupe de formulaires sur la console.    
+### Form Builders(Générateurs de formulaires):    
+Maintenant, alors que le FormGroup nous donne la possibilité de créer des formulaires complexes et imbriqués (et en passant, vous pouvez absolument imbriquer d'autres groupes de formulaires dans un groupe de formulaires !), sa syntaxe est légèrement verbeuse. Et c'est pourquoi, pour le remplacer, nous avons un FormBuilder dans Angular, ce qui le rend légèrement plus agréable pour construire ces formulaires riches de manière plus propre.     
+La bonne chose à propos de FormBuilder est que nous n'avons pas à changer ou même à toucher à notre modèle. Le **FormBuilder** nous permet de créer rapidement des éléments FormGroup et FormControl sans appeler manuellement *new* sur ces objets.        
+La forme réactive s'appuie toujours sur ces éléments sous-jacents pour son fonctionnement, et FormBuilder ne les supprime pas.      
+Voyons comment nous pouvons changer votre composant CreateStock pour utiliser FormBuilder. Nous allons modifier le fichier create-stock.component.ts comme suit:     
+
+    export class CreateStockComponent implements OnInit {
+
+    public stockForm: FormGroup; // ligne 11
+    constructor(private fb: FormBuilder) { // ligne 12
+        this.createForm();
+    }
+
+    createForm(): void {
+        this.stockForm = this.fb.group({  // ligne 17
+        name: [null, Validators.required],  // ligne 18
+        code: [null, [Validators.required, Validators.minLength(2)]],
+        price: [0, [Validators.required, Validators.min(0)]]
+        });
+    }
+
+    ngOnInit(): void {
+    }
+
+     onSubmit() {
+        console.log('Name Control Value', this.stockForm.value);
+     }
+    }
+
+* Import du FormBuilder de @angular/forms.
+* Ligne 11: On n'initialise plus le FormGroup en le déclarant. 
+* Ligne 12: Injecter une instance de FormBuilder dans le constructeur. 
+* Ligne 17: Créer un FormGroup à l'aide de l'instance FormBuilder injectée.
+* Ligne 18: Initialiser le contrôle de nom avec une valeur nulle initiale et un validateur requis.  
+
+Le changement majeur de cette façon pour créer de formulaire avec Angular, est de nous injectons d'abord une instance du FormBuilder dans notre constructeur. Ensuite, dans le constructeur lui-même, nous utilisons la méthode group sur l'instance FormBuilder pour créer ensuite les différents contrôles de formulaire.     
+Même pour créer les contrôles de formulaire, nous utilisons simplement le syntaxique FormBuilder.     
+# Form Data (Données de formulaire): 
+Jusqu'à présent, nous avons accédé aux vlaeurs de données du formulaire via le FormControl ou le FormGroup. Dans cette section, nous aborderons le modèle et les données de formulaire, et comment les formulaires réactifs nous permettent de le gérer le contrôle et l'état du formulaire (comme valide, invalide, etc.).    
+### Control State, Validity, and Error Messages (État du contrôle, validité et messages d'erreur): 
+Avant d'approfondir la façon dont le modèle de formulaire est structuré et comment cela correspond avec notre modèle de données dans le composant, nous allons d'abord couvrir les aspects les plus simples, qui traitent *l'état et la validité du contrôle*. Le traitement de l'état et de la validité du contrôle de formulaire est assez similaire à la façon dont nous le gérons avec les formulaires basés sur des modèles *template-driven forms*, en ce sens que les états de contrôle de base et la validité sont les mêmes. Ce qui change, c'est la méthode d'accès à ces propriétés.    
+Ajoutons maintenant des messages d'erreur à notre formulaire que nous avons construit jusqu'à présent, afin que nous puissions afficher les messages d'erreur respectifs le long de chaque champ. Cela dit, nous ne voulons afficher ces messages d'erreur que si l'utilisateur a interagi avec un champ, et pas avant. Donc, par défaut, lorsque la page s'ouvre, nous ne voulons afficher aucun message d'erreur.     
+Ci-dessous, un rappel rapide sur les états de base du contrôle angulaire:   
+![Alt text](https://github.com/zyedtu/AngularUpAndRunning/blob/master/chapiter07/imgReadme/controlstates.png?raw=true "Title")
+

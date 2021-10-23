@@ -1,10 +1,17 @@
 <h2>Create Stock Form</h2>
 <div class="form-group">
-    <div class="stock-name">
-        <input type="text" placeholder="Stock Name" 
-                name="stockName" [formControl]="nameControl"> <!-- ligne 5 -->
-    </div>
-    <button (click)="onSubmit()">Submit</button>
+    <form [formGroup]="stockForm" (ngSubmit)="onSubmit()"> <!-- ligne 3 -->
+        <div class="stock-name">
+            <input type="text" placeholder="Stock name" name="stockName" formControlName="name"> <!-- ligne 5-->
+        </div>
+        <div class="stock-code">
+            <input type="text" placeholder="Stock code" name="stockCode" formControlName="code">
+        </div>
+        <div class="stock-price">
+            <input type="number" placeholder="Price" name="stockPrice" formControlName="price">
+        </div>
+        <button type="submit">Submit</button>
+    </form>
 </div>
-<p>Form Control value: {{ nameControl.value | json }}</p> <!-- ligne 9 -->
-<p>Form Control status: {{ nameControl.status | json }}</p>
+<p>Form groupe value: {{ stockForm.value | json }}</p> <!-- ligne 16 -->
+<p>Form groupe status: {{ stockForm.status | json }}</p>
