@@ -160,8 +160,14 @@ Même pour créer les contrôles de formulaire, nous utilisons simplement le syn
 # Form Data (Données de formulaire): 
 Jusqu'à présent, nous avons accédé aux vlaeurs de données du formulaire via le FormControl ou le FormGroup. Dans cette section, nous aborderons le modèle et les données de formulaire, et comment les formulaires réactifs nous permettent de le gérer le contrôle et l'état du formulaire (comme valide, invalide, etc.).    
 ### Control State, Validity, and Error Messages (État du contrôle, validité et messages d'erreur): 
-Avant d'approfondir la façon dont le modèle de formulaire est structuré et comment cela correspond avec notre modèle de données dans le composant, nous allons d'abord couvrir les aspects les plus simples, qui traitent *l'état et la validité du contrôle*. Le traitement de l'état et de la validité du contrôle de formulaire est assez similaire à la façon dont nous le gérons avec les formulaires basés sur des modèles *template-driven forms*, en ce sens que les états de contrôle de base et la validité sont les mêmes. Ce qui change, c'est la méthode d'accès à ces propriétés.    
+Avant d'approfondir la façon dont le modèle de formulaire est structuré et comment cela correspond avec notre modèle de données dans le composant, nous allons d'abord couvrir les aspects les plus simples, qui traitent *l'état et la validité du contrôle*. Le traitement de l'état et de la validité du contrôle de formulaire est assez similaire à la façon dont nous le gérons avec les formulaires basés sur des modèles *template-driven forms*, en ce sens que les états de contrôle de base et la validité sont les mêmes. 
+Il y a deux aspects:   
+• L'état: qui nous permet de voir l'état du contrôle de formulaire, si l'utilisateur l'a visité, s'il l'a modifié et enfin s'il est dans un état valide.
+• La validité: qui nous indique si un contrôle de formulaire est valide ou non, et s'il n'est pas valide, la ou les raisons sous-jacentes pour lesquelles l'élément de formulaire est invalide.   
+
+Ce qui change avec les fomulaire reactif, c'est la méthode d'accès à ces propriétés.
 Ajoutons maintenant des messages d'erreur à notre formulaire que nous avons construit jusqu'à présent, afin que nous puissions afficher les messages d'erreur respectifs le long de chaque champ. Cela dit, nous ne voulons afficher ces messages d'erreur que si l'utilisateur a interagi avec un champ, et pas avant. Donc, par défaut, lorsque la page s'ouvre, nous ne voulons afficher aucun message d'erreur.     
 Ci-dessous, un rappel rapide sur les états de base du contrôle angulaire:   
 ![Alt text](https://github.com/zyedtu/AngularUpAndRunning/blob/master/chapiter07/imgReadme/controlstates.png?raw=true "Title")
-
+Nous pourrions les utiliser pour mettre en évidence et afficher les erreurs et l'état du formulaire, comme nous l'avons fait auparavant. Mais pour cette section, nous nous concentrerons sur l'affichage uniquement des messages d'erreur conditionelle et sur la gestion propre des cas avec plusieurs validateurs.    
+Voyons maintenant comment modifier le modèle pour commencer à afficher les messages d'erreur pertinents dans le formulaire, tout en utilisant l'approche du formulaire réactif. Nous allons éditer le fichier create-stock.component.html comme suit:     
