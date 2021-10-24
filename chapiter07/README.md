@@ -171,3 +171,44 @@ Ci-dessous, un rappel rapide sur les états de base du contrôle angulaire:
 ![Alt text](https://github.com/zyedtu/AngularUpAndRunning/blob/master/chapiter07/imgReadme/controlstates.png?raw=true "Title")
 Nous pourrions les utiliser pour mettre en évidence et afficher les erreurs et l'état du formulaire, comme nous l'avons fait auparavant. Mais pour cette section, nous nous concentrerons sur l'affichage uniquement des messages d'erreur conditionelle et sur la gestion propre des cas avec plusieurs validateurs.    
 Voyons maintenant comment modifier le modèle pour commencer à afficher les messages d'erreur pertinents dans le formulaire, tout en utilisant l'approche du formulaire réactif. Nous allons éditer le fichier create-stock.component.html comme suit:     
+
+    <h2>Create Stock Form</h2>
+    <div class="form-group">
+        <form [formGroup]="stockForm" (ngSubmit)="onSubmit()"> <!-- ligne 3 -->
+            <div class="stock-name">
+                <input type="text" placeholder="Stock name" name="stockName" formControlName="name"> 
+                <div class="error" *ngIf="stockForm.get('name').invalid &&   <!-- ligne 6-->
+                            ( stockForm.get('name').dirty ||
+                            stockForm.get('name').touched )">Name is required</div>
+            </div>
+            <div class="stock-code">
+                <input type="text" placeholder="Stock code" name="stockCode" formControlName="code">
+                <div class="error" *ngIf="stockForm.get('code').invalid &&
+                            ( stockForm.get('code').dirty ||
+                            stockForm.get('code').touched )">
+                    <div *ngIf="stockForm.get('code').errors.required"> <!-- ligne 28-->
+                            Stock Code is required
+                    </div>
+                    <div *ngIf="stockForm.get('code').errors.minlength">
+                            Stock Code must be at least 2 characters
+                    </div>
+                </div>
+            </div>
+                ..........
+                ..........
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <p>Form groupe value: {{ stockForm.value | json }}</p> 
+    <p>Form groupe status: {{ stockForm.status | json }}</p>
+* Ligne 6: Accéder à la validité d'un élément de contrôle individuel via le groupe de formulaires **stockForm.get('name').invalid**.        
+* linge 28: Vérification du statut de validateur individuel pour un élément de formulaire.    
+
+Bien que le formulaire de base reste le même que dans l'exemple précédent, nous l'avons modifié maintenant pour afficher les messages d'erreur conditionnels. Il y a quelques choses remarquables qui se produisent dans ce modèle:    
+* Pour chaque élément de formulaire, nous avons ajouté un élément div en dessous pour afficher les messages d'erreur conditionnels.   
+* Pour chaque élément, nous obtenons d'abord l'élément de formulaire individuel en appelant stockForm.get() avec le nom du contrôle de formulaire individuel que nous avons fourni lors de l'instanciation du FormGroup dans la classe de composant.    
+* Avec chaque FormControl, nous pouvons ensuite vérifier diverses propriétés telles que si l'élément de formulaire a été touché ou non (c'est-à-dire si l'utilisateur a accédé à l'élément) avec **touched**, si l'élément de formulaire a été modifié ou non **(dirty ou pristine)**, et si c'est valable ou non **invalid**.      
+* Pour les champs de formulaire avec plus d'un validateur (principalement le code de stock et le prix), nous examinons plus en détail la propriété error sur le contrôle de formulaire. Ce champ nous permet de vérifier quel type d'erreur rend le champ de formulaire invalide, et ainsi d'afficher le message d'erreur correspondant.      
+
+### Utilisation des getters:   
+

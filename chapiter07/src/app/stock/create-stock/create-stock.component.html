@@ -3,15 +3,35 @@
     <form [formGroup]="stockForm" (ngSubmit)="onSubmit()"> <!-- ligne 3 -->
         <div class="stock-name">
             <input type="text" placeholder="Stock name" name="stockName" formControlName="name"> <!-- ligne 5-->
-            <div *ngIf="stockForm.get('name').invalid && 
+            <div class="error" *ngIf="stockForm.get('name').invalid && 
                         ( stockForm.get('name').dirty ||
-                        stockForm.get('name').touched )"></div>
+                        stockForm.get('name').touched )">Name is required</div>
         </div>
         <div class="stock-code">
             <input type="text" placeholder="Stock code" name="stockCode" formControlName="code">
+            <div class="error" *ngIf="stockForm.get('code').invalid &&
+                        ( stockForm.get('code').dirty ||
+                        stockForm.get('code').touched )">
+                <div *ngIf="stockForm.get('code').errors.required">
+                        Stock Code is required
+                </div>
+                <div *ngIf="stockForm.get('code').errors.minlength">
+                        Stock Code must be at least 2 characters
+                </div>
+            </div>
         </div>
         <div class="stock-price">
             <input type="number" placeholder="Price" name="stockPrice" formControlName="price">
+            <div class="error" *ngIf="stockForm.get('price').invalid &&
+                        ( stockForm.get('price').dirty ||
+                        stockForm.get('price').touched )">
+                <div *ngIf="stockForm.get('price').errors.required">
+                    Stock Price is required
+                </div>
+                <div *ngIf="stockForm.get('price').errors.min">
+                    Stock Price must be positive
+                </div>
+            </div>
         </div>
         <button type="submit">Submit</button>
     </form>
