@@ -422,7 +422,9 @@ Passons maintenant à notre classe CreateStock3Component. Tout d'abord, passons 
 Il y a quelques éléments à noter dans le code de la classe de composants:      
 * notablePeople est une élément de FormGroup principal. Notez que notablePeople est une instance FormArray avec une valeur initiale qui est vide. Au cas où nous devions le remplir avec des valeurs existantes, nous le transmettrions au constructeur.   
 * Nous avons créé **un getter** simple pour notablePeople, qui va en profondeur dans l'instance stockForm de FormGroup et renvoie l'instance notablePeople FormArray. C'est plus pour que le modèle et de cette façon on va écrire this.stock Form.get('notablePeople') à chaque fois.       
-
+* Étant donné que nous pouvons avoir de zéro à plusieurs personnes notables par action, nous avons besoin d'une méthode nous permettant d'ajouter autant de personnes remarquables que nous le souhaitons. C'est ce que fait la méthode **addNotablePerson()**. Notez que chaque instance de personne notable dans le formulaire réel est représentée par un FormGroup. Ainsi, chaque fois que nous voulons ajouter une nouvelle personne notable, nous ajoutons une instance FormGroup avec un nom et un titre requis.    
+* De même, nous voulons pouvoir supprimer toute personne notable que nous avons ajoutée, ce que fait la méthode **removeNotablePerson()**. Il prend un index et supprime simplement cet index particulier de l'instance FormArray.     
+    
 
 
 
