@@ -168,7 +168,7 @@ Il y a deux aspects:
 Ce qui change avec les fomulaire reactif, c'est la méthode d'accès à ces propriétés.
 Ajoutons maintenant des messages d'erreur à notre formulaire que nous avons construit jusqu'à présent, afin que nous puissions afficher les messages d'erreur respectifs le long de chaque champ. Cela dit, nous ne voulons afficher ces messages d'erreur que si l'utilisateur a interagi avec un champ, et pas avant. Donc, par défaut, lorsque la page s'ouvre, nous ne voulons afficher aucun message d'erreur.     
 Ci-dessous, un rappel rapide sur les états de base du contrôle angulaire:   
-![Alt text](https://github.com/zyedtu/AngularUpAndRunning/blob/master/chapiter07/imgReadme/controlstates.png?raw=true "Title")
+![Alt text](https://github.com/zyedtu/AngularUpAndRunning/blob/master/chapiter07/imgReadme/controlstates.png?raw=true "Title")         
 Nous pourrions les utiliser pour mettre en évidence et afficher les erreurs et l'état du formulaire, comme nous l'avons fait auparavant. Mais pour cette section, nous nous concentrerons sur l'affichage uniquement des messages d'erreur conditionelle et sur la gestion propre des cas avec plusieurs validateurs.    
 Voyons maintenant comment modifier le modèle pour commencer à afficher les messages d'erreur pertinents dans le formulaire, tout en utilisant l'approche du formulaire réactif. Nous allons éditer le fichier create-stock.component.html comme suit:     
 
