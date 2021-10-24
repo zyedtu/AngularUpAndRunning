@@ -282,50 +282,50 @@ La plupart du modèle n'a pas changé, mais nous avons ajouté trois nouveaux bo
 
 Passons maintenant à la classe *CreateStock2Component*, où se produisent la plupart des activités et des changements. Nous allons éditer le fichier createstock2.component.ts comme suit:   
 
-let counter=1;
-@Component({
-  selector: 'app-create-stock2',
-  templateUrl: './create-stock2.component.html',
-  styleUrls: ['./create-stock2.component.scss']
-})
-export class CreateStock2Component implements OnInit {
-    private stock: Stock; // ligne 13
-    public stockForm: FormGroup;
+    let counter=1;
+    @Component({
+    selector: 'app-create-stock2',
+    templateUrl: './create-stock2.component.html',
+    styleUrls: ['./create-stock2.component.scss']
+    })
+    export class CreateStock2Component implements OnInit {
+        private stock: Stock; // ligne 13
+        public stockForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
-    this.createForm();
-    this.stock = new Stock('Test ' + counter++, 'TST', 20, 10); // ligne 18
-  }
+    constructor(private fb: FormBuilder) {
+        this.createForm();
+        this.stock = new Stock('Test ' + counter++, 'TST', 20, 10); // ligne 18
+    }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+    }
 
-  createForm() {
-    this.stockForm = this.fb.group({
-      name: [null, Validators.required],
-      code: [null, [Validators.required, Validators.minLength(2)]],
-      price: [0, [Validators.required, Validators.min(0)]]
-    });
-  }
-  loadStockFromServer() {
-    this.stock = new Stock('Test ' + counter++, 'TST', 20, 10);
-    let stockFormModel = Object.assign({}, this.stock);
-    delete stockFormModel.previousPrice;
-    delete stockFormModel.favorite;
-    this.stockForm.setValue(stockFormModel); // ligne 36
-  }
-  patchStockForm() {
-    this.stock = new Stock(`Test ${counter++}`, 'TST', 20, 10);
-    this.stockForm.patchValue(this.stock); // ligne 40
-  }
-  resetForm() {
-    this.stockForm.reset(); // ligne 43
-  }
-  onSubmit() {
-    this.stock = Object.assign({}, this.stockForm.value);
-    console.log('Saving stock', this.stock);
-  }
-}
+    createForm() {
+        this.stockForm = this.fb.group({
+        name: [null, Validators.required],
+        code: [null, [Validators.required, Validators.minLength(2)]],
+        price: [0, [Validators.required, Validators.min(0)]]
+        });
+    }
+    loadStockFromServer() {
+        this.stock = new Stock('Test ' + counter++, 'TST', 20, 10);
+        let stockFormModel = Object.assign({}, this.stock);
+        delete stockFormModel.previousPrice;
+        delete stockFormModel.favorite;
+        this.stockForm.setValue(stockFormModel); // ligne 36
+    }
+    patchStockForm() {
+        this.stock = new Stock(`Test ${counter++}`, 'TST', 20, 10);
+        this.stockForm.patchValue(this.stock); // ligne 40
+    }
+    resetForm() {
+        this.stockForm.reset(); // ligne 43
+    }
+    onSubmit() {
+        this.stock = Object.assign({}, this.stockForm.value);
+        console.log('Saving stock', this.stock);
+    }
+    }
 
 * ligne 13: Nous avons introduit un objet stock, en plus du modèle de formulaire.
 * ligne 18: Instanciation de notre de l'objet stock avec une valeur par défaut.  
