@@ -337,4 +337,31 @@ Nous utilisons **la méthode setValue** sur l'instance stockForm de FormGroup. C
 Ainsi, le déclenchement de la méthode loadStockFromServer finirait par mettre à jour le formulaire avec le nom, le code et le prix de l'instance de stock nouvellement créée.      
 La deuxième méthode, patchStockForm, utilise une autre méthode sur l'instance stockForm de FormGroup appelée **patchValue**. Il s'agit d'une méthode plus indulgente qui prend les champs disponibles et met à jour le formulaire avec eux. Il ignorera les champs supplémentaires même s'il en a moins.     
 La dernière méthode est le resetForm, qui réinitialise simplement le formulaire à son état initial en appelant la méthode **reset** sur 'instance stockForm de FormGroup.    
+# FormArrays:   
+Maintenant, supposons que pour chaque stock, nous voulions capturer et mettre en évidence les personnes clés liées à l'entreprise. Sachant, pour une entreprise on peut avoir de 0 à n presonnes associées. Cela nous permettra de voir comment nous pouvons gérer les formulaires et comment nous devons capturer plusieurs valeurs ainsi de gérer proprement les éléments de formulaire imbriqués.    
+
+Tout d'abord, nous commencent par mettre à jour notre classe modèle Stock en ajoutant un tableau d'objet People, et en ajoutant aussi la classe Peaple.   
+
+    export class Stock {
+        favorite: boolean = false;
+        notablePeople: Person[];
+
+        constructor(public name: string,
+                public code: string,
+                public price: number,
+                public previousPrice: number) {  
+                    this.notablePeople = [];
+                }
+                    
+        get isPositiveChange(): boolean {
+            return this.price >= this.previousPrice;
+        }
+    }
+
+    export class Person {
+        name: string;
+        title: string;
+    }
+Nous avons ajouté une nouvelle classe Person avec un nom et un titre, puis l'avons ajoutée en tant qu'enfant à la classe Stock, avec le nom notablePeople. Dans le constructeur de la classe Stock, nous l'avons initialisé dans un tableau vide.         
+
 
