@@ -28,4 +28,8 @@ export class CreateStockComponent implements OnInit {
     console.log('Name Control Value', this.stockForm.value);
   }
 
+  get name() { return this.stockForm.get('name'); }
+  get code() { return this.stockForm.get('code'); }
+  get price() { return this.stockForm.get('price'); }
+
 }

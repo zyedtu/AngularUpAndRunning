@@ -211,4 +211,22 @@ Bien que le formulaire de base reste le même que dans l'exemple précédent, no
 * Pour les champs de formulaire avec plus d'un validateur (principalement le code de stock et le prix), nous examinons plus en détail la propriété error sur le contrôle de formulaire. Ce champ nous permet de vérifier quel type d'erreur rend le champ de formulaire invalide, et ainsi d'afficher le message d'erreur correspondant.      
 
 ### Utilisation des getters:   
+Au lieu de répéter stockForm.get('price') à chaque fois, on peut créer des getters simples dans la classe de composant comme ci-dessous:  
+
+    export class CreateStockComponent implements OnInit {
+            /* Skipping irrelevant code here */
+        get name() { return this.stockForm.get('name'); }
+        get code() { return this.stockForm.get('code'); }
+        get price() { return this.stockForm.get('price'); }
+    }
+Maintenant, dans votre code HTML, vous pouvez simplement vous référer à name.invalid au lieu de stockForm.get('name').invalid et ainsi de suite.   
+
+    <h2>Create Stock Form</h2>
+    <div class="form-group">
+        <form [formGroup]="stockForm" (ngSubmit)="onSubmit()"> <!-- ligne 3 -->
+            <div class="stock-name">
+                <input type="text" placeholder="Stock name" name="stockName" formControlName="name"> <!-- ligne 5-->
+                <div class="error" *ngIf="name.invalid && (name.dirty ||name.touched)">Name is required</div>
+            </div>
+            ......
 

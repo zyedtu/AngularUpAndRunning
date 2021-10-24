@@ -3,9 +3,7 @@
     <form [formGroup]="stockForm" (ngSubmit)="onSubmit()"> <!-- ligne 3 -->
         <div class="stock-name">
             <input type="text" placeholder="Stock name" name="stockName" formControlName="name"> <!-- ligne 5-->
-            <div class="error" *ngIf="stockForm.get('name').invalid && 
-                        ( stockForm.get('name').dirty ||
-                        stockForm.get('name').touched )">Name is required</div>
+            <div class="error" *ngIf="name.invalid && (name.dirty ||name.touched)">Name is required</div>
         </div>
         <div class="stock-code">
             <input type="text" placeholder="Stock code" name="stockCode" formControlName="code">
