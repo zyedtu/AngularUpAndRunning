@@ -419,7 +419,8 @@ Passons maintenant à notre classe CreateStock3Component. Tout d'abord, passons 
 * ligne 33: Ajouter une nouvelle instance FormGroup au FormArray.  
 * ligne 40: Supprimer une instance FormGroup particulière du FormArray.  
 
-
+Il y a quelques éléments à noter dans le code de la classe de composants:      
+* notablePeople est une élément de FormGroup principal. Notez que notablePeople est une instance FormArray avec une valeur initiale qui est vide. Au cas où nous devions le remplir avec des valeurs existantes, nous le transmettrions au constructeur.     
 
 
 
