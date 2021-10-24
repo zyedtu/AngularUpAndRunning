@@ -424,7 +424,41 @@ Il y a quelques éléments à noter dans le code de la classe de composants:
 * Nous avons créé **un getter** simple pour notablePeople, qui va en profondeur dans l'instance stockForm de FormGroup et renvoie l'instance notablePeople FormArray. C'est plus pour que le modèle et de cette façon on va écrire this.stock Form.get('notablePeople') à chaque fois.       
 * Étant donné que nous pouvons avoir de zéro à plusieurs personnes notables par action, nous avons besoin d'une méthode nous permettant d'ajouter autant de personnes remarquables que nous le souhaitons. C'est ce que fait la méthode **addNotablePerson()**. Notez que chaque instance de personne notable dans le formulaire réel est représentée par un FormGroup. Ainsi, chaque fois que nous voulons ajouter une nouvelle personne notable, nous ajoutons une instance FormGroup avec un nom et un titre requis.    
 * De même, nous voulons pouvoir supprimer toute personne notable que nous avons ajoutée, ce que fait la méthode **removeNotablePerson()**. Il prend un index et supprime simplement cet index particulier de l'instance FormArray.     
-    
 
+Enfin, regardons maintenant comment le modèle change pour afficher tout cela. Nous allons creat-stock3.component.html comme suit:    
 
-
+    <h2>Create Stock Form</h2>
+    <div class="form-group">
+        <form [formGroup]="stockForm" (ngSubmit)="onSubmit()">
+        <!-- No change until the end of price form element -->
+        <!-- Omitted for brevity -->
+        <div formArrayName="notablePeople">
+                <div *ngFor="let person of notablePeople.controls; let i = index" [formGroupName]="i"
+                    class="notable-people">
+                    <div>
+                        Person {{i + 1}}
+                    </div>
+                    <div>
+                        <input type="text" placeholder="Person Name" formControlName="name">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="Person Title" formControlName="title">
+                    </div>
+                    <button type="button" (click)="removeNotablePerson(i)">Remove Person</button>
+                </div>
+            </div>
+            <button type="button" (click)="addNotablePerson()">Add Notable Person</button>
+            <button class="styleC" type="submit">Submit</button>
+            <button class="styleC" type="button" (click)="resetForm()">Reset</button>
+        </form>
+    </div>
+    <p>Form groupe value: {{ stockForm.value | json }}</p> 
+    <p>Form groupe status: {{ stockForm.status | json }}</p>
+Il y a quelques points à noter sur la façon dont nous avons relié l'instance FormArray que nous avons créée dans notre composant au modèle du composant:    
+* Au lieu d'utiliser formControlName, nous utilisons **formGroupName** sur l'élément div englobant. C'est l'élément qui contiendra de zéro à plusieurs formes, une pour chaque personne notable.    
+* Nous avons alors un élément div qui se répété à chaque fois pour une entrée dans l'instance FormArray, auquel nous accédons via notablePeople.controls. Le notable People accède au getter *notablePeople* que nous avons créé dans la classe composant.    
+* Nous exposons également l'indice actuel du *ngFor via la variable i.    
+* Nous connectons ensuite le FormGroup qui est chaque élément du FormArray via la liaison formGroupName, le liant à chaque index individuel du tableau.      
+* Cela nous permet ensuite d'utiliser formControlName individuellement pour le nom et le titre comme nous l'avons fait jusqu'à présent. Cela garantit que le nom et le titre sont liés à cette instance FormGroup particulière indiquée par l'index dans le FormArray.     
+* Enfin, nous avons le bouton Remove Person dans chaque instance *ngFor, qui appelle la méthode removeNotablePerson(), et un bouton global Add Person, qui appelle la méthode addNotablePerson().    
+   

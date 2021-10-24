@@ -1,6 +1,6 @@
 <h2>Create Stock Form</h2>
 <div class="form-group">
-    <form [formGroup]="stockForm" (ngSubmit)="onSubmit()"> <!-- ligne 3 -->
+    <form [formGroup]="stockForm" (ngSubmit)="onSubmit()">
         <div class="stock-name">
             <input type="text" placeholder="Stock name" name="stockName" formControlName="name"> <!-- ligne 5-->
             <div class="error" *ngIf="name.invalid && (name.dirty ||name.touched)">Name is required</div>
@@ -11,10 +11,10 @@
                         ( stockForm.get('code').dirty ||
                         stockForm.get('code').touched )">
                 <div *ngIf="stockForm.get('code').errors.required">
-                        Stock Code is required
+                    Stock Code is required
                 </div>
                 <div *ngIf="stockForm.get('code').errors.minlength">
-                        Stock Code must be at least 2 characters
+                    Stock Code must be at least 2 characters
                 </div>
             </div>
         </div>
@@ -31,9 +31,25 @@
                 </div>
             </div>
         </div>
+        <div formArrayName="notablePeople">
+            <div *ngFor="let person of notablePeople.controls; let i = index" [formGroupName]="i"
+                class="notable-people">
+                <div>
+                    Person {{i + 1}}
+                </div>
+                <div>
+                    <input type="text" placeholder="Person Name" formControlName="name">
+                </div>
+                <div>
+                    <input type="text" placeholder="Person Title" formControlName="title">
+                </div>
+                <button type="button" (click)="removeNotablePerson(i)">Remove Person</button>
+            </div>
+        </div>
+        <button type="button" (click)="addNotablePerson()">Add Notable Person</button>
         <button class="styleC" type="submit">Submit</button>
         <button class="styleC" type="button" (click)="resetForm()">Reset</button>
     </form>
 </div>
-<p>Form groupe value: {{ stockForm.value | json }}</p> <!-- ligne 16 -->
+<p>Form groupe value: {{ stockForm.value | json }}</p> 
 <p>Form groupe status: {{ stockForm.status | json }}</p>
