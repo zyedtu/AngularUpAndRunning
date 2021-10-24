@@ -25,7 +25,7 @@ export class CreateStock2Component implements OnInit {
     this.stockForm = this.fb.group({
       name: [null, Validators.required],
       code: [null, [Validators.required, Validators.minLength(2)]],
-      price: [0, [Validators.required, Validators.min(0)]]
+      price: [0, [Validators.required, Validators.min(0)]],
     });
   }
   loadStockFromServer() {

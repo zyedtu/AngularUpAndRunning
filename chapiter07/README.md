@@ -362,6 +362,64 @@ Tout d'abord, nous commencent par mettre à jour notre classe modèle Stock en a
         name: string;
         title: string;
     }
-Nous avons ajouté une nouvelle classe Person avec un nom et un titre, puis l'avons ajoutée en tant qu'enfant à la classe Stock, avec le nom notablePeople. Dans le constructeur de la classe Stock, nous l'avons initialisé dans un tableau vide.         
+Nous avons ajouté une nouvelle classe Person avec un nom et un titre, puis l'avons ajoutée en tant qu'enfant à la classe Stock, avec le nom notablePeople. Dans le constructeur de la classe Stock, nous l'avons initialisé dans un tableau vide.   
+
+Pour ce paragraphe nous allons crée un nouveau composant pour ne pas polluer notre composant *create-stock2.component.ts*: 
+
+    > ng g c stock/create-stock3
+Passons maintenant à notre classe CreateStock3Component. Tout d'abord, passons en revue les modifications apportées à la classe de composants, qui se trouve dans *create-stock3.component.ts*:    
+
+    export class CreateStock3Component implements OnInit {
+
+    public stockForm: FormGroup;
+    private stock: Stock;
+
+    constructor(private fb: FormBuilder) {
+        this.createForm();
+    }
+
+    ngOnInit(): void { }
+
+    createForm(): void {
+        this.stockForm = this.fb.group({
+        name: [null, Validators.required],
+        code: [null, [Validators.required, Validators.minLength(2)]],
+        price: [0, [Validators.required, Validators.min(0)]],
+        notablePeople: this.fb.array([]) // ligne 24
+        });
+    }
+
+    get notablePeople(): FormArray { // ligne 30
+        return this.stockForm.get('notablePeople') as FormArray;
+    }
+    addNotablePerson() { // ligne 33
+        this.notablePeople.push(this.fb.group({
+        name: ['', Validators.required],
+        title: ['', Validators.required]
+        }))
+    }
+
+    removeNotablePerson(index: number) { // ligne 40
+        this.notablePeople.removeAt(index);
+    }
+
+    resetForm() {
+        this.stockForm.reset();
+    }
+
+    onSubmit() {
+        this.stock = Object.assign({}, this.stockForm.value);
+        console.log('Saving stock', this.stock);
+    }
+    .....
+    }
+
+* ligne 26: Initialiser notablePeople en tant qu'instance FormArray.  
+* ligne 30: Getter pour faciliter l'accès au FormArray sous-jacent à partir du modèle.    
+* ligne 33: Ajouter une nouvelle instance FormGroup au FormArray.  
+* ligne 40: Supprimer une instance FormGroup particulière du FormArray.  
+
+
+
 
 
