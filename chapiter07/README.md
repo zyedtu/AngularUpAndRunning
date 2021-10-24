@@ -455,10 +455,11 @@ Enfin, regardons maintenant comment le modèle change pour afficher tout cela. N
     <p>Form groupe value: {{ stockForm.value | json }}</p> 
     <p>Form groupe status: {{ stockForm.status | json }}</p>
 Il y a quelques points à noter sur la façon dont nous avons relié l'instance FormArray que nous avons créée dans notre composant au modèle du composant:    
+* La directive **FormArrayName** est utilisé pour lié l'objet *FormArray notablePeople* à l'élément div.     
 * Au lieu d'utiliser formControlName, nous utilisons **formGroupName** sur l'élément div englobant. C'est l'élément qui contiendra de zéro à plusieurs formes, une pour chaque personne notable.    
 * Nous avons alors un élément div qui se répété à chaque fois pour une entrée dans l'instance FormArray, auquel nous accédons via notablePeople.controls. Le notable People accède au getter *notablePeople* que nous avons créé dans la classe composant.    
 * Nous exposons également l'indice actuel du *ngFor via la variable i.    
 * Nous connectons ensuite le FormGroup qui est chaque élément du FormArray via la liaison formGroupName, le liant à chaque index individuel du tableau.      
 * Cela nous permet ensuite d'utiliser formControlName individuellement pour le nom et le titre comme nous l'avons fait jusqu'à présent. Cela garantit que le nom et le titre sont liés à cette instance FormGroup particulière indiquée par l'index dans le FormArray.     
 * Enfin, nous avons le bouton Remove Person dans chaque instance *ngFor, qui appelle la méthode removeNotablePerson(), et un bouton global Add Person, qui appelle la méthode addNotablePerson().    
-   
+
