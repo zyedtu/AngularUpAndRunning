@@ -229,4 +229,112 @@ Maintenant, dans votre code HTML, vous pouvez simplement vous référer à name.
                 <div class="error" *ngIf="name.invalid && (name.dirty ||name.touched)">Name is required</div>
             </div>
             ......
+De cette façon, nous pouvons interagir avec l'état des contrôles de formulaire et fournir une expérience utilisateur correcte aux utilisateurs de notre application Web.     
+# Form and Data Model (Formulaire et modèle de données):  
+Nous allons maintenant commencer à approfondir l'accès et l'utilisation des données qui alimentent le formulaire, ainsi que l'interaction entre le formulaire et le modèle de données dans notre composant. Nous avons simplifié cela jusqu'à présent dans les exemples précédents, en accédant simplement à la valeur du FormGroup ou du FormControl. C'est également ce que nous connectons à la fois dans le modèle à l'aide du tuyau json, ainsi que dans le composant lorsque nous cliquons sur le bouton Soumettre.     
+
+Utilisons un exemple pour montrer comment nous travaillons avec le formulaire et le modèle de données, et comment les deux interagissent. Pour cele nous créons un nouveau composant (pour ne pas polier le composant *create-stock.component.ts*):
+
+    > ng g c create/create-stock2
+Nous commençons par éditer le Template *create-stock2.component.html* comme ci-dessous:    
+
+    <h2>Create Stock Form</h2>
+    <div class="form-group">
+        <form [formGroup]="stockForm" (ngSubmit)="onSubmit()">
+            <!-- Repeated code from before, omitted for brevity -->
+            <button type="submit">Submit</button>
+            <button type="button" (click)="resetForm()">
+                Reset
+            </button>
+            <button type="button" (click)="loadStockFromServer()">
+                Simulate Stock Load from Server
+            </button>
+            <button type="button" (click)="patchStockForm()">
+                Patch Stock Form
+            </button>
+        </form>
+    </div>
+    <p>Form Control value: {{ stockForm.value | json }} </p>
+    <p>Form Control value: {{ stockForm.status | json }} </p>
+La plupart du modèle n'a pas changé, mais nous avons ajouté trois nouveaux boutons à la fin du formulaire. Tous trois font appel à une méthode de la classe component, que nous verrons dans un instant. Mais les trois boutons effectuent fondamentalement les deux actions suivantes:
+
+    <h2>Create Stock Form</h2>
+    <div class="form-group">
+        <form [formGroup]="stockForm" (ngSubmit)="onSubmit()">
+        <!-- Repeated code from before, omitted for brevity stock-item.component.html -->
+        <button  class="styleB" type="submit">Submit</button>
+            <button class="styleB" type="button" (click)="resetForm()">
+                Reset
+            </button>
+            <button class="styleB" type="button" (click)="loadStockFromServer()">
+                Simulate Stock Load from Server
+            </button>
+            <button class="styleB" type="button" (click)="patchStockForm()">
+                Patch Stock Form
+            </button>
+        </form>
+    </div>
+    <p>Form Control value: {{ stockForm.value | json }} </p>
+    <p>Form Control value: {{ stockForm.status | json }} </p>
+La plupart du modèle n'a pas changé, mais nous avons ajouté trois nouveaux boutons à la fin du formulaire. Tous trois font appel à une méthode de la classe component, que nous verrons dans un instant. Mais les trois boutons effectuent fondamentalement les deux actions suivantes:    
+* Le bouton Reset: Réinitialiser le formulaire à son état d'origine.  
+* Le bouton Patch Stock Form: Simuler le chargement d'un stock depuis le serveur.   
+
+Passons maintenant à la classe *CreateStock2Component*, où se produisent la plupart des activités et des changements. Nous allons éditer le fichier createstock2.component.ts comme suit:   
+
+let counter=1;
+@Component({
+  selector: 'app-create-stock2',
+  templateUrl: './create-stock2.component.html',
+  styleUrls: ['./create-stock2.component.scss']
+})
+export class CreateStock2Component implements OnInit {
+    private stock: Stock; // ligne 13
+    public stockForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.createForm();
+    this.stock = new Stock('Test ' + counter++, 'TST', 20, 10); // ligne 18
+  }
+
+  ngOnInit(): void {
+  }
+
+  createForm() {
+    this.stockForm = this.fb.group({
+      name: [null, Validators.required],
+      code: [null, [Validators.required, Validators.minLength(2)]],
+      price: [0, [Validators.required, Validators.min(0)]]
+    });
+  }
+  loadStockFromServer() {
+    this.stock = new Stock('Test ' + counter++, 'TST', 20, 10);
+    let stockFormModel = Object.assign({}, this.stock);
+    delete stockFormModel.previousPrice;
+    delete stockFormModel.favorite;
+    this.stockForm.setValue(stockFormModel); // ligne 36
+  }
+  patchStockForm() {
+    this.stock = new Stock(`Test ${counter++}`, 'TST', 20, 10);
+    this.stockForm.patchValue(this.stock); // ligne 40
+  }
+  resetForm() {
+    this.stockForm.reset(); // ligne 43
+  }
+  onSubmit() {
+    this.stock = Object.assign({}, this.stockForm.value);
+    console.log('Saving stock', this.stock);
+  }
+}
+
+* ligne 13: Nous avons introduit un objet stock, en plus du modèle de formulaire.
+* ligne 18: Instanciation de notre de l'objet stock avec une valeur par défaut.  
+* ligne 36: Définir (setter) dans le modèle formulaire avec nos valeurs de modèle de données stock.   
+* ligne 40: Patcher le modèle de formulaire avec tous les champs disponibles.  
+* ligne 43: Remettre le formulaire à son état initial.   
+
+Nous utilisons **la méthode setValue** sur l'instance stockForm de FormGroup. Cette méthode prend un objet de modèle JSON qui correspond exactement au modèle de formulaire. Cela signifie que pour que setValue fonctionne dans ce cas, il a besoin d'un objet avec un nom, un code et une clé de prix. Il ne devrait pas avoir plus ou moins de clés que cela, car cela *générerait une erreur dans ce cas*.     
+Ainsi, le déclenchement de la méthode loadStockFromServer finirait par mettre à jour le formulaire avec le nom, le code et le prix de l'instance de stock nouvellement créée.      
+La deuxième méthode, patchStockForm, utilise une autre méthode sur l'instance stockForm de FormGroup appelée **patchValue**. Il s'agit d'une méthode plus indulgente qui prend les champs disponibles et met à jour le formulaire avec eux. Il ignorera les champs supplémentaires même s'il en a moins.     
+La dernière méthode est le resetForm, qui réinitialise simplement le formulaire à son état initial en appelant la méthode **reset** sur 'instance stockForm de FormGroup.    
 
