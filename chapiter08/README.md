@@ -1,0 +1,4 @@
+                                            #Angular Services#
+                                            
+# What Are Angular Services (qu'est ce c'est Sercices dans Angular): 
+Jusqu'à présent, nous avons principalement travaillé avec des composants angulaires. Les composants, pour récapituler rapidement, sont chargés de décider quelles données afficher et comment les rendre et les afficher dans l'interface utilisateur. Nous lions nos données des composants à notre interface utilisateur et lions nos événements de l'interface utilisateur aux méthodes des composants pour autoriser et gérer les interactions des utilisateurs. C'est-à-dire que les composants d'Angular sont notre couche de présentation et doivent être impliqués et se concentrer sur les aspects de présentation des données.
