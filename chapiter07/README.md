@@ -329,13 +329,14 @@ Passons maintenant à la classe *CreateStock2Component*, où se produisent la pl
 
 * ligne 13: Nous avons introduit un objet stock, en plus du modèle de formulaire.
 * ligne 18: Instanciation de notre de l'objet stock avec une valeur par défaut.  
-* ligne 36: Définir (setter) dans le modèle formulaire avec nos valeurs de modèle de données stock.   
-* ligne 40: Patcher le modèle de formulaire avec tous les champs disponibles.  
+* ligne 36: Mettre à jour ou pousser (setter) nos valeurs de modèle de données stock dans le modèle formulaire avec.   
+* ligne 40: Patcher (Mettre à jour) le modèle de formulaire avec tous les champs disponibles (une partie ou sous-ensemble du modèle stock).  
 * ligne 43: Remettre le formulaire à son état initial.   
 
 Nous utilisons **la méthode setValue** sur l'instance stockForm de FormGroup. Cette méthode prend un objet de modèle JSON qui correspond exactement au modèle de formulaire. Cela signifie que pour que setValue fonctionne dans ce cas, il a besoin d'un objet avec un nom, un code et une clé de prix. Il ne devrait pas avoir plus ou moins de clés que cela, car cela *générerait une erreur dans ce cas*.     
 Ainsi, le déclenchement de la méthode loadStockFromServer finirait par mettre à jour le formulaire avec le nom, le code et le prix de l'instance de stock nouvellement créée.      
-La deuxième méthode, patchStockForm, utilise une autre méthode sur l'instance stockForm de FormGroup appelée **patchValue**. Il s'agit d'une méthode plus indulgente qui prend les champs disponibles et met à jour le formulaire avec eux. Il ignorera les champs supplémentaires même s'il en a moins.     
+La deuxième méthode, patchStockForm, utilise une autre méthode sur l'instance stockForm de FormGroup appelée **patchValue**. Le PatchValueest utilisé pour mettre à jour uniquement un sous-ensemble des éléments du FormGroupou FormArray. Il ne mettra à jour que les objets correspondants et ignore le reste.   
+
 La dernière méthode est le resetForm, qui réinitialise simplement le formulaire à son état initial en appelant la méthode **reset** sur 'instance stockForm de FormGroup.    
 # FormArrays:   
 Maintenant, supposons que pour chaque stock, nous voulions capturer et mettre en évidence les personnes clés liées à l'entreprise. Sachant, pour une entreprise on peut avoir de 0 à n presonnes associées. Cela nous permettra de voir comment nous pouvons gérer les formulaires et comment nous devons capturer plusieurs valeurs ainsi de gérer proprement les éléments de formulaire imbriqués.    
