@@ -141,25 +141,25 @@ Nous aurions pu ignorer l'étape d'ajout manuel du service au module en demandan
 Cela aurait à la fois généré le service et enregistré le fournisseur dans l'AppModule.     
 À ce stade, nous sommes prêts à commencer à utiliser le service, nous allons donc d'abord l'utiliser dans le StockListComponent nouvellement créé. Modifions le fichier stocklist.component.ts comme suit:
 
-  @Component({
-    selector: 'app-stock-list',
-    templateUrl: './stock-list.component.html',
-    styleUrls: ['./stock-list.component.scss']
-  })
-  export class StockListComponent implements OnInit {
+    @Component({
+        selector: 'app-stock-list',
+        templateUrl: './stock-list.component.html',
+        styleUrls: ['./stock-list.component.scss']
+    })
+    export class StockListComponent implements OnInit {
 
-    public stocks: Stock[];
-    constructor(private stockSrv: StockService) { } // ligne 13
+        public stocks: Stock[];
+        constructor(private stockSrv: StockService) { } // ligne 13
 
-    ngOnInit(): void {
-      this.stocks = this.stockSrv.getStocks(); // ligne 16
-    }
+        ngOnInit(): void {
+        this.stocks = this.stockSrv.getStocks(); // ligne 16
+        }
 
-    onToggleFavorite(stock: Stock) {
-      console.log('Favorite for stock ', stock, ' was triggered');
-      this.stockSrv.toggleFavorite(stock); // ligne 21
-    }
-  }    
+        onToggleFavorite(stock: Stock) {
+        console.log('Favorite for stock ', stock, ' was triggered');
+        this.stockSrv.toggleFavorite(stock); // ligne 21
+        }
+    }    
   
 * ligne 13: Injecter le StockService dans le composant.   
 * ligne 16: Utilisez le StockService pour obtenir la liste des stocks.  
