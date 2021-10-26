@@ -165,7 +165,10 @@ Cela aurait à la fois généré le service et enregistré le fournisseur dans l
 * ligne 16: Utilisez le StockService pour obtenir la liste des stocks.  
 * ligne 21:  Utilisez StockService pour basculer le statut de favori sur un stock.   
 
-
+Il s'agit de notre premier exemple d'injection et d'utilisation d'un service, alors examinons-le étape par étape:
+* Nous pouvons injecter n'importe quel service que nous voulons dans notre composant simplement en l'ajoutant comme paramètre dans notre constructeur. Dans ce cas, nous avons déclaré une instance privée de StockService avec le nom stockService. Le nom lui-même n'a pas d'importance; Angular utilise la définition de type pour déterminer quel service injecter. Pour tout ce que nous nous soucions, nous pourrions même appeler l'instance du service xyz (pas que vous devriez !), et il serait toujours injecté correctement.    
+* Nous appelons simplement les méthodes que nous voulons sur notre service via notre instance (comme stockService.getStocks() ou stockService.toggleFavorite()) au bon moment. Nous initialisons notre liste de stocks, et passons l'appel bascule au service. Notez que nous devons accéder au service via une variable d'instance et que nous ne pouvons pas y accéder directement (c'est-à-dire que **nous devons appeler this.stockService** et que nous ne pouvons pas utiliser directement stockService).    
+ 
 ### An Introduction to Dependency Injection ():   
 ### Angular and Dependency Injection ():  
 # RxJS and Observables: Moving to Asynchronous Operations ():    
