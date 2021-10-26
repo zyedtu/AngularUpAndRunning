@@ -141,11 +141,6 @@ Nous aurions pu ignorer l'étape d'ajout manuel du service au module en demandan
 Cela aurait à la fois généré le service et enregistré le fournisseur dans l'AppModule.     
 À ce stade, nous sommes prêts à commencer à utiliser le service, nous allons donc d'abord l'utiliser dans le StockListComponent nouvellement créé. Modifions le fichier stocklist.component.ts comme suit:
 
-    @Component({
-        selector: 'app-stock-list',
-        templateUrl: './stock-list.component.html',
-        styleUrls: ['./stock-list.component.scss']
-    })
     export class StockListComponent implements OnInit {
 
         public stocks: Stock[];
