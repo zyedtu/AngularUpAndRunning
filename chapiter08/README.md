@@ -159,7 +159,8 @@ Cela aurait à la fois généré le service et enregistré le fournisseur dans l
       console.log('Favorite for stock ', stock, ' was triggered');
       this.stockSrv.toggleFavorite(stock); // ligne 21
     }
-  }
+  }    
+  
 * ligne 13: Injecter le StockService dans le composant.   
 * ligne 16: Utilisez le StockService pour obtenir la liste des stocks.  
 * ligne 21:  Utilisez StockService pour basculer le statut de favori sur un stock.   
