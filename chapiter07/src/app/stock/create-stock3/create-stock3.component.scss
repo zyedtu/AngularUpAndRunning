@@ -1,9 +1,3 @@
-.styleC {
-    margin-top: 0.5em;
-    margin-right: 0.5em;
-    border-radius: 10px;
-    background-color: salmon;
-}
 .stock-name{
     margin-top: 0.5em
 }
@@ -12,6 +6,7 @@
 }
 .stock-price {
     margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
 .error {
     color: violet;
@@ -20,4 +15,8 @@
     border: 1px solid black;
     padding: 10px;
     margin: 5px;
+}
+
+.btn {
+    margin-right: 0.5em;
 }

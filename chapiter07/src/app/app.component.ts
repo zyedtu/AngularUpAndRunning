@@ -7,7 +7,7 @@ import { Stock } from './model/stock';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  title = 'bookAngularUpAndRunning';
+  title = 'TATO';
   
   public stock: Stock;
 

@@ -46,10 +46,15 @@
                 <button type="button" (click)="removeNotablePerson(i)">Remove Person</button>
             </div>
         </div>
-        <button type="button" (click)="addNotablePerson()">Add Notable Person</button>
-        <button class="styleC" type="submit">Submit</button>
-        <button class="styleC" type="button" (click)="resetForm()">Reset</button>
+        <button class="btn btn-outline-info" (click)="addNotablePerson()">Add Notable Person</button>
+        <button class="btn btn-outline-info" type="submit">Submit</button>
+        <button class="btn btn-outline-info" type="button" (click)="resetForm()">Reset</button>
     </form>
 </div>
 <p>Form groupe value: {{ stockForm.value | json }}</p> 
 <p>Form groupe status: {{ stockForm.status | json }}</p>
+<!-- <p>
+    <ngb-alert [dismissible]="false">
+      <strong>Warning!</strong> Better check yourself, you're not looking too good.
+    </ngb-alert>
+</p> -->
