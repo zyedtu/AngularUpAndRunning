@@ -1,0 +1,44 @@
+<h2>Create Stock Form</h2>
+<div *ngIf="message">{{message}}</div>
+<div class="form-group">
+    <form [formGroup]="stockForm" (ngSubmit)="Create()"> <!-- ligne 3 -->
+        <div class="stock-name">
+            <input type="text" placeholder="Stock name" name="stockName" formControlName="name"> <!-- ligne 5-->
+            <div class="error" *ngIf="name.invalid && (name.dirty ||name.touched)">Name is required</div>
+        </div>
+        <div class="stock-code">
+            <input type="text" placeholder="Stock code" name="stockCode" formControlName="code">
+            <div class="error" *ngIf="stockForm.get('code').invalid &&
+                        ( stockForm.get('code').dirty ||
+                        stockForm.get('code').touched )">
+                <div *ngIf="stockForm.get('code').errors.required">
+                        Stock Code is required
+                </div>
+                <div *ngIf="stockForm.get('code').errors.minlength">
+                        Stock Code must be at least 2 characters
+                </div>
+            </div>
+        </div>
+        <div class="stock-price">
+            <input type="number" placeholder="Price" name="stockPrice" formControlName="price">
+            <div class="error" *ngIf="stockForm.get('price').invalid &&
+                        ( stockForm.get('price').dirty ||
+                        stockForm.get('price').touched )">
+                <div *ngIf="stockForm.get('price').errors.required">
+                    Stock Price is required
+                </div>
+                <div *ngIf="stockForm.get('price').errors.min">
+                    Stock Price must be positive
+                </div>
+            </div>
+        </div>
+        <div class="exchange">
+            <select formControlName="exchange" id="exampleFormControlSelect2">
+                <option *ngFor="let op of exchanges; index as i">{{ op }}</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+</div>
+<p>Form groupe value: {{ stockForm.value | json }}</p> <!-- ligne 16 -->
+<p>Form groupe status: {{ stockForm.status | json }}</p>

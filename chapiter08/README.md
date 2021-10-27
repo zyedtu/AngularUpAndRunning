@@ -165,6 +165,137 @@ Il s'agit de notre premier exemple d'injection et d'utilisation d'un service, al
 * Nous appelons simplement les méthodes que nous voulons sur notre service via notre instance (comme stockService.getStocks() ou stockService.toggleFavorite()) au bon moment. Nous initialisons notre liste de stocks, et passons l'appel bascule au service. Notez que nous devons accéder au service via une variable d'instance et que nous ne pouvons pas y accéder directement (c'est-à-dire que **nous devons appeler this.stockService** et que nous ne pouvons pas utiliser directement stockService).    
 
 Continuons avec les modifications mineures apportées au CreateStockComponent pour terminer l'intégration du service. Tout d'abord, nous allons ajouter un message simple en haut du modèle CreateStockComponent, pour afficher un message à l'utilisateur si le stock a été créé avec succès ou s'il y a eu une erreur lors de la création. Nous allons éditer *createstock.component.html* comme suit:
+
+    <h2>Create Stock Form</h2>
+    <div *ngIf="message">{{message}}</div> <!-- linge 2 -->
+    <div class="form-group">
+        <!-- Rest of the form omitted for brevity -->
+        <!-- No change from the base code -->
+    <div/>
+* Ligne 12: on affiche un message s'il existe.   
+
+Maintenant, nous pouvons modifier le composant dans createstock.component.ts pour intégrer StockService:   
+
+    export class CreateStockComponent implements OnInit {
+
+    public stockForm: FormGroup;
+    public stock: Stock;
+    public message: string = ''; // ligne 15
+    public exchanges: string[] = ['NYSE', 'NASDAQ', 'OTHER'];
+    constructor(private fb: FormBuilder,
+        private stockSrv: StockService) { // ligne 18
+        this.stock = new Stock('', '', 0, 0, 'NASDAQ');
+        this.createForm();
+    }
+    ........
+    Create() {
+        if (this.stockForm.valid) {
+        let created = this.stockSrv.createStock(this.stockForm.value); // ligne 37
+        if (created) { // ligne 38
+            this.message = 'Successfully created stock with stock code: '
+            + this.stock.code;
+            this.stock = new Stock('', '', 0, 0, 'NASDAQ');
+        } else {
+            this.message = 'Stock with stock code: ' + this.stock.code
+            + ' already exists';
+        }
+        } else {
+        console.error('Stock form is in an invalid state');
+        }
+    }
+    ......
+    }
+* ligne 15: Ajout du champ message pour afficher les messages de réussite et d'erreur.    
+* ligne 18: Injection de service stockSrv dans le composant.   
+* ligne 37: Appelez stockSrv.createStock lorsque le formulaire est soumis.   
+* ligne 38: Traiter les scénarios de réussite et d'erreur lors de la création du stock.     
+
 ### An Introduction to Dependency Injection ():   
+TODO
 ### Angular and Dependency Injection ():  
+TODO
 # RxJS and Observables: Moving to Asynchronous Operations ():    
+Le dernier changement que nous apporterons avant de conclure ce chapitre particulier sur les services est de travailler avec du code asynchrone. Les données que nous avons renvoyées de notre service dans notre exemple étaient des données fictives codées en dur. Nous l'avons rendu tel quel et l'avons affiché immédiatement. Mais dans une application du monde réel, ce ne serait pas le cas, car la plupart du temps, nous extrairions les données d'un serveur.       
+La gestion des réponses et des données d'un serveur devient légèrement différente de ce que nous avons fait. Nous pourrions passer un appel pour récupérer la liste des stocks sur le serveur. Ensuite, à un moment ultérieur, une fois que notre serveur aura fini de traiter la demande, nous obtiendrions une liste de stocks. Ainsi, les stocks ne seraient pas disponibles immédiatement à la demande, mais ultérieurement, de manière **asynchrone**.       
+Dans AngularJS, nous avions l'habitude de gérer ces situations à l'aide de promesses. Les promesses étaient un meilleur moyen de gérer le comportement asynchrone que les rappels, qui étaient la méthode traditionnelle, pour plusieurs raisons. Cela dit, il y a quelques inconvénients qu'Angular essaie de supprimer en passant à l'utilisation d'observables.     
+Les **observables sont un concept ReactiveX** qui permet de traiter des flux qui émettent des données. Tout intéressé peut alors être observateur sur ce flux, et effectuer des opérations et des transformations sur les événements émis par le flux.     
+principalement, il existe quelques différences entre les observables et les promesses:   
+* Les promesses fonctionnent sur un seul événement asynchrone, tandis que les observables nous permettent de traiter un flux de zéro ou plusieurs événements asynchrones.     
+* Contrairement aux promesses, les observables peuvent être annulés. C'est-à-dire que le gestionnaire de réussite ou d'erreur d'une promesse sera éventuellement appelé, tandis que nous pouvons annuler un abonnement et ne pas traiter les données si nous ne nous en soucions pas.      
+* Les observables nous permettent de composer et de créer facilement une chaîne de transformations. Les opérateurs qu'il fournit prêts à l'emploi permettent des compositions fortes et puissantes, et des opérations telles que la nouvelle tentative et la relecture rendent la gestion de certains cas d'utilisation courants triviales. Tout cela en pouvant réutiliser notre code d'abonnement.       
+
+Cela dit, les promesses sont bonnes pour les cas d'événement unique et restent une option lorsque vous travaillez avec Angular. Un observable peut être converti en promesse puis traité dans Angular. Mais il est recommandé d'utiliser des observables, car Angular fournit beaucoup de support prêt à l'emploi pour RxJS et ses extensions dans son cadre.     
+
+Prenons maintenant notre exemple et déplaçons-le étape par étape vers l'utilisation d'observables et préparons-le pour nos futurs cas d'utilisation.   
+Tout d'abord, nous allons modifier notre StockService pour commencer à renvoyer un observable asynchrone afin de nous préparer pour l'avenir lorsque nous commencerons à nous intégrer aux serveurs. Ensuite, nous modifierons nos composants pour souscrire à ces observables et traiter les cas de réussite et d'erreur.    
+
+    import { Injectable } from '@angular/core';
+    import { Observable, of, throwError } from 'rxjs';  // ligne 2
+    import { Stock } from '../model/stock';
+
+    @Injectable({
+    providedIn: 'root'
+    })
+    export class StockService {
+
+    private stocks: Stock[];
+    constructor() {
+        this.stocks = [
+        new Stock('Test Stock Company', 'TSC', 85, 80, 'NASDAQ'),
+        new Stock('Second Stock Company', 'SSC', 10, 20, 'NSE'),
+        new Stock('Last Stock Company', 'LSC', 876, 765, 'NYSE')
+        ];
+    }
+
+    getStocks(): Observable<Stock[]> {  // ligne 19
+        return of(this.stocks); // ligne 20
+    }
+
+    createStock(stock: Stock): Observable<any> {
+        let foundStock = this.stocks.find(each => each.code === stock.code);
+        if (foundStock) {
+        return throwError({msg: 'Stock with code ' +
+            stock.code + ' already exists'});   // ligne 26
+        }
+        this.stocks.push(stock);
+        return of(this.stocks);
+    }
+    
+    toggleFavorite(stock: Stock): Observable<Stock> {
+        let foundStock = this.stocks.find(each => each.code === stock.code);
+        foundStock.favorite = !foundStock.favorite;
+        return of(foundStock);
+    }
+    }
+* ligne 2: importation d'Observable et des méthode core d'observable comme of et throwError.   
+* ligne 19: Changer le type de retour de getStocks en un observable. 
+* ligne 20: Retour d'un observable pour des données fictives.  
+* ligne 26: Lancer une exception à l'observateur.   
+
+La première chose que nous faisons est d'importer Observable depuis la bibliothèque RxJS. Notez que nous importons les opérateurs et les classes individuellement à partir des fichiers respectifs, plutôt que d'importer l'intégralité de la bibliothèque RxJS.    
+Nous modifions ensuite le type de retour de chacune des méthodes du service pour renvoyer une valeur observable au lieu d'une valeur synchrone. Il s'agit d'assurer une interface API cohérente à l'utilisateur du service. Une fois cette modification effectuée, nous pouvons modifier l'implémentation en dessous (par exemple, passer de données fictives à un appel de serveur) sans avoir à modifier chaque composant.       
+
+Modifions maintenant les composants qui intégrent le service avec les nouvelles API asynchrones. Tout d'abord, nous allons changer le StockListComponent, pour lire la liste des stocks à partir de l'observable au lieu de lire directement le tableau.    
+
+    .....
+    import { Subject } from 'rxjs';
+    .....
+    export class StockListComponent implements OnInit {
+
+    public stocks: Stock[];
+    constructor(private stockSrv: StockService) { }
+
+    ngOnInit(): void {
+        this.stockSrv.getStocks().subscribe( res => { // ligne 17
+        this.stocks = res;
+        });
+    }
+
+     onToggleFavorite(stock: Stock) {
+        console.log('Favorite for stock ', stock, ' was triggered');
+        this.stockSrv.toggleFavorite(stock);
+     }
+    }
+* ligne 17: S'abonner à l'observable.   
+
+Nous avons apporté une petite modification, qui concerne le bloc ngOnInit du composant. Au lieu d'affecter directement la valeur de retour de l'appel stockService.getStocks() au tableau stocks, nous **souscrivons (subscribe)** maintenant à **l'observable** qu'il renvoie. L'observable est déclenché une fois avec le tableau de stocks, auquel cas nous attribuons la valeur à notre tableau local. Il n'y a pas de changement en tant que tel pour le onToggleFavorite, bien que nous devions également souscrire à l'observable qu'il renvoie pour une gestion appropriée.
