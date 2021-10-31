@@ -174,18 +174,3 @@ Ici, nous voulons exécuter le *ngFor, ensuite on teste si le stock est actif av
 		<!-- Show stock details here if more than 2 stocks present -->
 	</div>
 Ces deux cas se ressemblent beaucoup, mais l'intention et les attentes sont très différentes. Dans le premier cas, nous nous attendons à ce que *ngFor s'exécute en premier, suivi de *ngIf, et vice versa dans le second cas.    
-# Understanding and Using Angular Components: 
-### Components—A Recap: 
-### Defining a Component: 
-##### Selector
-##### Template
-##### Styles
-##### Style Encapsulation
-##### Others
-### Components and Modules:
-### Input and Output:
-##### Input: 
-##### Output: 
-##### Change Detection: 
-### Component Lifecycle: 
-### Interfaces and Functions:
