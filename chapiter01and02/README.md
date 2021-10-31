@@ -85,7 +85,7 @@ Qu'en est-il de la partie qui charge les scripts angulaires de base et notre cod
 - @NgModule: c'est décorateur (une annotation TypeScript), qui marque cette classe comme un module.   
 - declarations: le bloc de déclarations définit tous les composants qui sont autorisés à être utilisés dans la portée du HTML au sein de ce module. Tout composant que vous créez doit être déclaré avant de pouvoir être utilisé.   
 - imports: Vous ne créerez pas toutes les fonctionnalités utilisées dans l'application, et le tableau des importations vous permet d'importer d'autres modules d'application et de bibliothèque Angular et ainsi de tirer parti des composants, services et autres capacités qui ont déjà été créés dans ces modules.    
-- providers: les fournisseurs en français, utilisés pour enregister les services qui seront injectés dans les cpmposant.  
+- providers: les fournisseurs en français, utilisés pour enregister les services qui seront injectés dans les composant.  
 - bootstrap: Le tableau bootstrap définit le composant qui sert de point d'entrée à votre application. Si le composant principal n'est pas ajouté ici, votre application ne démarrera pas, car Angular ne saura pas quels éléments rechercher dans votre index.html. Dans notre exemple est le *AppComponent*.   
 
 * AppComponent: c'est la racine composant (Root Component), Nous arrivons enfin au code Angular réel qui pilote les fonctionnalités de l'application, et dans ce cas, c'est le composant principal (et unique) que nous avons, l'AppComponent. Le code pour cela ressemble à ceci:   
