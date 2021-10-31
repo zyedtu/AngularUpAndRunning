@@ -1,11 +1,11 @@
 
-# Understanding and Using Angular Components:   
+                        # Understanding and Using Angular Components #
 Dans ce chapitre, nous approfondirons un peu les composants, ces éléments que nous avons créés pour afficher l'interface utilisateur et permettre aux utilisateurs d'interagir avec les applications que nous construisons. Nous couvrirons certains des attributs les plus utiles que vous pouvez spécifier lors de la création de composants, comment réfléchir au cycle de vie du composant et aux divers hooks qu'Angular vous offre, et enfin, comment transmettre des données dans et hors de vos composants personnalisés. À la fin du chapitre, vous devriez être capable d'effectuer les tâches les plus courantes liées aux composants tout en comprenant ce que vous faites et pourquoi.   
-### Components—A Recap: 
+# Components—A Recap: 
 Dans le chapitre précédent, nous avons traité des directives d'attribut et de structure, qui nous permettent de changer le comportement d'un élément existant ou de changer la structure du modèle en cours de rendu.      
 Le troisième type de directives sont les composants, que nous utilisons pratiquement depuis le premier chapitre. Dans une certaine mesure, vous pouvez considérer qu'une application Angular n'est rien d'autre qu'un arbre de composants. Chaque composant à son tour a un certain comportement et un modèle qui est rendu. Ce modèle peut ensuite continuer à utiliser d'autres composants, formant ainsi une arborescence de composants, qui est l'application Angular qui est rendue dans le navigateur.       
 Dans sa forme la plus simple, un composant n'est rien d'autre qu'une classe qui encapsule un comportement, et un modèle (Template). Mais il existe également plusieurs façons de définir cela, ainsi que d'autres options, que nous couvrirons dans les sections suivantes.      
-### Defining a Component:   
+# Defining a Component:   
 Nous définissons un composant à l'aide du décorateur TypeScript **@Componant**. Cela nous permet d'annoter n'importe quelle classe avec des métadonnées qui enseignent à Angular comment fonctionne le composant, ce qu'il faut afficher, etc. Jetons un coup d'œil au composant stock-item que nous avons créé pour voir à quoi ressemblerait un composant simple, et nous allons construire à partir de là:   
 
         @Component({
@@ -17,7 +17,7 @@ Nous définissons un composant à l'aide du décorateur TypeScript **@Componant*
             // Code omitted here for clarity
         }
 
-##### Selector:  
+### Selector:  
 L'attribut selector, nous permet de définir comment Angular identifie le composant lorsque il'est utilisé dans le clode HTML. Le sélecteur prend une valeur de chaîne, qui est le sélecteur CSS qu'Angular utilisera pour identifier l'élément.    
 Par exemple, voici quelques façons de spécifier l'attribut selector et de l'utiliser dans le code HTML: (la première façon est recommendée)     
 * selector: 'app-stock-item' entraînerait l'utilisation du composant en HTML: 
@@ -29,7 +29,7 @@ Par exemple, voici quelques façons de spécifier l'attribut selector et de l'ut
 * selector: '[app-stock-item]', entraînerait l'utilisation du composant comme attribut sur un élément existant:
 
         <div app-stock-item></div>
-##### Template:  
+### Template:  
 Jusqu'à présent, nous avons utilisé templateUrl pour définir le modèle à utiliser avec un composant. Le chemin que vous transmettez à l'attribut templateUrl est **relatif** au chemin du composant. Dans le cas précédent, nous pouvons soit spécifier le templateUrl et cela fonctionnerait. Mais si vous essayez de spécifier une URL absolue ou quoi que ce soit d'autre, votre compilation va échouer.     
 
         templateUrl: './stock.item.component.html'
@@ -54,10 +54,10 @@ Au lieu de templateUrl, nous pourrions également spécifier le modèle en ligne
         // Code omitted here for clarity
     }
 * Remarque: template ou templateUrl peut être spécifié dans un composant. Vous ne pouvez pas utiliser les deux, mais au moins un est essentiel.   
-##### Styles: 
+### Styles: 
 Un composant donné peut être associé à plusieurs styles. Cela vous permet d'extraire du CSS spécifique au composant. Vous pouvez soit incorporer votre CSS à l'aide de l'attribut **styles**, ou s'il y a une quantité importante de CSS, vous pouvez l'extraire dans un fichier séparé et l'intégrer dans votre composant à l'aide de l'attribut **styleUrls**.       
-##### Style Encapsulation:   
-Angular encapsule les styles de chaque composant, pour s'assurer qu'il ne sera pas utilisé ou plolué les autres. En fait, vous pouvez réellement dire à Angular s'il doit le faire ou non, ou si les styles peuvent être accessibles globalement. Vous pouvez définir cela en utilisant l'attribut **encapsulation** sur le décorateur composant. L'attribut d'encapsulation prend l'une des trois valeurs suivantes:     
+### Style Encapsulation:   
+Angular encapsule les styles de chaque composant, pour s'assurer qu'il ne sera pas utilisé ou polué les autres. En fait, vous pouvez réellement dire à Angular s'il doit le faire ou non, ou si les styles peuvent être accessibles globalement. Vous pouvez définir cela en utilisant l'attribut **encapsulation** sur le décorateur composant. L'attribut d'encapsulation prend l'une des trois valeurs suivantes:     
 * ViewEncapsulation.Emulated: Il s'agit de la valeur **par défaut**, où Angular crée un CSS spécial pour émuler le comportement fourni par les shadow DOM (pas utilisation de Shadow DOM).    
 * ViewEncapsulation.Native:  Angular créera un Web Component complet avec l’utilisation du Shadow DOM et du CSS scopé au component.        
 * ViewEncapsulation.None: Utilise le CSS global, sans aucune encapsulation.    
@@ -83,17 +83,17 @@ Ensuite dans le composant on ajoute l'attribut **ViewEncapsulation.None**:
         }
 Maintenant, si nous actualisons notre application, vous verrez que le nom du stock a été gonflé à 50px. En effet, les styles appliqués sur AppComponent ne se limitent pas au composant, mais prennent désormais l'espace de noms global.         
 ViewEncapsulation.None est un bon moyen d'appliquer des styles communs à tous les composants enfants, mais ajoute définitivement le risque d'affecter l'espace de noms CSS global et d'avoir des effets non intentionnels.     
-### Components and Modules:   
+# Components and Modules:   
 Avant d'entrer dans les détails du cycle de vie d'un composant, examinons rapidement comment les composants sont liés aux modules et quelle est leur relation. Au chapitre 2, nous avons vu comment chaque fois que nous créions un nouveau composant, nous devions l'inclure dans un module. Si vous créez un nouveau composant et ne l'ajoutez pas à un module, Angular se plaindra que vous avez des composants qui ne font partie d'aucun module.      
 Pour qu'un composant soit utilisé dans le contexte d'un module, il doit être importé dans votre fichier de déclaration de module et déclaré dans le tableau des déclarations. Cela garantit que le composant est visible pour tous les autres composants du module.     
 Il existe trois attributs spécifiques dans le **NgModule** qui ont un impact direct sur les composants et leur utilisation, qu'il est important de connaître. Bien que seules les déclarations soient importantes au départ, une fois que vous commencez à travailler avec plusieurs modules, ou si vous créez ou importez d'autres modules, les deux autres attributs deviennent essentiels:    
 * declarations: L'attribut declarations garantit que les composants et les directives peuvent être utilisés dans le cadre du module. L'Angular CLI ajoutera automatiquement votre composant ou directive au module lorsque vous créez un composant via le CLI Angular.    
 * imports: L'attribut imports vous permet de spécifier les modules que vous souhaitez importer et accessibles dans votre module. Il s'agit principalement d'un moyen d'intégrer des modules tiers pour rendre les composants et les services disponibles dans votre application.   
 * exports: L'attribut exports, offre la possibilité d'utiliser un composant dans un autre module.    
-### Input and Output:
+# Input and Output:
 Un composant est vraiment utile lorsqu'il est réutilisable. L'un des moyens de rendre un composant réutilisable (plutôt que d'avoir des valeurs par défaut codées en dur à l'intérieur) est de transmettre différentes entrées en fonction du cas d'utilisation. De même, il peut y avoir des cas où nous voulons des hooks d'un composant lorsqu'une certaine activité se produit dans son contexte.    
 Angular fournit des hooks (crochets) pour spécifier chacun d'entre eux via des décorateurs, bien nommés Input et Output. Ceux-ci, contrairement aux décorateurs Component et NgModule, s'appliquent au niveau d'une variable membre de classe.   
-##### Input: 
+### Input: 
 Lorsque nous ajoutons un décorateur **@Input** sur une variable membre, il vous permet automatiquement de transmettre les valeurs de cette entrée au composant via la syntaxe de liaison de données d'Angular.      
  L’input peut être de n’importe quel type TypeScript, un number, un string, ou même une classe/interface que vous aurez créée.    
  Voyons comment nous pouvons étendre notre composant stock-item du chapitre précédent pour nous permettre de passer l'objet stock, plutôt que de le re-coder en dur dans le composant:     
@@ -128,7 +128,7 @@ Nous venons de déplacer l'initialisation de l'objet stock de StockItemComponent
         <app-stock-item [stock]="stockObj"></app-stock-item>  
         </div>
 Nous utilisons la liaison de données d'Angular pour transmettre le stock de AppComponent à StockItemComponent. Le nom de l'attribut (stock) doit correspondre au nom de la variable dans le composant qui a été marqué comme entrée. Le nom de l'attribut est **sensible à la casse**, assurez-vous donc qu'il correspond exactement au nom de la variable d'entrée. La valeur que nous lui passons est la référence de l'objet dans la classe AppComponent, qui est **stockObj**.      
-##### Output: 
+### Output: 
 Tout comme nous pouvons transmettre des données à un composant, nous pouvons également enregistrer et écouter les événements d'un composant. Nous utilisons la liaison de données pour transmettre les données et nous utilisons la syntaxe de liaison d'événement pour s'inscrire aux événements. Nous utilisons le décorateur **@Output** pour accomplir cela.     
 Nous enregistrons un EventEmitter en tant que sortie du composant, ensuite on déclencher l'événement à l'aide de l'objet EventEmitter, cela permet à chaque composant lié à l'évenement de recevoir la notification et de réagir en conséquence.     
 Nous pouvons utiliser le code de l'exemple précédent où nous avons enregistré un décorateur @Input et continuer à partir de là. Suposant maintenant que le StockComponent déclenche un événement lorsqu'il est favori, et délège la gestion de données du composant vers son parent. Ainsi, nous laisserons le composant d'application parent s'enregistrer pour l'événement toggleFavorite et modifier l'état du stock lorsque l'événement est déclenché.      
@@ -185,7 +185,7 @@ Enfin, relions le tout en vous abonnant à la nouvelle sortie de notre composant
                                 (toggleFavorite)="onToggleFavorite($event)"></app-stock-item>  
         </div>
 Nous venons d'ajouter une liaison d'événement à l'aide de la syntaxe de liaison d'événement d'Angular à la sortie déclarée dans le composant stock-item. Notez à nouveau qu'il est sensible à la casse et qu'il doit correspondre exactement à la variable membre que nous avons décorée avec le @Output.   
-##### Change Detection: 
+### Change Detection: 
 Par défaut, Angular vérifie chaque liaison dans l'interface utilisateur pour voir s'il doit mettre à jour un élément de l'interface utilisateur chaque fois qu'une valeur change dans notre composant. Ceci est acceptable pour la plupart des applications, mais à mesure que nos applications deviennent de plus en plus grandes et complexes, nous pourrions vouloir contrôler comment et quand Angular met à jour l'interface utilisateur. Au lieu qu'Angular décide quand il doit mettre à jour l'interface utilisateur, nous pourrions vouloir être explicite et dire à Angular quand il doit mettre à jour l'interface utilisateur manuellement. Pour ce faire, nous utilisons l'attribut changeDetection, où nous pouvons remplacer la valeur par défaut de Change **DetectionStrategy.Default** par **ChangeDetectionStrategy.OnPush**. Cela signifie qu'après l'affchage initial, il nous appartiendra d'informer Angular lorsque la valeur change.    
 Par défaut, Angular applique le mécanisme ChangeDetectionStrategy.Default à l'attribut changeDetection. Cela signifie que chaque fois qu'Angular remarquera un événement (par exemple, une réponse du serveur ou une interaction de l'utilisateur), il parcourra chaque composant de l'arborescence des composants et vérifiera chacune des liaisons individuellement pour voir si l'une des valeurs a changé et doit à mettre à jour dans la vue.     
 En ravanche, Angular nous permet de changer cette stratégie de la detection de changement en mettant ChangeDetectionStrategy.OnPush, cela indique à Angular, c'est que les liaisons pour ce composant particulier devront être vérifiées uniquement en fonction de l'entrée de ce composant.     
@@ -262,12 +262,12 @@ Maintenant, lorsque vous exécutez cette application, vous devez vous attendre �
 * En cliquant sur Modifier le prix dans le composant StockItemComponent, le prix de l'action augmentera de 5$ à chaque fois.
 * Cliquer sur Change Stock en dehors du StockItemComponent (dans AppComponent) changera le nom du stock à chaque clic. (C'est pourquoi nous avons ajouté le compteur!).  
 * Cliquer sur Modifier le prix en dehors de StockItemComponent (dans AppComponent) n'aura aucun impact (même si la valeur réelle de l'action augmentera si vous cliquez sur Modifier le prix à l'intérieur après cela). Cela montre que le modèle est mis à jour, mais Angular ne met pas à jour la vue.
-### Component Lifecycle: 
+# Component Lifecycle: 
 Les composants (et directives) dans Angular ont leur propre cycle de vie (création, rendu de la vue, modification, et enfin destruction). Ce cycle de vie s'exécute dans l'ordre de parcours de l'arborescence de DOM, de haut en bas. Une fois qu'Angular a rendu un composant, il démarre le cycle de vie de chacun de ses enfants, et ainsi de suite jusqu'à ce que l'ensemble de l'application soit rendu.    
 Il y a des moments où ces événements de cycle de vie nous sont utiles dans le développement de notre application, donc Angular fournit des crochets (Hooks) dans ce cycle de vie afin que nous puissions observer et réagir si nécessaire.   
-##### Définition Hooks de cycle de vie: 
+### Définition Hooks de cycle de vie: 
 Les hooks de cycle de vie Angular ne sont rien d'autre des interface (fonction de rappel),qu'angular les invoquent lorqu'un certain événement se produit pendant le cycle de vie deu composant.   
-##### Liste complète des hooks:  
+### Liste complète des hooks:  
 Ci-dessous, on trouve la liste des hooks de cycle de vie d'un composant, dans l'ordre dans lequel ils sont appelés.
 ![Alt text](https://github.com/zyedtu/AngularUpAndRunning/blob/master/chapiter04and05/imgReadme/hooks.png?raw=true "Title")
 Angular appellera d'abord le constructeur de chaquecomposant, ensuite parcoure les différentes étapes mentionnées le figure dans l'ordre. Certains d'entre eux, comme OnInit et AfterContentInit (les hooks de cycle de vie qui se terminent par **Init**) ne sont appelés qu'une **seule fois** lorsqu'un composant est initialisé, tandis que les autres sont appelés chaque fois que le contenu change. Le hook **OnDestroy** est également appelé une seule fois pour un composant.     
@@ -278,7 +278,7 @@ Il y a aussi un autre concept à apprendre, que nous aborderons brièvement dans
 * ContentChildren: est tout composant enfant qui est projeté dans la vue du composant, mais qui n'est pas directement inclus dans le modèle au sein du composant. Imaginez quelque chose comme un carrousel, où la fonctionnalité est encapsulée dans le composant, mais la vue, qui peut être des images ou des pages d'un livre, vient de l'utilisateur du composant. Ceux-ci sont généralement atteints via ContentChildren. Nous aborderons cela plus en profondeur plus loin dans ce chapitre.    
 ### Interfaces and Functions:
 TODO
-### View Projection (projection de continu):  
+# View Projection (projection de continu):  
 La dernière chose que nous aborderons dans ce chapitre est le concept de projection de continue. La projection est une idée importante dans Angular car elle nous donne plus de flexibilité lorsque nous développons nos composants et nous donne encore un autre outil pour les rendre vraiment nos composant réutilisables dans différents contextes.          
 La projection est utile lorsque nous voulons construire des composants mais définir certaines parties de l'interface utilisateur du composant pour qu'elles n'en fassent pas partie innée. Par exemple, supposons que nous construisions un composant pour un carrousel. Un carrousel a quelques fonctionnalités simples: il est capable d'afficher un élément et nous permet de naviguer vers l'élément suivant/précédent. Votre composant carrousel peut également avoir d'autres fonctionnalités telles que le chargement paresseux (Lazy loading), etc. Mais une chose qui n'est pas du ressort du composant carrousel est le contenu qu'il affiche. Un utilisateur du composant peut vouloir afficher une image, une page d'un livre ou tout autre élément aléatoire.    
 Ainsi, dans ces cas, la vue serait contrôlée par l'utilisateur du composant et la fonctionnalité serait fournie par le composant lui-même. Ceci n'est qu'un cas d'utilisation où nous pourrions vouloir utiliser la projection dans nos composants.    
