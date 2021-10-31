@@ -269,7 +269,8 @@ Il y a des moments où ces événements de cycle de vie nous sont utiles dans le
 Les hooks de cycle de vie Angular ne sont rien d'autre des interface (fonction de rappel),qu'angular les invoquent lorqu'un certain événement se produit pendant le cycle de vie deu composant.   
 ### Liste complète des hooks:  
 Ci-dessous, on trouve la liste des hooks de cycle de vie d'un composant, dans l'ordre dans lequel ils sont appelés.
-![Alt text](https://github.com/zyedtu/AngularUpAndRunning/blob/master/chapiter04and05/imgReadme/hooks.png?raw=true "Title")
+![Alt text](https://github.com/zyedtu/AngularUpAndRunning/blob/master/chapiter04and05/imgReadme/hooks.png?raw=true "Title")     
+
 Angular appellera d'abord le constructeur de chaquecomposant, ensuite parcoure les différentes étapes mentionnées le figure dans l'ordre. Certains d'entre eux, comme OnInit et AfterContentInit (les hooks de cycle de vie qui se terminent par **Init**) ne sont appelés qu'une **seule fois** lorsqu'un composant est initialisé, tandis que les autres sont appelés chaque fois que le contenu change. Le hook **OnDestroy** est également appelé une seule fois pour un composant.     
 Chacune de ces étapes du cycle de vie est livrée avec une interface qui doit être implémentée lorsqu'un composant se soucie de ce cycle de vie particulier, et chaque interface fournit une fonction commençant par **ng** qui doit être implémentée. Par exemple, l'étape du cycle de vie **OnInit** a besoin d'une fonction appelée **ngOnInit** pour être implémentée dans le composant et ainsi de suite.   
 Nous allons utiliser un exemple pour voir tout cela en action et l'ordre des étapes du cycle de vie au sein d'un composant et entre les composants.     
