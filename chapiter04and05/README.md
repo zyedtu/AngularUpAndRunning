@@ -159,7 +159,7 @@ Quelques points importants à noter :
 * Nous devons nous assurer que l'instance EventEmitter est *initialisée*, car elle n'est pas initialisée automatiquement pour nous. On fait l'instanciation dans *le constructeur*.       
 * Dans la **ligne 24** de la fonction onToggleFavorite appelle simplement une fonction sur l'EventEmitter *emit(stock)* pour émettre l'intégralité de l'objet stock. Cela signifie que tous les écouteurs de l'événement toggleFavorite obtiendront l'objet stock actuel en tant que paramètre.     
 
-Nous allons également modifier stock-item.component.html pour appeler la méthode onToggle Favorite au lieu de toggle Favorite. Le balisage HTML reste à peu près le même:   
+Nous allons également modifier stock-item.component.html pour appeler la méthode onToggle Favorite au lieu de toggleFavorite. Le balisage HTML reste à peu près le même:   
 
         <div class="stock-container">
                 <div class="name">{{stock.name + ' (' + stock.code + ')'}}</div>
