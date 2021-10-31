@@ -148,7 +148,7 @@ Maintenant, modifions le Template (modèle) (le fichier stock-item.component.htm
         <div class="price">$ {{price}}</div>
     </div>
 De cette façon on affiche le variable name code et price sur notre navigateur.   
-Nous venons d'utiliser un bloc de construction fondamental d'Angular pour rendre nos données de notre composant dans le HTML. Nous utilisons la notation double crochet ({{ }}), également appelée **interpolation**.    
+Nous venons d'utiliser un bloc de construction fondamental d'Angular pour rendre nos données de notre composant dans le HTML. Nous utilisons la notation double crochet (**{{ }}**), également appelée **interpolation**.    
 ##### L'interpolation (One-way data binding):  
 Evaluer l'expression entre deux accolades {{ }}, puis restitue le résultat sous la forme d'une chaîne en la placant dans le code HTML. Dans ce cas, nous affichons le nom, le code et le prix *par interpolation*.        
 ##### Understanding Property Binding (One-way data binding): 
