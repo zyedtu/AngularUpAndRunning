@@ -189,7 +189,7 @@ Ce traduit à:
 
     <div class="positive">$ {{price}}</div>            
 ##### Comprendre la liaison d'événements (Understanding Event Binding):  
-Jusqu'à présent, nous avons travaillé sur l'utilisation des données de notre composant pour afficher les valeurs Dans le Tempalte. Dans cette section, nous allons commencer à comprendre comment gérer les interactions des utilisateurs et travailler avec les événements et la liaison d'événements dans Angular.       
+Jusqu'à présent, nous avons travaillé sur l'utilisation des données de notre composant pour afficher les valeurs Dans le Template. Dans cette section, nous allons commencer à comprendre comment gérer les interactions des utilisateurs et travailler avec les événements et la liaison d'événements dans Angular.       
 Supposons que nous ajoutons un bouton permettant aux utilisateurs d'ajouter un stock dans une liste de stocks préférées.   
 Tout d'abord, nous pouvons modifier notre composant *stock-item.component.ts* pour ajouter une fonction de basculement de favori, qui devrait être déclenchée chaque fois que le clic se produit depuis l'interface utilisateur:     
 
@@ -233,7 +233,7 @@ L'autre élément majeur que nous avons sur l'élément est ce fragment:
 Cette syntaxe est appelée liaison d'événement dans Angular avec les parenthèse (). La partie gauche du symbole égal fait référence à l'événement auquel nous sommes liés. Dans ce cas, il s'agit de **l'événement click**. Tout comme la notation entre crochets fait référence aux données circulant du composant vers l'interface utilisateur, la notation entre parenthèses fait référence aux événements. Et le nom entre parenthèses est le nom de l'événement.       
 
 Il y a des moments où nous pourrions également nous soucier de l'événement réel déclenché. Dans ces cas, Angular vous donne accès à l'événement DOM sous-jacent en donnant accès à une variable spéciale **$event**. Vous pouvez y accéder ou même le transmettre à votre fonction comme suit:    
-Dans le tempalte *stock-item.component.html*:
+Dans le template *stock-item.component.html*:
 
     <button (click) = toggleFavorite($event) [disabled]="favorite">Add to Favorite</button>
 et dans le comopsant *stock-item.component.ts*:   
