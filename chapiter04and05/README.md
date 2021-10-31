@@ -155,7 +155,7 @@ On commence par la modification du code de composant *stockitem.component.ts*:
         }
 Quelques points importants à noter :    
 * Nous avons importé le décorateur Output ainsi que l'EventEmitter de la bibliothèque core Angular.  
-* Nous avons créé un nouveau membre de classe appelé toggle Favorite de type EventEmitter et renommé notre méthode en onToggle Favorite.    
+* Nous avons créé un nouveau membre de classe appelé toggleFavorite de type EventEmitter et renommé notre méthode en onToggle Favorite.    
 * Nous devons nous assurer que l'instance EventEmitter est *initialisée*, car elle n'est pas initialisée automatiquement pour nous. On fait l'instanciation dans *le constructeur*.       
 * Dans la **ligne 24** de la fonction onToggleFavorite appelle simplement une fonction sur l'EventEmitter *emit(stock)* pour émettre l'intégralité de l'objet stock. Cela signifie que tous les écouteurs de l'événement toggleFavorite obtiendront l'objet stock actuel en tant que paramètre.     
 
