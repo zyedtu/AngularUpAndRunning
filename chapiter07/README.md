@@ -335,7 +335,7 @@ Passons maintenant à la classe *CreateStock2Component*, où se produisent la pl
 
 Nous utilisons **la méthode setValue** sur l'instance stockForm de FormGroup. Cette méthode prend un objet de modèle JSON qui correspond exactement au modèle de formulaire. Cela signifie que pour que setValue fonctionne dans ce cas, il a besoin d'un objet avec un nom, un code et une clé de prix. Il ne devrait pas avoir plus ou moins de clés que cela, car cela *générerait une erreur dans ce cas*.     
 Ainsi, le déclenchement de la méthode loadStockFromServer finirait par mettre à jour le formulaire avec le nom, le code et le prix de l'instance de stock nouvellement créée.      
-La deuxième méthode, patchStockForm, utilise une autre méthode sur l'instance stockForm de FormGroup appelée **patchValue**. Le PatchValueest utilisé pour mettre à jour uniquement un sous-ensemble des éléments du FormGroupou FormArray. Il ne mettra à jour que les objets correspondants et ignore le reste.   
+La deuxième méthode, patchStockForm, utilise une autre méthode sur l'instance stockForm de FormGroup appelée **patchValue**. Le PatchValue est utilisé pour mettre à jour uniquement un sous-ensemble des éléments du FormGroupou FormArray. Il ne mettra à jour que les objets correspondants et ignore le reste.   
 
 La dernière méthode est le resetForm, qui réinitialise simplement le formulaire à son état initial en appelant la méthode **reset** sur 'instance stockForm de FormGroup.    
 # FormArrays:   
