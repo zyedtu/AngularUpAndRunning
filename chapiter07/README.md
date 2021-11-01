@@ -386,7 +386,7 @@ Passons maintenant à notre classe CreateStock3Component. Tout d'abord, passons 
         name: [null, Validators.required],
         code: [null, [Validators.required, Validators.minLength(2)]],
         price: [0, [Validators.required, Validators.min(0)]],
-        notablePeople: this.fb.array([]) // ligne 24
+        notablePeople: this.fb.array([]) // ligne 26
         });
     }
 
