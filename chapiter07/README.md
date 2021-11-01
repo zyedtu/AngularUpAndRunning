@@ -341,7 +341,7 @@ La dernière méthode est le resetForm, qui réinitialise simplement le formulai
 # FormArrays:   
 Maintenant, supposons que pour chaque stock, nous voulions capturer et mettre en évidence les personnes clés liées à l'entreprise. Sachant, pour une entreprise on peut avoir de 0 à n presonnes associées. Cela nous permettra de voir comment nous pouvons gérer les formulaires et comment nous devons capturer plusieurs valeurs ainsi de gérer proprement les éléments de formulaire imbriqués.    
 
-Tout d'abord, nous commencent par mettre à jour notre classe modèle Stock en ajoutant un tableau d'objet People, et en ajoutant aussi la classe Peaple.   
+Tout d'abord, nous commencent par mettre à jour notre classe modèle Stock en ajoutant un tableau d'objet People, et en ajoutant aussi la classe People.   
 
     export class Stock {
         favorite: boolean = false;
