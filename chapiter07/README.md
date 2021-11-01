@@ -417,7 +417,7 @@ Passons maintenant à notre classe CreateStock3Component. Tout d'abord, passons 
 
 * ligne 26: Initialiser notablePeople en tant qu'instance FormArray.  
 * ligne 30: Getter pour faciliter l'accès au FormArray sous-jacent à partir du modèle.    
-* ligne 33: Ajouter une nouvelle instance FormGroup au FormArray.  
+* ligne 33: Ajouter une nouvelle instance FormGroup au FormArray avec la **méthode push**.  
 * ligne 40: Supprimer une instance FormGroup particulière du FormArray.  
 
 Il y a quelques éléments à noter dans le code de la classe de composants:      
