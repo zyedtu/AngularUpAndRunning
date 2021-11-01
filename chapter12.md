@@ -12,15 +12,12 @@ Cela exécute le compilateur Angular, crée et sert votre application Angular à
 Cela générerait par défaut tous vos fichiers compilés dans un dossier appelé dist/. Vous pouvez ensuite simplement tout copier à partir de ce dossier, le mettre sur un serveur HTTP et être opérationnel. Mais ce n'est pas ce que vous devriez faire ! La version générée par défaut est une version sous-optimale et en surpoids qui ralentirait le chargement et l'exécution de votre application de production (comparativement, bien sûr !). Angular vous permet de créer une version optimisée de votre application, alors voyons comment nous pourrions le faire.   
 ### Production Build (Construction de production):
 ### Ahead-of-Time (AOT) Compilation and Build Optimizer (Compilation à l'avance (AOT) et Optimiseur de construction): 
-
-JIT - Compiler TypeScript juste à temps pour l'exécuter.
-
+##### JIT - Compiler TypeScript juste à temps pour l'exécuter:    
 Compilé dans le navigateur.
 Chaque fichier compilé séparément.
 Pas besoin de construire après avoir changé votre code et avant de recharger la page du navigateur.
-Convient pour le développement local.
-AOT - Compiler TypeScript pendant la phase de construction.
-
+Convient pour le développement local.            
+##### AOT - Compiler TypeScript pendant la phase de construction:
 Compilé par la machine elle-même, via la ligne de commande (Faster).
 Tout le code compilé ensemble, intégrant HTML/CSS dans les scripts.
 Pas besoin de déployer le compilateur (la moitié de la taille Angular).
