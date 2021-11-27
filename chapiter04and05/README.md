@@ -127,7 +127,7 @@ Nous venons de déplacer l'initialisation de l'objet stock de StockItemComponent
         </div>
 Nous utilisons la liaison de données d'Angular pour transmettre le stock de AppComponent à StockItemComponent. Le nom de l'attribut (stock) doit correspondre au nom de la variable dans le composant qui a été marqué comme entrée. Le nom de l'attribut est **sensible à la casse**, assurez-vous donc qu'il correspond exactement au nom de la variable d'entrée. La valeur que nous lui passons est la référence de l'objet dans la classe AppComponent, qui est **stockObj**.  
 
-* [stock] *stock* est declaré dans le fichier *stock-item.component*.       
+* [stock]:  *stock* est declaré dans le fichier *stock-item.component*, on peut le nommer [stock1] par exemple, on a le choix de choisir le nom que nous voulons !               
 
 ### Output: 
 Tout comme nous pouvons transmettre des données à un composant, nous pouvons également enregistrer et écouter les événements d'un composant. Nous utilisons la liaison de données pour transmettre les données et nous utilisons la syntaxe de liaison d'événement pour s'inscrire aux événements. Nous utilisons le décorateur **@Output** pour accomplir cela.     
