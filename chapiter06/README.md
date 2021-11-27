@@ -65,7 +65,7 @@ Jetons ensuite un coup d'œil au modèle du CreateStockComponent, où se trouve 
                 placeholder="Stock Name"
                 [value]="stock.name"
                 (input)="stock.name=$event.target.value">
-                </div>
+            </div>
         </form>
         <button (click)="stock.name='test'">Reset stock name</button>
     </div>
@@ -97,7 +97,7 @@ Nous modifierons uniquement le fichier create-stock.component.html comme suit, l
                 name="stockName"
                 [ngModel]="stock.name"
                 (ngModelChange)="stock.name=$event">
-                </div>
+            </div>
         </form>
         <button (click)="stock.name='test'">Reset stock name</button>
     </div>
@@ -120,15 +120,15 @@ Il existe une version plus simple de ceci, que nous utilisons dans la plupart de
                 placeholder="Stock Name"
                 name="stockName"
                 [(ngModel)]="stock.name">
-                </div>
+            </div>
         </form>
         <button (click)="stock.name='test'">Reset stock name</button>
     </div>
 
     <h4>Stock Name is {{stock.name}}</h4>
 ##### Pourquoi s'appelle-t-on Banana-in-a-Box ? (Why Is It Called Banana-in-a-Box ?):   
- 
-
+Lorsqu'elles sont utilisées ensemble, une confusion courante lors de l'utilisation de la directive ngModel pourrait être l'ordre des types de parenthèses, qu'il s'agisse de [()] ou ([]). C'est pourquoi l'équipe Angular a trouvé un surnom pour le rendre facile à retenir. Le () ressemble à une banane (oui, c'est un étirement, mais roulez avec !), et il est enfermé dans une boîte []. D'où la banane dans une boîte, qui est [()].       
+s
 ### Un formulaire complet (A Complete Form):
 ### État de contrôle (Control State): 
 ### Validité du contrôle (Control Validity):
