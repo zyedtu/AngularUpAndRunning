@@ -122,10 +122,8 @@ Ensuite, jetons un coup d'œil à *AppComponent* et à la façon dont nous avons
 Nous venons de déplacer l'initialisation de l'objet stock de StockItemComponent vers AppComponent. Enfin, examinons le modèle de l'AppComponent pour voir comment nous pouvons transmettre le stock au StockItemComponent:     
 
         <div style="text-align:center">
-        <h1>
-        Welcome to {{ title }}!
-        </h1>
-        <app-stock-item [stock]="stockObj"></app-stock-item>  
+                <h1> Welcome to {{ title }}! </h1>
+                <app-stock-item [stock]="stockObj"></app-stock-item>  
         </div>
 Nous utilisons la liaison de données d'Angular pour transmettre le stock de AppComponent à StockItemComponent. Le nom de l'attribut (stock) doit correspondre au nom de la variable dans le composant qui a été marqué comme entrée. Le nom de l'attribut est **sensible à la casse**, assurez-vous donc qu'il correspond exactement au nom de la variable d'entrée. La valeur que nous lui passons est la référence de l'objet dans la classe AppComponent, qui est **stockObj**.      
 ### Output: 
