@@ -267,7 +267,7 @@ Maintenant, lorsque vous exécutez cette application, vous devez vous attendre �
 Les composants (et directives) dans Angular ont leur propre cycle de vie (création, rendu de la vue, modification, et enfin destruction). Ce cycle de vie s'exécute dans l'ordre de parcours de l'arborescence de DOM, de haut en bas. Une fois qu'Angular a rendu un composant, il démarre le cycle de vie de chacun de ses enfants, et ainsi de suite jusqu'à ce que l'ensemble de l'application soit rendu.    
 Il y a des moments où ces événements de cycle de vie nous sont utiles dans le développement de notre application, donc Angular fournit des crochets (Hooks) dans ce cycle de vie afin que nous puissions observer et réagir si nécessaire.   
 ### Définition Hooks de cycle de vie: 
-Les hooks de cycle de vie Angular ne sont rien d'autre des interface (fonction de rappel),qu'angular les invoquent lorqu'un certain événement se produit pendant le cycle de vie deu composant.   
+Les hooks de cycle de vie Angular ne sont rien d'autre des interface (fonction de rappel), qu'angular les invoquent lorqu'un certain événement se produit pendant le cycle de vie deu composant.   
 ### Liste complète des hooks:  
 Ci-dessous, on trouve la liste des hooks de cycle de vie d'un composant, dans l'ordre dans lequel ils sont appelés.
 ![Alt text](https://github.com/zyedtu/AngularUpAndRunning/blob/master/chapiter04and05/imgReadme/hooks.png?raw=true "Title")     
