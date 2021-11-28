@@ -117,7 +117,7 @@ Voyons ensuite comment nous modifions la classe de composants createstock.compon
         console.log('Name Control Value', this.stockForm.value);
      }
     }
-* Ligne 11: Dans le Templete on a crée le [formGroup]="stockForm" et au composant en déclare *stockForm: FormGroup*, là on utilise de **DataBinding**, [formGroup]="stockForm"  <->  stockForm: FormGroup.      
+* Ligne 11: Dans le Templete on a crée le [formGroup]="stockForm" et au composant en déclare *stockForm: FormGroup*, là on utilise de **DataBinding**:   [formGroup]="stockForm"  <->  stockForm: FormGroup      
 
 Dans le composant, nous instancions et exposons maintenant une instance FormGroup, nommée stockForm. C'est ce à quoi nous nous étions liés au niveau du formulaire dans le Template (modèle). FormGroup nous permet d'instancier plusieurs FromControl dedans, et nous l'avons fait pour instancier un contrôle de formulaire pour le nom, le code et le prix. Cette fois, nous utilisons également le constructeur du FormControl dans la mesure du possible, en ajoutant une valeur par défaut et des validateurs au besoin.   
 Le premier argument du constructeur FormControl est la valeur par défaut du contrôle de formulaire. Ici, nous initialisons les valeurs par défaut des deux contrôles de formulaire à null et 0, respectivement.    
