@@ -30,5 +30,16 @@ Convient aux constructions de production.
 ### API/Server Calls and CORS (Appels API/serveur et CORS): 
 ### Different Environments (Différents environnements): 
 ### Handling Deep-Linking (Gestion des liens profonds):  
-### Lazy Loading (Chargement paresseux):   
+### Lazy Loading (Chargement paresseux):  
+Une autre technique pour une application hautement performante, que nous avons très brièvement abordée au chapitre 11 lorsque nous parlions de routage dans Angular, est le chargement paresseux (**Lazy Loading**).      
+Une fois que nous avons introduit le concept de routage dans nos applications angulaires, vous vous êtes peut-être rendu compte que toutes les routes ne sont pas vraiment nécessaires ou doivent être chargées.     
+
+Ainsi, une astuce courante que nous utilisons pour augmenter les performances et réduire le temps de chargement initial consiste à essayer de charger le strict minimum à l'avance dans la demande initiale, et de reporter le chargement de tout le reste au fur et à mesure des besoins. Nous y parvenons en tirant parti du routage angulaire et en utilisant ce que nous appelons des routes enfants.    
+La technique en quelques mots est la suivante:    
+* Au lieu de définir tous nos itinéraires à l'avance, nous divisons notre application en modules plus petits, chacun avec ses itinéraires définis dans des unités autonomes.   
+* Les composants respectifs sont désormais enregistrés au niveau de ces sous-modules uniquement, et non au module principal au niveau de l'application.    
+* Nous enregistrons toutes ces routes en tant que routes enfants dans chaque module individuel.   
+* Au niveau de l'application, nous modifions notre routage pour pointer à la place certains sous-chemins vers le nouveau module, plutôt que les routes individuelles.     
+
+Maintenant, lorsque nous exécutons notre application, Angular chargera le code minimal à l'avance et chargera les modules restants au fur et à mesure que nous naviguons vers ces routes.   
 ### Server-Side Rendering and Handling SEO (Rendu côté serveur et gestion du référencement): 
