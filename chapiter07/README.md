@@ -104,9 +104,9 @@ Voyons ensuite comment nous modifions la classe de composants createstock.compon
     public stockForm: FormGroup;
     constructor() { 
         this.stockForm = new FormGroup({
-        name: new FormControl(null, Validators.required),
-        code: new FormControl(null, [Validators.required, Validators.minLength(2)]),
-        price: new FormControl(0, [Validators.required, Validators.min(0)])
+            name: new FormControl(null, Validators.required),
+            code: new FormControl(null, [Validators.required, Validators.minLength(2)]),
+            price: new FormControl(0, [Validators.required, Validators.min(0)])
         });
     }
 
@@ -136,9 +136,9 @@ Voyons comment nous pouvons changer votre composant CreateStock pour utiliser Fo
 
     createForm(): void {
         this.stockForm = this.fb.group({  // ligne 17
-        name: [null, Validators.required],  // ligne 18
-        code: [null, [Validators.required, Validators.minLength(2)]],
-        price: [0, [Validators.required, Validators.min(0)]]
+            name: [null, Validators.required],  // ligne 18
+            code: [null, [Validators.required, Validators.minLength(2)]],
+            price: [0, [Validators.required, Validators.min(0)]]
         });
     }
 
@@ -303,9 +303,9 @@ Passons maintenant à la classe *CreateStock2Component*, où se produisent la pl
 
     createForm() {
         this.stockForm = this.fb.group({
-        name: [null, Validators.required],
-        code: [null, [Validators.required, Validators.minLength(2)]],
-        price: [0, [Validators.required, Validators.min(0)]]
+            name: [null, Validators.required],
+            code: [null, [Validators.required, Validators.minLength(2)]],
+            price: [0, [Validators.required, Validators.min(0)]]
         });
     }
     loadStockFromServer() {
@@ -384,10 +384,10 @@ Passons maintenant à notre classe CreateStock3Component. Tout d'abord, passons 
 
     createForm(): void {
         this.stockForm = this.fb.group({
-        name: [null, Validators.required],
-        code: [null, [Validators.required, Validators.minLength(2)]],
-        price: [0, [Validators.required, Validators.min(0)]],
-        notablePeople: this.fb.array([]) // ligne 26
+            name: [null, Validators.required],
+            code: [null, [Validators.required, Validators.minLength(2)]],
+            price: [0, [Validators.required, Validators.min(0)]],
+            notablePeople: this.fb.array([]) // ligne 26
         });
     }
 
@@ -396,8 +396,8 @@ Passons maintenant à notre classe CreateStock3Component. Tout d'abord, passons 
     }
     addNotablePerson() { // ligne 33
         this.notablePeople.push(this.fb.group({
-        name: ['', Validators.required],
-        title: ['', Validators.required]
+            name: ['', Validators.required],
+            title: ['', Validators.required]
         }))
     }
 
