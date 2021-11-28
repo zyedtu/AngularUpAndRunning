@@ -85,12 +85,13 @@ Dans un premier temps, nous verrons comment modifier le template *create-stock.c
                 <input type="number" placeholder="Price" name="stockPrice" formControlName="price">
             </div>
         </form>
-        <button type="submit">Submit</button>
+        <button type="submit">Submit</button> <!-- 14 -->
     </div>
     <p>Form groupe value: {{ stockForm.value | json }}</p> <!-- ligne 16 -->
     <p>Form groupe status: {{ stockForm.status | json }}</p>
 * ligne 3: Nous nous lions le formulaire maintenant à un formGroup au lieu d'un formControl.
-* ligne 5: Une fois que nous utilisons un formGroup, nous utilisons **formControlName** à l'intérieur du groupe
+* ligne 5: Une fois que nous utilisons un formGroup, nous utilisons **formControlName** à l'intérieur du groupe.    
+* ligne 14: Enfin, nous avons un bouton de type soumettre **submit**, cela déclenche une soumission de formulaire, qui est ensuite interceptée par notre gestionnaire d'événements **ngSubmit** au niveau du formulaire. Cela déclenchera ensuite la méthode *onSubmit()* sur notre classe de composant.   
 * ligne 16: On affiche sur l'écran la valeur du form group (groupe de formulaires) au lieu de l'élément.
 
 Le changement majeur par rapport à l'exemple précédent est que nous sommes passés de la **liaison (binding)** à formControl à un formGroup. Nous le faisons au niveau du formulaire. Maintenant, à l'intérieur, pour chaque élément de formulaire, nous mentionnons un formControlName. Chacun d'eux se liera à un élément individuel au sein du formGroup. Enfin, nous affichons la valeur actuelle et l'état du formulaire de la même manière que nous l'avons fait pour le FormControl.    
