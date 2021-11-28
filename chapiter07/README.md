@@ -101,7 +101,7 @@ Voyons ensuite comment nous modifions la classe de composants createstock.compon
 
     export class CreateStockComponent implements OnInit {
 
-    public stockForm: FormGroup;
+    public stockForm: FormGroup; // ligne 11
     constructor() { 
         this.stockForm = new FormGroup({
             name: new FormControl(null, Validators.required),
@@ -117,6 +117,8 @@ Voyons ensuite comment nous modifions la classe de composants createstock.compon
         console.log('Name Control Value', this.stockForm.value);
      }
     }
+* Ligne 11: Dans le Templete on a crée le [formGroup]="stockForm" et au composant en déclare *stockForm: FormGroup*, là on utilise de **DataBinding**, [formGroup]="stockForm"  <->  stockForm: FormGroup.      
+
 Dans le composant, nous instancions et exposons maintenant une instance FormGroup, nommée stockForm. C'est ce à quoi nous nous étions liés au niveau du formulaire dans le Template (modèle). FormGroup nous permet d'instancier plusieurs FromControl dedans, et nous l'avons fait pour instancier un contrôle de formulaire pour le nom, le code et le prix. Cette fois, nous utilisons également le constructeur du FormControl dans la mesure du possible, en ajoutant une valeur par défaut et des validateurs au besoin.   
 Le premier argument du constructeur FormControl est la valeur par défaut du contrôle de formulaire. Ici, nous initialisons les valeurs par défaut des deux contrôles de formulaire à null et 0, respectivement.    
 Le deuxième argument du constructeur FormControl peut être soit un seul validateur, soit un tableau de validateurs. Il existe un ensemble de validateurs intégrés pour garantir que le FormControl est requis ou a une valeur minimale. Ces validateurs peuvent être soit synchrones (comme ceux que nous avons utilisés), soit également asynchrones (par exemple, pour vérifier si un nom d'utilisateur est disponible sur le serveur). Vous pouvez consulter les validateurs intégrés dans les documents officiels d'Angular.     
