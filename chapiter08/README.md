@@ -137,7 +137,7 @@ Modifions le fichier src/app/app.module.ts pour définir le fournisseur comme su
 Le tableau des fournisseurs du module Angular indique à Angular de créer une instance singleton du service et de la rendre disponible pour toute classe ou composant qui le demande. Lorsque nous l'enregistrons au niveau du module, cela signifie que tout composant du module qui demande le service recevra exactement la même instance qui lui sera injectée.    
 Nous aurions pu ignorer l'étape d'ajout manuel du service au module en demandant à la CLI angulaire de l'effectuer. La CLI angulaire ne sait pas à quel niveau le service est censé fonctionner, donc à nous de lui dire dans quel module sera enregisté en tapant cette commmande: 
 
-  > ng g service services/stock --module=app
+  > ng g service services/stock --module=app        
 Cela aurait à la fois généré le service et enregistré le fournisseur dans l'AppModule.     
 À ce stade, nous sommes prêts à commencer à utiliser le service, nous allons donc d'abord l'utiliser dans le StockListComponent nouvellement créé. Modifions le fichier stocklist.component.ts comme suit:
 
@@ -147,12 +147,12 @@ Cela aurait à la fois généré le service et enregistré le fournisseur dans l
         constructor(private stockSrv: StockService) { } // ligne 13
 
         ngOnInit(): void {
-        this.stocks = this.stockSrv.getStocks(); // ligne 16
+            this.stocks = this.stockSrv.getStocks(); // ligne 16
         }
 
         onToggleFavorite(stock: Stock) {
-        console.log('Favorite for stock ', stock, ' was triggered');
-        this.stockSrv.toggleFavorite(stock); // ligne 21
+            console.log('Favorite for stock ', stock, ' was triggered');
+            this.stockSrv.toggleFavorite(stock); // ligne 21
         }
     }    
   
