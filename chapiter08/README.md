@@ -50,7 +50,7 @@ Nous allons modifier le fichier *stock-list.component.ts*:
       }
     }
 Il y a quelques points à noter ici, mais rien de fondamentalement nouveau ou révolutionnaire jusqu'à présent: 
-* Nous avons déclaré un tableau de stcok au niveau de la classe et l'avons initialisé avec des valeurs par défaut dans le bloc ngOnInit.     
+* Nous avons déclaré un tableau de stock au niveau de la classe et l'avons initialisé avec des valeurs par défaut dans le bloc ngOnInit.     
 * Nous avons une fonction ToggleFavorite qui enregistre le stock et change son état favori.    
 
 Regardons maintenant son modèle correspondant, dans *stock-list.component.html*:   
