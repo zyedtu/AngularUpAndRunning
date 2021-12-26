@@ -165,29 +165,39 @@ La on va créer le composant list-stock et on l'ajoute aussi dans notre module r
         console.log('go to list stock', i);
       }
     }
-et dans notre Temlate:   
+et dans notre Template:   
 
-    <h1>Liste stocks</h1>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col" sortable="id" href="id">Id</th>
-          <th scope="col" sortable="name">Name</th>
-          <th scope="col" sortable="code">Code</th>
-          <th scope="col" sortable="exchange">Exchange</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let st of stocks; index as i">
-          <td> <button class="bg-warning" (click)="goDetailList(st.id)"> <i class="fas fa-edit"></i> </button>{{st.id}}</td>
-          <td>{{st.name}}</td>
-          <td>{{st.code}}</td>
-          <td>{{st.exchange}}</td>
-          <td  ></td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="container">
+      <div class="card">
+        <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
+          Liste Stocks
+      </h3>
+      <div class="card-body">
+        <table class="table table-bordered table-responsive-md table-striped text-center">
+          <thead>
+            <tr>
+                <th class="text-center">Id</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">Code</th>
+                <th class="text-center">Exchange</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let st of stocks; index as i">
+              <td> <span class="table-remove"
+                ><button type="button" class="btn btn-danger btn-rounded btn-sm my-0" (click)="goDetailList(st.id)">
+                  {{st.id}}
+                </button></span
+              ></td>
+              <td>{{st.name}}</td>
+              <td>{{st.code}}</td>
+              <td>{{st.exchange}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    </div>
 ### Créer le composant detail:  
 Dans le but de garder notre exemple concentré sur le routage, un **StockDetailsComponent** terminé (simpliste) est déjà créé dans le dossier src/app/stocks. Il est déjà enregistré dans l'AppModule. Tout ce qu'il montre est une répétition de l'individu StockItemComponent, mais sans la logique de favoritisme. Avant de l'examiner, voyons d'abord comment la définition de nos routes changerait pour inclure cette nouvelle route. Nous modifierions le fichier app-routes.module.ts comme suit :  
 
