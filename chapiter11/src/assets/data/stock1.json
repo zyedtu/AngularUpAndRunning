@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "name": "Test Stock Company",
+   "code": "TSC",
+   "price": 85,
+   "previousPrice": 80,
+   "exchange":"NASDAQ"
+}

@@ -1,0 +1,8 @@
+{
+  "id": 2,
+  "name": "Second Stock Company",
+  "code": "SSC",
+  "price": 10,
+  "previousPrice": 20,
+  "exchange":"NSE"
+}

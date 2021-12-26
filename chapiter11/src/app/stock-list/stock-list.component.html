@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="card">
+    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
+      Liste Stocks
+  </h3>
+  <div class="card-body">
+    <table class="table table-bordered table-responsive-md table-striped text-center">
+      <thead>
+        <tr>
+            <th class="text-center">Id</th>
+            <th class="text-center">Name</th>
+            <th class="text-center">Code</th>
+            <th class="text-center">Exchange</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let st of stocks; index as i">
+          <td> <span class="table-remove"
+            ><button type="button" class="btn btn-danger btn-rounded btn-sm my-0" (click)="goDetailList(st.id)">
+              {{st.id}}
+            </button></span
+          ></td>
+          <td>{{st.name}}</td>
+          <td>{{st.code}}</td>
+          <td>{{st.exchange}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>

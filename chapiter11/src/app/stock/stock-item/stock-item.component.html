@@ -1,0 +1,14 @@
+
+<div class="stock-container" >
+    <div class="name" >{{stock.name + ' (' + stock.code + ')'}}
+      <i class="stockId" [routerLink]="['/stock', stock.id]">{{stock.id}}</i>
+    </div>
+    <div class="name">{{stock.exchange + ' (' + stock.exchange + ')'}}</div>
+    <div class="price"
+        [class]="stock.isPositiveChange ? 'positive' : 'negative'">$ {{stock.price}}
+    </div>
+    <button type="button" class="btn btn-primary" (click)="onToggleFavorite($event)"
+        [disabled]="stock.favorite">Add to Favorite</button>
+    <button type="button" class="btn btn-primary" (click)="changeStockPrice()">Change Price</button>
+</div>
+

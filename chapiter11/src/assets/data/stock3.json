@@ -1,0 +1,8 @@
+{
+  "id": 3,
+  "name": "Last Stock Company",
+   "code": "LSC",
+   "price": 70,
+   "previousPrice": 60,
+   "exchange":"NYSE"
+}

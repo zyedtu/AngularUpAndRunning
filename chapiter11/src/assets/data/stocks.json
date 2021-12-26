@@ -1,0 +1,26 @@
+[
+   {
+     "id": 1,
+     "name": "Test Stock Company",
+      "code": "TSC",
+      "price": 85,
+      "previousPrice": 80,
+      "exchange":"NASDAQ"
+   },
+   {
+     "id": 2,
+     "name": "Second Stock Company",
+     "code": "SSC",
+     "price": 10,
+     "previousPrice": 20,
+     "exchange":"NSE"
+  },
+  {
+    "id": 3,
+    "name": "Last Stock Company",
+     "code": "LSC",
+     "price": 70,
+     "previousPrice": 60,
+     "exchange":"NYSE"
+  }
+]
