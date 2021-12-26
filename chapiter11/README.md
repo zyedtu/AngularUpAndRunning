@@ -389,7 +389,7 @@ La classe AuthGuard est simple et ressemble et se comporte comme un service Angu
 Dans la dernière étape, nous pouvons ajouter notre logique personnalisée, si nécessaire. Par exemple, nous pourrions conserver l'URL que nous essayions d'ouvrir. Une fois que l'utilisateur s'est connecté avec succès, nous pouvons alors rediriger vers l'URL enregistrée plutôt que vers l'URL par défaut.   
 
 ##### localStorage:   
-**LocalStorage (stockage local** est un moyen de stocker un état dans un projet Angular. localStorage une API fait partie de JavaScript.   
+**LocalStorage (stockage local**) est un moyen de stocker un état dans un projet Angular. localStorage une API fait partie de JavaScript.   
 LocalStorage à 4 fonctions:  
 * setItem(key: string, data: string | JSON): void
 * getItem(key: string): string | JSON | null  
