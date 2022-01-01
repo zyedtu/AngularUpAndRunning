@@ -42,10 +42,10 @@ Ensuite, nous pouvons modifions notre composant *stock-item.component.ts* pour c
           let diff = (this.stock.price / this.stock.previousPrice) - 1;
           let largeChange = Math.abs(diff) > 0.01;
           this.stockClasses = {
-          "positive": this.stock.isPositiveChange,
-          "negative": !this.stock.isPositiveChange,
-          "large-change": largeChange,
-          "small-change": !largeChange
+            "positive": this.stock.isPositiveChange,
+            "negative": !this.stock.isPositiveChange,
+            "large-change": largeChange,
+            "small-change": !largeChange
           };
         }
 Dans le code du composant, nous avons créé un objet stockClasses avec quatre clés: *positive, négative, grande variation et petite variation*. Sur la base du prix actuel et des prix précédents, chacune de ces clés aura une valeur vraie ou fausse.      
