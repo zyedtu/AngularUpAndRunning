@@ -78,14 +78,14 @@ Considérant que notre exemple avec NgClass utilisait des classes CSS simples af
 			let largeChange = Math.abs(diff) > 0.01;
 			console.log('diff', diff);
 			this.stockClasses = {
-			'positive': this.stock.isPositiveChange,
-			'negative': !this.stock.isPositiveChange,
-			'large-change': largeChange,
-			'small-change': !largeChange
+        'positive': this.stock.isPositiveChange,
+        'negative': !this.stock.isPositiveChange,
+        'large-change': largeChange,
+        'small-change': !largeChange
 			};
 			this.stockStyles = {
-			"color": this.stock.isPositiveChange ? "green" : "red",
-			"font-size": largeChange ? "1.2em" : "0.8em"
+        "color": this.stock.isPositiveChange ? "green" : "red",
+        "font-size": largeChange ? "1.2em" : "0.8em"
 			};
 		}
 Semblable à la section précédente, nous avons créé un objet stockStyles. Dans le code d'initialisation, nous avons initialisé l'objet stockStyles avec les clés color et font-size. Ses valeurs sont des attributs CSS générés en fonction des propriétés du stock. Nous pouvons ensuite utiliser cet objet stockStyles comme entrée de la directive NgStyle pour la liaison.      
@@ -99,7 +99,12 @@ Nous pouvons maintenant modifier notre code HTML pour utiliser ces informations 
 		</div>
 Nous avons ajouté **[ngStyle]="stockStyles"**, Angular examinera les clés et les valeurs de l'objet stockStyles et ajoutera ces styles particuliers à l'élément HTML.     
 
-Il est généralement préférable d'utiliser la classe ou les liaisons NgClass pour changer l'apparence de votre application, mais le NgStyle vous donne une autre alternives.          
+Il est généralement préférable d'utiliser la classe ou les liaisons NgClass pour changer l'apparence de votre application, mais le NgStyle vous donne une autre alternives.   
+
+##### Remarque:    
+Les directives **ngClass** et **ngStyle** acceptent une objet de type **JSON** donc si on veut utiliser directement dans un templete on ejoute les les accolades **{}**.   
+
+        <some-element [ngStyle]="{'font-size': '20px'}">....</some-element>
 #####  Alternative Class and Style Binding Syntax:   
 Nous avons abordé l'utilisation de la syntaxe de liaison [class] dans le chapitre précédent, ainsi que l'alternative NgClass pour ajouter dynamiquement des classes à nos éléments à l'aide d'Angular. Il existe une troisième alternative pour les classes et les styles, qui consiste à utiliser une version singulière de la liaison de classe et de style qui ajoute et supprime une classe/un style particulier, au lieu de l'approche tout ou rien de la liaison [class].     
 Nous pouvons ajouter ou supprimer des classes individuelles en fonction de l'évaluation d'une expression véridique dans Angular avec la syntaxe suivante:    
