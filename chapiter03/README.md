@@ -32,22 +32,22 @@ Tout d'abord, nous ajoutons des nouvelles classes scss dans src/app/stock/stock-
 		}
 Ensuite, nous pouvons modifions notre composant *stock-item.component.ts* pour calculer et garder un objet JSON prêt avec les classes à appliquer la variable **stockClasses reçoit un objet JSON**. Dans le composant *stock-item.component.ts* on calcule d'abord la différence entre le prix actuel et l'ancien prix, puis créer un objet qui contient toutes les données.    
 
-  export class StockItemComponent implements OnInit {
+      export class StockItemComponent implements OnInit {
 
-    public stock: Stock;
-    public stockClasses;
+        public stock: Stock;
+        public stockClasses;
 
-		ngOnInit(): void {
-			this.stock = new Stock('Test Stock Company', 'TSC', 85, 80);
-			let diff = (this.stock.price / this.stock.previousPrice) - 1;
-			let largeChange = Math.abs(diff) > 0.01;
-			this.stockClasses = {
-			"positive": this.stock.isPositiveChange,
-			"negative": !this.stock.isPositiveChange,
-			"large-change": largeChange,
-			"small-change": !largeChange
-			};
-		}
+        ngOnInit(): void {
+          this.stock = new Stock('Test Stock Company', 'TSC', 85, 80);
+          let diff = (this.stock.price / this.stock.previousPrice) - 1;
+          let largeChange = Math.abs(diff) > 0.01;
+          this.stockClasses = {
+          "positive": this.stock.isPositiveChange,
+          "negative": !this.stock.isPositiveChange,
+          "large-change": largeChange,
+          "small-change": !largeChange
+          };
+        }
 Dans le code du composant, nous avons créé un objet stockClasses avec quatre clés: *positive, négative, grande variation et petite variation*. Sur la base du prix actuel et des prix précédents, chacune de ces clés aura une valeur vraie ou fausse.      
 Voyons maintenant comment on peut utiliser la directive **NgClass** pour l'utiliser à la place de *la liaison de classe* que nous utilisions auparavant dans le Template *stock-item.component.html*.      
 
