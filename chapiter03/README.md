@@ -30,7 +30,12 @@ Tout d'abord, nous ajoutons des nouvelles classes scss dans src/app/stock/stock-
 		.small-change {
 			font-size: 0.8em;
 		}
-Ensuite, nous pouvons modifions notre composant *stock-item.component.ts* pour calculer et garder l'objet JSON prêt avec les classes à appliquer. Dans le composant *stock-item.component.ts* on calcule d'abord la différence entre le prix actuel et l'ancien prix, puis créer un objet qui contient toutes les données.    
+Ensuite, nous pouvons modifions notre composant *stock-item.component.ts* pour calculer et garder un objet JSON prêt avec les classes à appliquer la variable **stockClasses reçoit un objet JSON"**. Dans le composant *stock-item.component.ts* on calcule d'abord la différence entre le prix actuel et l'ancien prix, puis créer un objet qui contient toutes les données.    
+
+  export class StockItemComponent implements OnInit {
+
+    public stock: Stock;
+    public stockClasses;
 
 		ngOnInit(): void {
 			this.stock = new Stock('Test Stock Company', 'TSC', 85, 80);
