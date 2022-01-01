@@ -1,0 +1,49 @@
+<h2>Create Stock Form Complet</h2>
+<div class="container">
+  <div class="form-group">
+    <form (ngSubmit)="createStock()">
+      <div class="row">
+        <div class="col-2"> <label>Stock Name : </label> </div>
+        <div class="col-2">
+          <input type="text" placeholder="Stock Name" name="stockName" [(ngModel)]="stock.name">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2"> <label>Stock Code : </label> </div>
+        <div class="col-2">
+          <input type="text" placeholder="Stock Code" name="stockCode" [(ngModel)]="stock.code">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2"> <label>Stock Price : </label> </div>
+        <div class="col-2">
+          <input type="text" placeholder="Stock Price" name="stockPrice" [(ngModel)]="stock.price">
+        </div>
+      </div>
+      <div class="row">
+        <!-- <div class="col-2"> -->
+          <div class="input-group col-2">
+            <select name="stockExchange" [(ngModel)]="stock.exchange">
+              <option value="NYSE">NYSE</option>
+              <option value="NASDAQ">NASDAQ</option>
+              <option value="OTHER">OTHER</option>
+            </select>
+            <div class="input-group-append">
+              <label class="input-group-text" id="inputGroup-sizing-sm">Exchange</label>
+            </div>
+          </div>
+        <!-- </div> -->
+      </div>
+      <div class="row">
+        <div class="col-2">
+          <label class ="form-check-label" for="exampleCheck1">confirmed : </label>
+        </div>
+        <div class="col-2">
+          <input type="checkbox" name="stockConfirm" [(ngModel)]="confirmed">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="!confirmed">Submit</button>
+    </form>
+  </div>
+</div>
+

@@ -128,8 +128,106 @@ Il existe une version plus simple de ceci, que nous utilisons dans la plupart de
     <h4>Stock Name is {{stock.name}}</h4>
 ##### Pourquoi s'appelle-t-on Banana-in-a-Box ? (Why Is It Called Banana-in-a-Box ?):   
 Lorsqu'elles sont utilisées ensemble, une confusion courante lors de l'utilisation de la directive ngModel pourrait être l'ordre des types de parenthèses, qu'il s'agisse de [()] ou ([]). C'est pourquoi l'équipe Angular a trouvé un surnom pour le rendre facile à retenir. Le () ressemble à une banane (oui, c'est un étirement, mais roulez avec !), et il est enfermé dans une boîte []. D'où la banane dans une boîte, qui est [()].       
-### Un formulaire complet (A Complete Form):
-### État de contrôle (Control State): 
+### Un formulaire complet (A Complete Form):     
+Maintenant que nous avons vu un champ de formulaire de base, étendons-le à un formulaire complet qui comporte différents types de contrôles liés à notre composant ainsi que la gestion de la soumission du formulaire. Nous continuerons à nous appuyer sur l'exemple précédent.        
+Ci-dessous, le nouveau composant *CreateStockCompletComponent*:  
+
+        export class CreateStockCompletComponent implements OnInit {
+
+          public stock: Stock;
+          public confirmed : boolean = false;
+
+          constructor() {
+            this.stock = new Stock('test', '', 0, 0, 'NASDAQ');
+          }
+
+          ngOnInit(): void {
+          }
+
+          setStockPrice(price) {
+            this.stock.price = price;
+            this.stock.previousPrice = price;
+          }
+
+          createStock() {
+            console.log('Creating stock ', this.stock);
+          }
+        }
+Nous avons ajouté quelques nouvelles pièces ici, notamment:  
+* Nous avons ajouté à l'initialisation du stock (un argument 'NASDAQ' dans ce cas).   
+* Nous avons ajouté confirmé, une variable membre booléenne, à la classe de composant, avec une valeur par défaut de false.    
+* Nous avons créé une nouvelle fonction setStockPrice(), qui prend un prix, puis définit à la fois le prix actuel et le prix précédent du stock.    
+* Enfin, nous avons une nouvelle méthode createStock, qui affiche simplement la variable stock actuelle sur la console.     
+
+Note Templete resemble à ça:    
+
+          <h2>Create Stock Form Complet</h2>
+
+          <div class="container">
+            <div class="form-group">
+              <form (ngSubmit)="createStock()">
+                <div class="row">
+                  <div class="col-2"> <label>Stock Name : </label> </div>
+                  <div class="col-2">
+                    <input type="text" placeholder="Stock Name" name="stockName" [(ngModel)]="stock.name">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-2"> <label>Stock Code : </label> </div>
+                  <div class="col-2">
+                    <input type="text" placeholder="Stock Code" name="stockCode" [(ngModel)]="stock.code">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-2"> <label>Stock Price : </label> </div>
+                  <div class="col-2">
+                    <input type="text" placeholder="Stock Price" name="stockPrice" [(ngModel)]="stock.price">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-4">
+                    <div class="input-group">
+                      <select name="stockExchange" [(ngModel)]="stock.exchange">
+                        <option value="NYSE">NYSE</option>
+                        <option value="NASDAQ">NASDAQ</option>
+                        <option value="OTHER">OTHER</option>
+                      </select>
+                      <div class="input-group-append">
+                        <label class="input-group-text" id="inputGroup-sizing-sm">Exchange</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-2">
+                    <label class ="form-check-label" for="exampleCheck1">confirmed : </label>
+                  </div>
+                  <div class="col-2">
+                    <input type="checkbox" name="stockConfirm" [(ngModel)]="confirmed">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="!confirmed">Submit</button>
+              </form>
+            </div>
+          </div>
+Dans le modèle, nous avons ajouté un tout nouvel ensemble de champs de formulaire, des zones de saisie pour le code de stock et le prix, aux boutons radio pour sélectionner l'échange et une case à cocher pour confirmer si les données sont correctes. Passons en revue cette étape par étape:   
+* Pour le code de stock, il reste similaire au nom de stock que nous avions. Rien de différent à part, bien sûr, la variable cible.  
+* Ensuite, nous avons un select drop-down/combo box (**une liste déroulante**) nous utilisons pour définir l'échange. Cette liste déroulante liela variable de modèle (stock.exchange) à l'aide de ngModel.    
+* Nous avons alors une case à cocher, qui est liée à la variable confirmée sur la classe de composant. Puisqu'il s'agit d'une case à cocher, activer et désactiver la case à cocher définit la valeur de la variable confirmée sur true et false, respectivement.    
+* Enfin, nous avons un bouton de type soumettre. Ceci n'est activé que lorsque le booléen confirmé est défini sur true. En cliquant dessus, cela déclenche une soumission de formulaire, qui est ensuite interceptée par notre gestionnaire d'événements **ngSubmit au niveau du formulaire**. Cela déclenchera ensuite la méthode createStock sur notre classe de composant.    
+
+### État de contrôle (Control State):    
+La validation de formulaire angulaire pour les formulaires basés sur des modèles repose et étend la validation de formulaire native à partir du HTML. Ainsi, vous pouvez simplement utiliser la plupart des contraintes que vous connaissez et aimez déjà prêtes à l'emploi, et elles devraient fonctionner directement et proprement avec une forme angulaire. Cela dit, Angular fait le travail d'intégration de ces états de contrôle et validations avec son propre modèle interne (que ce soit ngModel ou ngForm), et c'est à nous d'utiliser ce modèle interne pour ensuite montrer le bon type de message à l'utilisateur.     
+
+Il y a deux aspects à cela:   
+* L'état (state):  qui nous permet d'avoir un aperçu de l'état du contrôle de formulaire, de savoir si l'utilisateur l'a visité, s'il l'a modifié et enfin s'il est dans un état valide.     
+* La validité (validity):  qui nous indique si un contrôle de formulaire est valide ou non, et s'il n'est pas valide, la ou les raisons sous-jacentes pour lesquelles l'élément de formulaire est invalide.    
+
+Voyons d'abord comment l'état est mis à notre disposition et comment nous pouvons l'utiliser. La directive ngModel change et ajoute des classes CSS à l'élément sur lequel elle se trouve, en fonction de l'interaction de l'utilisateur avec celui-ci. Il suit trois modes d'interaction principaux et deux classes CSS par mode d'interaction qui lui sont associées. Ils sont:   
+
+![Alt text](https://github.com/zyedtu/AngularUpAndRunning/blob/master/chapiter06/imgReadme/controlstates.png?raw=true "Title")     
+
+
 ### Validité du contrôle (Control Validity):
 # Utilisation des groupes de formulaires (Working with FormGroups):
  

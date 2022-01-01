@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   private counter: number = 1;
 
   ngOnInit(): void {
-    this.stock = new Stock('Test Stock Company', 'TSC', 85, 80);
+    this.stock = new Stock('Test Stock Company', 'TSC', 85, 80, 'NASDAQ');
   }
 
   onToggleFavorite(stock: Stock) {
@@ -22,13 +22,13 @@ export class AppComponent implements OnInit {
   }
 
   changeStockObject() {
-    // Cela mettra à jour la valeur dans le composant d'article en stock 
+    // Cela mettra à jour la valeur dans le composant d'article en stock
     // car nous créons une nouvelle référence pour l'entrée de stock.
     this.stock = new Stock('Test Stock Company - ' + this.counter++,
-    'TSC', 85, 80);
+    'TSC', 85, 80, 'NASDAQ');
   }
     changeStockPrice() {
-    // Cela ne mettra pas à jour la valeur dans le composant de l'article 
+    // Cela ne mettra pas à jour la valeur dans le composant de l'article
     // en stock car il modifie la même référence et angulaire ne la vérifiera
     // pas dans la stratégie de détection de changement OnPush.
     this.stock.price += 10;
