@@ -373,7 +373,9 @@ Voyons ensuite les modifications apportées au modèle dans *create-stock-comple
 La plupart du modèle reste le même, mais il y a quelques éléments qui méritent d'être soulignés:    
 * Nous avons ajouté une variable de référence de modèle au niveau du formulaire et à chaque niveau de contrôle. La variable de référence de modèle au niveau du formulaire (stockForm) obtient l'objet de modèle NgForm qui lui est lié, ce qui nous permet de vérifier des éléments tels que le formulaire et de contrôler la validité et les valeurs à travers celui-ci.          
 * Nous avons ajouté des variables de référence de modèle (stockName, stockPrice, stockCode) sur chacune des zones de texte et lui avons attribué l'objet de modèle NgModel. Cela nous permet de vérifier le champ de formulaire pour tous les états de contrôle que nous utilisions auparavant via les classes CSS (dirty/pristine, valid/invalid, and touched/untouched), en plus des errors.    
-* 
+* Pour le premier champ de formulaire (stock name), nous avons ajouté un div pour afficher le message d'erreur qu'il est requis, si l'erreur existe.     
+* Pour les deuxième et troisième messages de champ, nous avons inclus le message d'erreur dans un autre div, qui vérifie d'abord si le champ de formulaire est Dirty et invalide avant de rechercher un message d'erreur particulier.
+* Lors de la soumission du formulaire, nous passons la variable de référence du modèle stockForm, qui pointe vers le modèle de formulaire, à la méthode createStock. Il s'agit d'une autre capacité des variables de référence de modèle : vous pouvez les transmettre en tant qu'arguments à votre classe de composant.
 
 # Utilisation des groupes de formulaires (Working with FormGroups):
  
