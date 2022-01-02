@@ -10,9 +10,10 @@ export class CreateStockCompletComponent implements OnInit {
 
   public stock: Stock;
   public confirmed : boolean = false;
+  public exchanges = ['NYSE', 'NASDAQ', 'OTHER'];
 
   constructor() {
-    this.stock = new Stock('test', '', 0, 0, 'NASDAQ');
+    this.stock = new Stock('', '', 0, 0, 'NASDAQ');
    }
 
   ngOnInit(): void {
@@ -23,10 +24,13 @@ export class CreateStockCompletComponent implements OnInit {
     this.stock.previousPrice = price;
   }
 
-  createStock() {
-    console.log('Creating stock ', this.stock);
-    console.log('confirmed : ', this.confirmed);
-
+  createStock(stockForm) {
+    console.log('Stock form', stockForm);
+    if (stockForm.valid) {
+      console.log('Creating stock ', this.stock);
+    } else {
+      console.error('Stock form is in an invalid state');
+    }
   }
 
 }

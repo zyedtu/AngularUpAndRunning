@@ -227,7 +227,153 @@ Voyons d'abord comment l'état est mis à notre disposition et comment nous pouv
 
 ![Alt text](https://github.com/zyedtu/AngularUpAndRunning/blob/master/chapiter06/imgReadme/controlstates.png?raw=true "Title")     
 
+En particulier, ces états vous permettent de présenter différentes expériences ou vues aux utilisateurs selon divers scénarios. Nous pouvons utiliser le code de la section précédente comme base pour travailler, au cas où vous ne coderiez pas.      
 
-### Validité du contrôle (Control Validity):
+Maintenant, pour utiliser ces classes d'état de contrôle, nous n'avons en fait pas besoin de modifier le code de classe de composant. Nous n'avons qu'à peaufiner un peu le CSS, puis à en tirer parti dans le modèle HTML du composant.   
+Ajoutons d'abord les définitions de classe CSS suivantes au *create-stock-complet.component.scss*:  
+
+      .stock-name .ng-valid,
+      .stock-code .ng-pristine,
+      .stock-price .ng-untouched {
+        background-color: green;
+      }
+      .stock-name .ng-invalid,
+      .stock-code .ng-dirty,
+      .stock-price .ng-touched {
+        background-color: pink;
+      }
+ le rest n'est pas important!!! 
+### Validité du contrôle (Control Validity):   
+Voyons ensuite comment nous pouvons tirer parti de la validation du formulaire HTML pour créer des erreurs intéressantes et significatives pour nos utilisateurs. Nous n'entrerons pas encore dans les validations personnalisées dans ce chapitre, mais nous verrons comment utiliser plusieurs validations sur les mêmes éléments et comment afficher des messages d'erreur pour les mêmes.     
+
+En interne, **Angular possède son propre ensemble de validateurs**. Ceux-ci reflètent les validateurs de formulaire HTML qui sont ensuite utilisés pour générer un comportement similaire dans le contexte d'une application angulaire. Une fois que vous avez ajouté des validateurs à vos éléments de formulaire, Angular se charge de les exécuter à chaque fois que le contrôle du formulaire change. Cela se refléterait ensuite à chaque niveau de contrôle, ainsi qu'à un niveau agrégé au niveau du formulaire.       
+
+Avant de creuser cela, vous pouvez jeter un œil à la barre latérale suivante pour avoir une brève compréhension des *variables de référence de modèle*, qui sont un cheval de bataille majeur dans la façon dont nous exécutons et travaillons avec la validité du contrôle de formulaire.        
+##### Variables de référence de modèle (Template Reference Variables):    
+Une variable de référence de modèle dans Angular nous permet d'obtenir un gestionnaire temporaire sur un élément, un composant ou une directive DOM directement dans le modèle. Il est indiqué par une syntaxe standard dans le HTML, qui est **un préfixe de #**. Par exemple, dans le code HTML suivant:     
+
+    <input type="text" #myStockField name="stockName">
+Le **#myStockField** est une variable de référence de modèle qui nous donne une référence au champ de formulaire de saisie. Nous pouvons ensuite l'utiliser comme variable dans n'importe quelle expression angulaire, ou accéder directement à sa valeur via ***myStockField.value et la transmettre comme argument à une fonction**.     
+En plus des éléments DOM, il peut également être utilisé pour référencer la classe/valeur sous-jacente à une directive, c'est ainsi que nous l'utilisons en conjonction avec les formulaires et les champs de formulaire.     
+Par défaut, lorsque nous ne lui transmettons aucune valeur, il fera toujours référence à l'élément HTML DOM.        
+##### Validation des entrées dans les formulaires basés sur des modèles (Validating input in template-driven forms):         
+Pour ajouter une validation à un formulaire basé sur un modèle, Angular se base sur des attribus de validation des formulaire natif HTML comme *required, minlength, max,..*.   
+Chaque fois que la valeur d'un contrôle de formulaire change, **Angular exécute la validation et génère soit une liste d'erreurs de validation** qui entraîne un statut *INVALID*, et si la liste d'erreurs est null,ça entraîne un statut VALID.     
+Ensuite nous **inspectons** l'état du contrôle en **exportant** ngModel vers une variable de référence de modèle locale.     
+##### Retour au exemple:    
+Nous verrons comment nous pouvons accomplir une gestion simple des erreurs via nos formulaires basés sur des modèles. Au cas où vous ne coderiez pas, vous pouvez utiliser la base de code de la section précédente. 
+
+On va apporter qques modification à notre composant comme ci-dessous:    
+
+      export class CreateStockCompletComponent implements OnInit {
+
+        public stock: Stock;
+        public confirmed : boolean = false;
+        public exchanges = ['NYSE', 'NASDAQ', 'OTHER'];
+
+        constructor() {
+          this.stock = new Stock('test', '', 0, 0, 'NASDAQ');
+        }
+
+        ngOnInit(): void {
+        }
+
+        setStockPrice(price) {
+          this.stock.price = price;
+          this.stock.previousPrice = price;
+        }
+
+        createStock(stockForm) {
+          console.log('Stock form', stockForm);
+          if (stockForm.valid) {
+            console.log('Creating stock ', this.stock);
+          } else {
+            console.error('Stock form is in an invalid state');
+          }
+        }
+      }
+Nous avons apporté des modifications mineures uniquement à la méthode createStock:   
+* Nous avons maintenant commencé à prendre le stockForm comme argument de la fonction. Il s'agit de l'objet ngForm représentant le formulaire que nous avons dans notre modèle, y compris tous ses contrôles et états. Nous imprimons également cela sur la console Web.    
+* Nous vérifions si le formulaire est valide à l'aide de cet objet transmis, puis ne procédons qu'à la création du stock (pour ce que cela vaut, imprimez à ce stade).    
+* Nous avons également modifié le constructeur pour initialiser le stock avec un nom vide, contrairement à avant.   
+
+Voyons ensuite les modifications apportées au modèle dans *create-stock-complet.component.html*:  
+
+      <h2>Create Stock Form Complet</h2>
+      <div class="container">
+        <div class="form-group">
+          <form (ngSubmit)="createStock(stockForm)" #stockForm="ngForm"> <!-- ligne 3 -->
+            <div class="row">
+              <div class="col-2"> <label>Stock Name : </label> </div>
+              <div class="col-2">
+                <input type="text" placeholder="Stock Name"
+                required name="stockName"
+                #stockName="ngModel" <!-- ligne 9 -->
+                [(ngModel)]="stock.name"> 
+              </div>
+              <div class="col-2" *ngIf="stockName.errors && stockName.errors.required"> <!-- ligne 12 -->
+                <i class="error">Stock Name is Mandatory</i>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-2"> <label>Stock Code : </label> </div>
+              <div class="col-2">
+                <input type="text" placeholder="Stock Code"
+                name="stockCode" 
+                required  minlength="2" 
+                #stockCode="ngModel" <!-- ligne 22 -->
+                [(ngModel)]="stock.code">
+              </div>
+              <div class="col-2" *ngIf="stockCode.dirty && stockCode.invalid"> <!-- ligne 25 -->
+                  <div *ngIf="stockCode.errors.required"> <!-- ligne 26 -->
+                  <i class="error"> Stock Code is Mandatory </i>
+                  </div>
+                  <div *ngIf="stockCode.errors.minlength"> <!-- ligne 29 -->
+                    <i class="error">Stock Code must be atleast of length 2</i>
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-2"> <label>Stock Price : </label> </div>
+              <div class="col-2">
+                <input type="text" placeholder="Stock Price" name="stockPrice" [(ngModel)]="stock.price">
+              </div>
+            </div>
+            <div class="row">
+              <!-- <div class="col-2"> -->
+                <div class="input-group col-2">
+                  <select name="stockExchange"  [(ngModel)]="stock.exchange">
+                    <option *ngFor="let ex of exchanges"  value="NYSE">{{ex}}</option>
+                  </select>
+                  <div class="input-group-append">
+                    <label class="input-group-text" id="inputGroup-sizing-sm">Exchange</label>
+                  </div>
+                </div>
+              <!-- </div> -->
+            </div>
+            <div class="row">
+              <div class="col-2">
+                <label class ="form-check-label" for="exampleCheck1">confirmed : </label>
+              </div>
+              <div class="col-2">
+                <input type="checkbox" name="stockConfirm" [(ngModel)]="confirmed">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="!confirmed">Submit</button>
+          </form>
+        </div>
+      </div>
+* Ligne 3: Variable de référence de modèle stockForm pour travailler au niveau du modèle de formulaire.   
+* ligne 9: Variable de référence de modèle stockName pour exposer le nom ngModel.   
+* ligne 12: Vérifiez la variable de référence du modèle pour les erreurs et la présence.   
+* ligne 25: Variable de référence du modèle stockCode pour exposer le code ngModel.  
+* ligne 26: Vérifiez la variable de référence du modèle stockCode pour les contrôles de formulaire Dirty (était changé) et invalides.   
+* ligne 29: Vérifiez les erreurs sur le stockCode.   
+
+La plupart du modèle reste le même, mais il y a quelques éléments qui méritent d'être soulignés:    
+* Nous avons ajouté une variable de référence de modèle au niveau du formulaire et à chaque niveau de contrôle. La variable de référence de modèle au niveau du formulaire (stockForm) obtient l'objet de modèle NgForm qui lui est lié, ce qui nous permet de vérifier des éléments tels que le formulaire et de contrôler la validité et les valeurs à travers celui-ci.          
+* Nous avons ajouté des variables de référence de modèle (stockName, stockPrice, stockCode) sur chacune des zones de texte et lui avons attribué l'objet de modèle NgModel. Cela nous permet de vérifier le champ de formulaire pour tous les états de contrôle que nous utilisions auparavant via les classes CSS (dirty/pristine, valid/invalid, and touched/untouched), en plus des errors.    
+* 
+
 # Utilisation des groupes de formulaires (Working with FormGroups):
  

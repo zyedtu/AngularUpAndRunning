@@ -1,17 +1,31 @@
 <h2>Create Stock Form Complet</h2>
 <div class="container">
   <div class="form-group">
-    <form (ngSubmit)="createStock()">
+    <form (ngSubmit)="createStock(stockForm)" #stockForm="ngForm">
       <div class="row">
         <div class="col-2"> <label>Stock Name : </label> </div>
         <div class="col-2">
-          <input type="text" placeholder="Stock Name" name="stockName" [(ngModel)]="stock.name">
+          <input type="text" placeholder="Stock Name"
+          required name="stockName" #stockName="ngModel" [(ngModel)]="stock.name">
+        </div>
+        <div class="col-2" *ngIf="stockName.errors && stockName.errors.required">
+          <i class="error">Stock Name is Mandatory</i>
         </div>
       </div>
       <div class="row">
         <div class="col-2"> <label>Stock Code : </label> </div>
         <div class="col-2">
-          <input type="text" placeholder="Stock Code" name="stockCode" [(ngModel)]="stock.code">
+          <input type="text" placeholder="Stock Code"
+          name="stockCode" required  minlength="2"
+          #stockCode="ngModel" [(ngModel)]="stock.code">
+        </div>
+        <div class="col-2" *ngIf="stockCode.dirty && stockCode.invalid">
+            <div *ngIf="stockCode.errors?.required">
+             <i class="error"> Stock Code is Mandatory </i>
+            </div>
+            <div *ngIf="stockCode.errors?.minlength">
+              <i class="error">Stock Code must be atleast of length 2</i>
+            </div>
         </div>
       </div>
       <div class="row">
@@ -23,10 +37,8 @@
       <div class="row">
         <!-- <div class="col-2"> -->
           <div class="input-group col-2">
-            <select name="stockExchange" [(ngModel)]="stock.exchange">
-              <option value="NYSE">NYSE</option>
-              <option value="NASDAQ">NASDAQ</option>
-              <option value="OTHER">OTHER</option>
+            <select name="stockExchange"  [(ngModel)]="stock.exchange">
+              <option *ngFor="let ex of exchanges"  value="NYSE">{{ex}}</option>
             </select>
             <div class="input-group-append">
               <label class="input-group-text" id="inputGroup-sizing-sm">Exchange</label>
