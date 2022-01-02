@@ -258,7 +258,7 @@ En plus des éléments DOM, il peut également être utilisé pour référencer 
 Par défaut, lorsque nous ne lui transmettons aucune valeur, il fera toujours référence à l'élément HTML DOM.        
 ##### Validation des entrées dans les formulaires basés sur des modèles (Validating input in template-driven forms):         
 Pour ajouter une validation à un formulaire basé sur un modèle, Angular se base sur des attribus de validation des formulaire natif HTML comme *required, minlength, max,..*.   
-Chaque fois que la valeur d'un contrôle de formulaire change, **Angular exécute la validation et génère soit une liste d'erreurs de validation** qui entraîne un statut *INVALID*, et si la liste d'erreurs est null,ça entraîne un statut VALID.     
+Chaque fois que la valeur d'un contrôle de formulaire change, **Angular exécute la validation et génère soit une liste d'erreurs de validation (template_reference_variables.?errors)** qui entraîne un statut *INVALID*, et si la liste d'erreurs est null,ça entraîne un statut VALID.     
 Ensuite nous **inspectons** l'état du contrôle en **exportant** ngModel vers une variable de référence de modèle locale.     
 ##### Retour au exemple:    
 Nous verrons comment nous pouvons accomplir une gestion simple des erreurs via nos formulaires basés sur des modèles. Au cas où vous ne coderiez pas, vous pouvez utiliser la base de code de la section précédente. 
