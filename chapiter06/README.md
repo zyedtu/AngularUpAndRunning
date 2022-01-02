@@ -253,7 +253,7 @@ Avant de creuser cela, vous pouvez jeter un œil à la barre latérale suivante 
 Une variable de référence de modèle dans Angular nous permet d'obtenir un gestionnaire temporaire sur un élément, un composant ou une directive DOM directement dans le modèle. Il est indiqué par une syntaxe standard dans le HTML, qui est **un préfixe de #**. Par exemple, dans le code HTML suivant:     
 
     <input type="text" #myStockField name="stockName">
-Le **#myStockField** est une variable de référence de modèle qui nous donne une référence au champ de formulaire de saisie. Nous pouvons ensuite l'utiliser comme variable dans n'importe quelle expression angulaire, ou accéder directement à sa valeur via ***myStockField.value et la transmettre comme argument à une fonction**.     
+Le **#myStockField** est une variable de référence de modèle qui nous donne une référence au champ de formulaire de saisie. Nous pouvons ensuite l'utiliser comme variable dans n'importe quelle expression angulaire, ou accéder directement à sa valeur via **myStockField.value et la transmettre comme argument à une fonction**.     
 En plus des éléments DOM, il peut également être utilisé pour référencer la classe/valeur sous-jacente à une directive, c'est ainsi que nous l'utilisons en conjonction avec les formulaires et les champs de formulaire.     
 Par défaut, lorsque nous ne lui transmettons aucune valeur, il fera toujours référence à l'élément HTML DOM.        
 ##### Validation des entrées dans les formulaires basés sur des modèles (Validating input in template-driven forms):         
